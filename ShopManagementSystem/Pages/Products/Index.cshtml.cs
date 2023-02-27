@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
@@ -21,12 +22,24 @@ namespace ShopManagementSystem.Pages.Products
 
         public IList<Product> Product { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
         public async Task OnGetAsync()
         {
-            if (_context.Product != null)
+
+            var products = from m in _context.Product
+                          select m;
+            if (!string.IsNullOrEmpty(SearchString))
             {
-                Product = await _context.Product.ToListAsync();
+                products = products.Where(s => s.ProductName.Contains(SearchString));
             }
+
+            Product = await products.ToListAsync();
+            //if (_context.Product != null)
+            //{
+            //    Product = await _context.Product.ToListAsync();
+            //}
         }
     }
 }

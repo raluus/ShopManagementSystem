@@ -1,0 +1,51 @@
+﻿@page
+@model ShopManagementSystem.Pages.Account.SignUpModel
+
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Pages/Shared/_Layout_Login.cshtml";
+}
+
+
+<h1>Sign Up</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="User.Username" class="control-label"></label>
+                <input asp-for="User.Username" class="form-control" placeholder="Enter Username" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" placeholder="Enter Email"/>
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.PhoneNumber" class="control-label"></label>
+                <input asp-for="User.PhoneNumber" class="form-control" placeholder="Enter Phone Number"/>
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Password" class="control-label"></label>
+                <input asp-for="User.Password" class="form-control" placeholder="Enter Password"/>
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.ConfirmPassword" class="control-label"></label>
+                <input asp-for="User.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
+                <span asp-validation-for="User.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sign Up" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Login">If you have an account you can login here</a>
+</div>
+

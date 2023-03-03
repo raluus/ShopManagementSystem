@@ -1,0 +1,42 @@
+﻿@page
+@model ShopManagementSystem.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout_Login.cshtml";
+}
+
+<h1>Login</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LoginM.Username" class="control-label"></label>
+                <input asp-for="LoginM.Username" class="form-control" />
+                <span asp-validation-for="LoginM.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoginM.Password" class="control-label"></label>
+                <input asp-for="LoginM.Password" class="form-control" />
+                <span asp-validation-for="LoginM.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LoginM.IsRemember" /> @Html.DisplayNameFor(model => model.LoginM.IsRemember)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Forgot Username?</a>
+    <a asp-page="Index">Forgot Password?</a> <br>
+    <a asp-page="SignUp">No Account? Sign Up here</a>
+</div>

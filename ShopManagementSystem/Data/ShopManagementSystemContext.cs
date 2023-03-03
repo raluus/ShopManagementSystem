@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Data
         {
         }
         public DbSet<ShopManagementSystem.Models.Product> Product { get; set; } = default!;
-        public DbSet<ShopManagementSystem.Models.Account.SignUpM> User { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.Account.SignUpM> SignUpM { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.Account.LoginM> LoginM { get; set; } = default!;
 
         

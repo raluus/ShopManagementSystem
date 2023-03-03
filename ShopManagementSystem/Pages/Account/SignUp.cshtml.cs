@@ -25,18 +25,18 @@ namespace ShopManagementSystem.Pages.Account
         }
 
         [BindProperty]
-        public new SignUpM User { get; set; } = default!;
+        public new SignUpM SignUpM { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.User == null || User == null)
+          if (!ModelState.IsValid || _context.SignUpM == null || SignUpM == null)
             {
                 return Page();
             }
 
-            _context.User.Add(User);
+            _context.SignUpM.Add(SignUpM);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

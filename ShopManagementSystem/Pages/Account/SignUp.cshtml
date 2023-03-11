@@ -14,36 +14,36 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SignUpM.Username" class="control-label"></label>
-                <input asp-for="SignUpM.Username" class="form-control" placeholder="Enter Username" />
-                <span asp-validation-for="SignUpM.Username" class="text-danger"></span>
+                <label asp-for="User.Username" class="control-label"></label>
+                <input asp-for="User.Username" class="form-control" placeholder="Enter Username" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SignUpM.Email" class="control-label"></label>
-                <input asp-for="SignUpM.Email" class="form-control" placeholder="Enter Email"/>
-                <span asp-validation-for="SignUpM.Email" class="text-danger"></span>
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" placeholder="Enter Email"/>
+                <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SignUpM.PhoneNumber" class="control-label"></label>
-                <input asp-for="SignUpM.PhoneNumber" class="form-control" placeholder="Enter Phone Number"/>
-                <span asp-validation-for="SignUpM.PhoneNumber" class="text-danger"></span>
+                <label asp-for="User.PhoneNumber" class="control-label"></label>
+                <input asp-for="User.PhoneNumber" class="form-control" placeholder="Enter Phone Number"/>
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SignUpM.Password" class="control-label"></label>
-                <input asp-for="SignUpM.Password" class="form-control" placeholder="Enter Password"/>
-                <span asp-validation-for="SignUpM.Password" class="text-danger"></span>
+                <label asp-for="User.Password" class="control-label"></label>
+                <input asp-for="User.Password" class="form-control" placeholder="Enter Password"/>
+                <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SignUpM.ConfirmPassword" class="control-label"></label>
-                <input asp-for="SignUpM.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
-                <span asp-validation-for="SignUpM.ConfirmPassword" class="text-danger"></span>
+                <label asp-for="User.ConfirmPassword" class="control-label"></label>
+                <input asp-for="User.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
+                <span asp-validation-for="User.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Sign Up" class="btn btn-primary" />
             </div>
              <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="SignUpM.IsActive" /> @Html.DisplayNameFor(model => model.SignUpM.IsActive)
+                    <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
                 </label>
             </div>
         </form>

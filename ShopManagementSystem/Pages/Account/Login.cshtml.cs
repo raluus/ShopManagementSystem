@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShopManagementSystem.Data;
-using ShopManagementSystem.Models.Account;
+using ShopManagementSystem.Models;
 
 namespace ShopManagementSystem.Pages.Account
 {
@@ -25,18 +25,18 @@ namespace ShopManagementSystem.Pages.Account
         }
 
         [BindProperty]
-        public LoginM LoginM { get; set; } = default!;
+        public User User { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.LoginM == null || LoginM == null)
+          if (!ModelState.IsValid || _context.User == null || User == null)
             {
                 return Page();
             }
 
-            _context.LoginM.Add(LoginM);
+            _context.User.Add(User);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

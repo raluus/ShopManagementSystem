@@ -5,6 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 builder.Services.AddDbContext<ShopManagementSystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ShopManagementSystemContext") ?? throw new InvalidOperationException("Connection string 'ShopManagementSystemContext' not found.")));
 
@@ -25,6 +32,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapRazorPages();
+
+app.MapDefaultControllerRoute();
 
 app.Run();

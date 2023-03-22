@@ -35,6 +35,8 @@ namespace ShopManagementSystem.Pages.Account
             {
                 return Page();
             }
+            User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);
+            User.ConfirmPassword = BCrypt.Net.BCrypt.HashPassword(User.ConfirmPassword);
 
             _context.User.Add(User);
             await _context.SaveChangesAsync();

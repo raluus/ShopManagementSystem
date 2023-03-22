@@ -1,0 +1,17 @@
+﻿@page
+@model ShopManagementSystem.Pages.WelcomeModel
+@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html> 
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width"/>
+        <title>Welcome</title>
+    </head>
+    <body>
+        Welcome @HttpContext.Session.GetString("username")
+        <br>
+        <a asp-page="index" asp-page-handler="logout">Logout</a>
+    </body>
+</html>

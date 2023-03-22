@@ -14,32 +14,61 @@ namespace ShopManagementSystem.Pages.Account
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
 
+        private string Msg;
+
         public LoginModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet()
-        {
+        { 
             return Page();
         }
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Remove("username");
+            return RedirectToPage("./Index");
+        }
+
+      
 
         [BindProperty]
-        public User User { get; set; } = default!;
+        public new User User { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.User == null || User == null)
-            {
-                return Page();
+          
+
+                var user = Login( User.Username, User.Password);
+                if (user == null)
+                {
+                    Msg = "Invalid account!";
+                    return Page();
+                }
+                else
+                {
+                    HttpContext.Session.SetString("username", user.Username);
+                    return RedirectToPage("../Welcome");
+
+                }
+            
+
+        }
+
+        private User? Login(string username, string password)
+        {
+            var user = _context.User.SingleOrDefault(a => a.Username.Equals(username));
+            if (user != null) {
+
+                if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+                {
+                    return user;
+                }
             }
-
-            _context.User.Add(User);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return null;
         }
     }
 }

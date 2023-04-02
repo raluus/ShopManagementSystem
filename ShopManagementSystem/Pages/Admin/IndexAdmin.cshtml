@@ -1,0 +1,16 @@
+﻿@page
+@model ShopManagementSystem.Pages.Admin.IndexAdminModel
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hello</title>
+</head>
+<body>
+    Hello @HttpContext.Session.GetString("username")
+    <br>
+    <a asp-page="../Index" asp-page-handler="logout">Logout</a>
+</body>

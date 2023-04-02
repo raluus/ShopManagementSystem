@@ -28,7 +28,7 @@ namespace ShopManagementSystem.Pages.Account
         public IActionResult OnGetLogout()
         {
             HttpContext.Session.Remove("username");
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
 
       
@@ -42,19 +42,23 @@ namespace ShopManagementSystem.Pages.Account
         {
           
 
-                var user = Login( User.Username, User.Password);
-                if (user == null)
-                {
-                    Msg = "Invalid account!";
-                    return Page();
-                }
-                else
-                {
-                    HttpContext.Session.SetString("username", user.Username);
-                    return RedirectToPage("../Welcome");
+            var user = Login( User.Username, User.Password);
+            if (user == null)
+            {
+                Msg = "Invalid account!";
+                return Page();
+            }
+            else if (user.Username == "admin" && BCrypt.Net.BCrypt.Verify("1234", user.Password))
+            {
+                HttpContext.Session.SetString("username", user.Username);
+                return RedirectToPage("/Admin/IndexAdmin");
 
-                }
-            
+            }
+            else 
+            {
+                HttpContext.Session.SetString("username", user.Username);
+                return RedirectToPage("../Welcome");
+            }
 
         }
 

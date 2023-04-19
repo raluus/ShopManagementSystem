@@ -15,6 +15,7 @@ namespace ShopManagementSystem.Data
         }
         public DbSet<ShopManagementSystem.Models.Product> Product { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.User> User { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.Cart> Cart { get; set; } = default!;
 
         
     }

@@ -7,13 +7,24 @@ namespace ShopManagementSystem.Models
 {
     public class Cart
     {
+        public Cart()
+        {
+            User = new User();
+            Product = new Product();
+        }
+
         [Key]
         public int Id { get; set; }
 
         public int UserId { get; set; }
 
-        [Display(Name = "Product Name")]
-        public string ProductName { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public int ProductId { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public User User { get; set; }
+
+        public Product Product { get; set; }
+
     }
 }

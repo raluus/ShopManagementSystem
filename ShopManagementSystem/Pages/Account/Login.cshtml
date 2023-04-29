@@ -1,61 +1,46 @@
 ﻿@page
 @model ShopManagementSystem.Pages.Account.LoginModel
-
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Pages/Shared/_Layout_Login.cshtml";
 }
 
-<h1>Login</h1>
 
-<hr />
+<h1>@ViewData["Title"]</h1>
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4>Use a local account to log in.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="User.Username" class="control-label"></label>
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input id="password" type="password" asp-for="User.Password" class="form-control" />
-                <i id="open" class="fa-solid fa-eye" style="float:right; margin-top:-25px; margin-right:6px; cursor:pointer"></i>
-                <i id="closed" class="fa-solid fa-eye-slash" style="float:right; margin-top:-25px; margin-right:6px; display:none; cursor:pointer"></i>
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsRemember" /> @Html.DisplayNameFor(model => model.User.IsRemember)
-                </label>
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
+            <div class="form-group">
+                <a asp-page="./ForgotPassword">Forgot your password?</a>
+            </div>
+            <div class="form-group">
+                <a asp-page="./SignUp" asp-route-returnUrl="@Model.ReturnUrl">Sign Up as a new user</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Forgot Username?</a>
-    <a asp-page="Index">Forgot Password?</a> <br>
-    <a asp-page="SignUp">No Account? Sign Up here</a>
-</div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#open").click(function(){
-            $("#open").hide();
-            $("#closed").show();
-            $("#password").attr("type","text");
-        });
-
-         $("#closed").click(function(){
-            $("#closed").hide();
-            $("#open").show();
-            $("#password").attr("type","password");
-        });
-    });
-</script>

@@ -1,78 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
+        private readonly SignInManager<Users> _signInManager;
 
-        private string Msg;
-
-        public LoginModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
+        public LoginModel(SignInManager<Users> signInManager)
         {
-            _context = context;
+            _signInManager = signInManager;
         }
-
-        public IActionResult OnGet()
-        { 
-            return Page();
-        }
-        public IActionResult OnGetLogout()
-        {
-            HttpContext.Session.Remove("username");
-            return RedirectToPage("../Index");
-        }
-
-      
 
         [BindProperty]
-        public new User User { get; set; } = default!;
-        
+        public InputModel Input { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public string ReturnUrl { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-          
-
-            var user = Login( User.Username, User.Password);
-            if (user == null)
+            if (User.Identity.IsAuthenticated)
             {
-                Msg = "Invalid account!";
-                return Page();
-            }
-            else if (user.Username == "admin" && BCrypt.Net.BCrypt.Verify("1234", user.Password))
-            {
-                HttpContext.Session.SetString("username", user.Username);
-                return RedirectToPage("/Admin/IndexAdmin");
-
-            }
-            else 
-            {
-                HttpContext.Session.SetString("username", user.Username);
-                return RedirectToPage("../Welcome");
+                return RedirectToPage("/Index");
             }
 
+            ReturnUrl = returnUrl;
+
+            return Page();
         }
 
-        private User? Login(string username, string password)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            var user = _context.User.SingleOrDefault(a => a.Username.Equals(username));
-            if (user != null) {
+            returnUrl ??= Url.Content("~/");
 
-                if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
                 {
-                    return user;
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
                 }
             }
-            return null;
+
+            return Page();
+        }
+
+        public class InputModel
+        {
+            [Required]
+            [EmailAddress]
+            public string? Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            public string? Password { get; set; }
+
+            [Display(Name = "Remember me?")]
+            public bool RememberMe { get; set; }
         }
     }
 }
+

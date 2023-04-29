@@ -36,6 +36,7 @@ namespace ShopManagementSystem.Pages.UserCart
                 return NotFound();
             }
             Cart = cart;
+           ViewData["ProductId"] = new SelectList(_context.Product, "Id", "ProductCategory");
             return Page();
         }
 

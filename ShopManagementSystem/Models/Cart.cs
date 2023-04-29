@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace ShopManagementSystem.Models
 {
@@ -9,7 +8,7 @@ namespace ShopManagementSystem.Models
     {
         public Cart()
         {
-            User = new User();
+            User = new Users();
             Product = new Product();
         }
 
@@ -22,7 +21,7 @@ namespace ShopManagementSystem.Models
 
         public decimal Quantity { get; set; }
 
-        public User User { get; set; }
+        public Users User { get; set; }
 
         public Product Product { get; set; }
 

@@ -25,7 +25,8 @@ namespace ShopManagementSystem.Pages.UserCart
         {
             if (_context.Cart != null)
             {
-                Cart = await _context.Cart.ToListAsync();
+                Cart = await _context.Cart
+                .Include(c => c.Product).ToListAsync();
             }
         }
     }

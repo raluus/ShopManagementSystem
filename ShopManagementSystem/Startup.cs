@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data;
 using ShopManagementSystem.Migrations;
@@ -26,7 +27,11 @@ namespace ShopManagementSystem
             services.AddDbContext<ShopManagementSystemContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ShopManagementSystemContext")));
 
-            services.AddIdentity<Users, UsersRole>()
+            services.AddIdentity<Users, UsersRole>(options => 
+
+            options.SignIn.RequireConfirmedEmail = true
+
+            )
            .AddEntityFrameworkStores<ShopManagementSystemContext>()
            .AddDefaultTokenProviders()
            .AddRoles<UsersRole>();
@@ -34,6 +39,8 @@ namespace ShopManagementSystem
             services.AddScoped<RoleManager<UsersRole>>();
             services.AddScoped<UserManager<Users>, UserManager<Users>>();
             services.AddScoped<SignInManager<Users>, SignInManager<Users>>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

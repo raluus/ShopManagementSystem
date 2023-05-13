@@ -1,18 +1,101 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+.products-field {
+    text-decoration: none;
+    color: black !important;
+}
+
+.products li {
+    list-style-type: none;
+    position: center;
+}
+
+nav.main-products-category-navigation {
+    background-color: #f1f1f1;
+}
+
+.main-category-list {
+    position: absolute;
+    /* top: 100%;*/
+    left: 0;
+    display: none;
+    padding-left: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    height: 74.5%;
+    margin-left: 120px;
+    background-color:white;
+}
+
+
+    .main-category-list.open {
+        display: block !important;
+    }
+
+    .main-category-list li {
+        display: block;
+        position: relative;
+    }
+
+        .main-category-list li a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .main-category-list li:hover a {
+            background-color: #f1f1f1; 
+            color: #333; 
+        }
+
+
+
+.subcategory-navigation {
+    position: absolute;
+    /*top: 100%;*/ /* Position the menu below the main navigation */
+    background-color: #fff; /* Customize the background color */
+    margin-left: 350px; /* Customize the spacing */
+    width: 50%;
+    height: 74.5%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow */
+    display: none;
+    
+}
+
+    .subcategory-navigation.open {
+        display: block;
+    }
+
+    .subcategory-list{
+        list-style-type:none;
+    }
+    .subcategory-list a{
+        text-decoration:none;
+        color:black !important;
+    }
+
+.category-container {
+    display: flex;
+}
+
+
+
+

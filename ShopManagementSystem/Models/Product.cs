@@ -13,6 +13,15 @@ namespace ShopManagementSystem.Models
         [StringLength(10)]
         public string ProductCategory{ get; set; } = string.Empty;
 
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
+        [Required]
+        [StringLength(10)]
+        public string ProductSubcategory { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(500)]
+        public string ProductDescription { get; set; } = string.Empty;
+
         [StringLength(60, MinimumLength = 3)]
         [Required]
         public string? ProductName { get; set; }

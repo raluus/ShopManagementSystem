@@ -98,14 +98,13 @@ namespace ShopManagementSystem.Pages.Account
                    
                     if (_userManager.Options.SignIn.RequireConfirmedEmail)
                     {
+                        await _userManager.AddToRoleAsync(user, "User");
+                        _context.SaveChanges();
                         return RedirectToPage("/Account/SignUpThankYou");
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        await _userManager.AddToRoleAsync(user, "User");
-
-                        _context.SaveChanges();
+                       
                         return RedirectToPage("/Index");
                     }
                 }

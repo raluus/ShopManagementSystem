@@ -9,10 +9,12 @@ namespace ShopManagementSystem.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<Users> _userManager;
 
-        public LoginModel(SignInManager<Users> signInManager)
+        public LoginModel(SignInManager<Users> signInManager, UserManager<Users> userManager)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -41,6 +43,12 @@ namespace ShopManagementSystem.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToPage("/Admin/Index"); 
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 else

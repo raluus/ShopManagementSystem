@@ -19,6 +19,11 @@ namespace ShopManagementSystem.Data
         public DbSet<ShopManagementSystem.Models.Product> Product { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.UsersRole> UsersRole { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.Cart> Cart { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.ProductAttributes> ProductAttributes { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.ProductInventory> ProductInventory { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.ProductCategory> ProductCategory { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.ProductSubCategory> ProductSubCategory { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.ProductNestedCategory> ProductNestedCategory { get; set; } = default!;
        
 
     

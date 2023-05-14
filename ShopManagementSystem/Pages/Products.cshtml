@@ -5,13 +5,33 @@
     ViewData["Title"] = "Products";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<div class="page-container">
+@*<div class="header">
+    <p>home sign > @Model.GetCategoryDisplayName(Model.Category)</p>
+</div>*@
 
-<h1>Products</h1>
+<div class="container">
+    <div class="filter-list">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+    </div>
+    <div class="product-display">
+            @foreach (var item in Model.Product)
+            {
+                <div class="item">
+                    @Html.DisplayFor(modelItem => item.ProductImage)
+                    <div class="item-description">
+                        @Html.DisplayFor(modelItem => item.ProductDescription);
+                    </div>
+                    <div class="item-price">
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </div>
+                </div>
+            }
+        </div>
+</div>
+</div>
+
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -56,12 +76,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
         </tr>
 }
     </tbody>
-</table>
+</table>*@

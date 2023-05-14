@@ -11,10 +11,10 @@ namespace ShopManagementSystem
 {
     public class Startup
     {
-        
+
 
         public IConfiguration Configuration { get; }
-      
+
 
 
         public Startup(IConfiguration configuration)
@@ -27,7 +27,7 @@ namespace ShopManagementSystem
             services.AddDbContext<ShopManagementSystemContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ShopManagementSystemContext")));
 
-            services.AddIdentity<Users, UsersRole>(options => 
+            services.AddIdentity<Users, UsersRole>(options =>
 
             options.SignIn.RequireConfirmedEmail = true
 
@@ -59,7 +59,7 @@ namespace ShopManagementSystem
                 app.UseHsts();
             }
 
-           
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

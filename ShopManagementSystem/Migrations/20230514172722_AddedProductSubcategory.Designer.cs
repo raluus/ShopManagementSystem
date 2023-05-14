@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Data;
 namespace ShopManagementSystem.Migrations
 {
     [DbContext(typeof(ShopManagementSystemContext))]
-    partial class ShopManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230514172722_AddedProductSubcategory")]
+    partial class AddedProductSubcategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,6 +206,11 @@ namespace ShopManagementSystem.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<string>("ProductCategory")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<string>("ProductDescription")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -217,6 +225,11 @@ namespace ShopManagementSystem.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("ProductSubcategory")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -331,28 +344,6 @@ namespace ShopManagementSystem.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInventory");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Models.ProductNestedCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NestedCategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductNestedCategory");
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductSubCategory", b =>
@@ -540,17 +531,6 @@ namespace ShopManagementSystem.Migrations
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductInventory", b =>
-                {
-                    b.HasOne("ShopManagementSystem.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Models.ProductNestedCategory", b =>
                 {
                     b.HasOne("ShopManagementSystem.Models.Product", "Product")
                         .WithMany()

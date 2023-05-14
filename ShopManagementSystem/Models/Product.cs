@@ -9,14 +9,6 @@ namespace ShopManagementSystem.Models
         public int Id { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-        [Required]
-        [StringLength(10)]
-        public string ProductCategory{ get; set; } = string.Empty;
-
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-        [Required]
-        [StringLength(10)]
-        public string ProductSubcategory { get; set; } = string.Empty;
 
         [Required]
         [StringLength(500)]

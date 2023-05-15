@@ -35,7 +35,7 @@ namespace ShopManagementSystem.Pages.Products
                           select m;
             if (!string.IsNullOrEmpty(SearchString))
             {
-                products = products.Where(s => s.ProductName.Contains(SearchString));
+                products = products.Where(s => s.Name.Contains(SearchString));
             }
 
             Product = await products.ToListAsync();

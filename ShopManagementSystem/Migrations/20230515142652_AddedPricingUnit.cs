@@ -5,24 +5,18 @@
 namespace ShopManagementSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedDescriptionAndSubcategoryForProduct : Migration
+    public partial class AddedPricingUnit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "Product",
-                type: "nvarchar(500)",
-                maxLength: 500,
-                nullable: false,
-                defaultValue: "");
+            
 
             migrationBuilder.AddColumn<string>(
-                name: "ProductSubcategory",
+                name: "PriceUnit",
                 table: "Product",
-                type: "nvarchar(10)",
-                maxLength: 10,
+                type: "nvarchar(20)",
+                maxLength: 20,
                 nullable: false,
                 defaultValue: "");
         }
@@ -31,12 +25,10 @@ namespace ShopManagementSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Description",
+                name: "PriceUnit",
                 table: "Product");
 
-            migrationBuilder.DropColumn(
-                name: "ProductSubcategory",
-                table: "Product");
+            
         }
     }
 }

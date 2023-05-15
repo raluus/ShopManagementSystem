@@ -12,8 +12,8 @@ using ShopManagementSystem.Data;
 namespace ShopManagementSystem.Migrations
 {
     [DbContext(typeof(ShopManagementSystemContext))]
-    [Migration("20230514171700_AddedProductCategory")]
-    partial class AddedProductCategory
+    [Migration("20230515184306_ChangedUserIdType")]
+    partial class ChangedUserIdType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,17 +180,14 @@ namespace ShopManagementSystem.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cart");
                 });
@@ -203,13 +200,10 @@ namespace ShopManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("ProductCategory")
+                    b.Property<string>("Brand")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -226,10 +220,13 @@ namespace ShopManagementSystem.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<string>("ProductSubcategory")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("PriceUnit")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -344,6 +341,50 @@ namespace ShopManagementSystem.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductInventory");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Models.ProductNestedCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NestedCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductNestedCategory");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Models.ProductSubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductSubCategory");
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.Users", b =>
@@ -479,7 +520,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasOne("ShopManagementSystem.Models.Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
 
@@ -509,6 +550,28 @@ namespace ShopManagementSystem.Migrations
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductInventory", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Models.ProductNestedCategory", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Models.ProductSubCategory", b =>
                 {
                     b.HasOne("ShopManagementSystem.Models.Product", "Product")
                         .WithMany()

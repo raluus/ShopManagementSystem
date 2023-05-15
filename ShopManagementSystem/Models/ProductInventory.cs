@@ -4,10 +4,6 @@ namespace ShopManagementSystem.Models
 {
     public class ProductInventory
     {
-        public ProductInventory()
-        {
-            Product = new Product();
-        }
         public int Id { get; set; }
         public int ProductId { get; set; }
         public decimal Quantity { get; set; }

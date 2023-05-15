@@ -1,21 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShopManagementSystem.Models
 {
     public class Cart
     {
-        public Cart()
-        {
-            User = new Users();
-            Product = new Product();
-        }
 
         [Key]
         public int Id { get; set; }
 
-        public int UserId { get; set; }
+        public string? UserId { get; set; }
 
         public int ProductId { get; set; }
 

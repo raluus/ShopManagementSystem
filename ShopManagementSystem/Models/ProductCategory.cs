@@ -2,10 +2,7 @@
 {
     public class ProductCategory
     {
-        public ProductCategory() { 
-
-            Product = new Product(); 
-        }
+     
         public int Id { get; set; }
         public int ProductId { get; set; }
 

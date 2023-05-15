@@ -2,9 +2,6 @@
 {
     public class ProductAttributes
     {
-        public ProductAttributes() {
-            Product = new Product();
-        }
         public int Id { get; set; }
 
         public int ProductId { get; set; }

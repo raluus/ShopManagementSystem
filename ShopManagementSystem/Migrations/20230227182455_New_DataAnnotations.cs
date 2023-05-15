@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "ProductName",
+                name: "Name",
                 table: "Product",
                 type: "nvarchar(60)",
                 maxLength: 60,
@@ -35,7 +35,7 @@ namespace ShopManagementSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "ProductName",
+                name: "Name",
                 table: "Product",
                 type: "nvarchar(max)",
                 nullable: true,

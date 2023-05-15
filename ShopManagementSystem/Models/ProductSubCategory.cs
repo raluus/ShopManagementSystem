@@ -2,10 +2,6 @@
 {
     public class ProductSubCategory
     {
-        public ProductSubCategory() { 
-
-            Product = new Product();
-        }
         public int Id {get;set;}
 
         public int ProductId { get; set; }

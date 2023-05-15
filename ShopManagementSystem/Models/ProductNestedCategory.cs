@@ -2,10 +2,6 @@
 {
     public class ProductNestedCategory
     {
-        public ProductNestedCategory()
-        {
-            Product= new Product();
-        }
         public int Id { get; set; }
 
         public int ProductId { get; set; }

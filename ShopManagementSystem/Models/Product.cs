@@ -12,18 +12,27 @@ namespace ShopManagementSystem.Models
 
         [Required]
         [StringLength(500)]
-        public string ProductDescription { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? ProductName { get; set; }
+        public string? Name { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? ProductImage { get; set; }
+        public string? Image { get; set; }
+
+        [StringLength(60)]
+        [Required]
+        public string? Brand { get; set; }
+
+        [StringLength(20)]
+        [Required]
+        public string? PriceUnit { get; set; }
 
         [Range(1, 500)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+
     }
 }

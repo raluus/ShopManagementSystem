@@ -1,0 +1,59 @@
+{
+  "mainCategories": [ "Grocery", "Personal Care & Beauty", "Home,Furniture and Appliances", "Sports & Outdoors", "Toys & Video Games", "Electronics", "Baby", "Kids", "Pet Shop", "Garden & Auto", "Books,Music and Movies", "Clothes & Accesories" ],
+  "subcategories": {
+    "Grocery": [ "Fruits", "Vegetables", "Sweets", "Nuts", "Seeds", "Salads", "Herbs", "Dairy Products", "Eggs", "Cereal", "Basic Foodstuffs", "Meat", "Fish", "Deli", "Tobacco", "Water", "Tea", "Coffee", "Wine", "Champagne", "Beer", "Cider", "Hard Liquors", "Non-Alcoholic Drinks" ],
+    "Personal Care & Beauty": [ "SubcategoryA", "SubcategoryB" ],
+    "Home,Furniture and Appliances": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Sports & Outdoors": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Toys & Video Games": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Electronics": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Baby": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Kids": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Pet Shop": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Garden & Auto": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Books,Music and Movies": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ],
+    "Clothes & Accesories": [ "SubcategoryX", "SubcategoryY", "SubcategoryZ" ]
+  },
+  "nestedcategories": {
+    "Fruits": [ "Organic Fruits", "Frozen Fruits", "Fresh Fruits", "Dried Fruits" ],
+    "Vegetables": [ "Organic Vegetables", "Frozen Vegetables", "Fresh Vegetables", "Dried Vegetables" ],
+    "Sweets": [ "Chocolate", "Biscuits", "Wafer Biscuits", "Cookies", "Pastries" ],
+    "Dairy Products": [ "Milk", "Yogurt", "Cheese", "Sour Cream", "Whipped Cream", "Butter", "Margarine" ],
+    "Meat": [ "Chicken Meat", "Pork Meat", "Beef Meat", "Sheep Meat", "Frozen Meat" ],
+    "Fish": [ "Fresh Fish", "Frozen Fish", "Seafood", "Sushi" ],
+    "Deli": [ "Salami", "Ham", "Sausages", "FrankFurter", "Bologna" ],
+    "Tobacco": [ "Cigarettes", "E-cigarettes" ],
+    "Water": [ "Still Water", "Sparkling Water", "Flavored Water" ],
+    "Coffee": [ "Ground Coffee", "Coffee Beans", "Instant Coffee" ],
+    "Wine": [ "Red Wine", "White Wine", "Rosé Wine" ],
+    "Champagne": [ "For Kids" ],
+    "Beer": [ "Bottled Beer", "Canned Beer", "Craft Beer", "Non-alcoholic Beer" ],
+    "Hard Liquors": [ "Whiskey", "Rum", "Vodka", "Tequilla" ],
+    "Non-Alcoholic Drinks": [ "Sparkling Juice", "Still Juice", "Fresh Juice", "Energy Drinks" ],
+    "Basic Foodstuffs": [ "Oil", "Vinegar", "Sugar", "Rice", "Flour", "Cornmeal", "Semolina" ]
+  },
+  "brand": {
+    "Grocery": [
+      "Acme",
+      "Fresh Choice",
+      "Great Lemon",
+      "Stay Healthy",
+      "Happy Harvest",
+      "Green Market",
+      "Pantry",
+      "Nature's Promise",
+      "Whole Foods Market"
+    ]
+  },
+  "priceUnit": {
+    "Grocery": [
+      "Bag",
+      "Box",
+      "Kilogram",
+      "Each"
+    ]
+  }
+}
+
+
+

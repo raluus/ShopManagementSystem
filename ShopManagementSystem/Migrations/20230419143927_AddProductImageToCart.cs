@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Image",
+                name: "ProductImage",
                 table: "Cart",
                 type: "nvarchar(60)",
                 maxLength: 60,
@@ -23,7 +23,7 @@ namespace ShopManagementSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Image",
+                name: "ProductImage",
                 table: "Cart");
         }
     }

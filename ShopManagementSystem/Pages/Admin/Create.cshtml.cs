@@ -31,19 +31,34 @@ namespace ShopManagementSystem.Pages.Products
         [BindProperty]
         public Product Product { get; set; } = default!;
 
+        [BindProperty]
         public ProductCategory ProductCategory { get; set; } = default!;
+
+        [BindProperty]
+        public ProductSubCategory ProductSubCategory { get; set; } = default!;
+
+        [BindProperty]
+        public ProductNestedCategory ProductNestedCategory { get; set; } = default!;
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Product == null || Product == null || _context.ProductCategory == null || ProductCategory == null)
+            if (!ModelState.IsValid || _context.Product == null || Product == null ||   _context.ProductCategory == null || ProductCategory == null ||  _context.ProductSubCategory == null || ProductSubCategory == null ||  _context.ProductNestedCategory == null || ProductNestedCategory == null)
             {
                 return Page();
             }
 
             _context.Product.Add(Product);
+            await _context.SaveChangesAsync();
+
+            ProductCategory.ProductId = Product.Id;
+            ProductSubCategory.ProductId = Product.Id;
+            ProductNestedCategory.ProductId = Product.Id;
+
             _context.ProductCategory.Add(ProductCategory);
+            _context.ProductSubCategory.Add(ProductSubCategory);
+            _context.ProductNestedCategory.Add(ProductNestedCategory);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

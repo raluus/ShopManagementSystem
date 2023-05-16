@@ -8,6 +8,6 @@
 
         public string CategoryName { get; set; } = string.Empty;
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

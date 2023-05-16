@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Migrations
                 table: "Cart");
 
             migrationBuilder.DropColumn(
-                name: "Name",
+                name: "ProductName",
                 table: "Cart");
         }
 
@@ -30,7 +30,7 @@ namespace ShopManagementSystem.Migrations
                 defaultValue: 0m);
 
             migrationBuilder.AddColumn<string>(
-                name: "Name",
+                name: "ProductName",
                 table: "Cart",
                 type: "nvarchar(max)",
                 nullable: false,

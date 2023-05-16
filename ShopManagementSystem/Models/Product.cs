@@ -12,19 +12,19 @@ namespace ShopManagementSystem.Models
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } = string.Empty;
+        public string ProductDescription { get; set; } = string.Empty;
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? Name { get; set; }
+        public string? ProductName { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
-        public string? Image { get; set; }
+        public string? ProductImage { get; set; }
 
         [StringLength(60)]
         [Required]
-        public string? Brand { get; set; }
+        public string? ProductBrand { get; set; }
 
         [StringLength(20)]
         [Required]

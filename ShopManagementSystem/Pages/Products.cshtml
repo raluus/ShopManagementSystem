@@ -18,9 +18,9 @@
             @foreach (var item in Model.Product)
             {
                 <div class="item">
-                    @Html.DisplayFor(modelItem => item.Image)
+                    @Html.DisplayFor(modelItem => item.ProductImage)
                     <div class="item-description">
-                        @Html.DisplayFor(modelItem => item.Description);
+                        @Html.DisplayFor(modelItem => item.ProductDescription);
                     </div>
                     <div class="item-price">
                         @Html.DisplayFor(modelItem => item.Price)

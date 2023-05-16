@@ -14,27 +14,55 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="Product.ProductName" class="control-label">Product Name:</label>
+                <input asp-for="Product.ProductName" id="product-name" />
+                <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+            </div>
             <div class="form-group">
-                <label asp-for="ProductCategory.CategoryName" class="control-label"></label>
-                @*<input asp-for="ProductCategory.CategoryName" class="form-control" />*@
-                <select asp-for="ProductCategory.CategoryName" name="main-category">    
+                <label asp-for="ProductCategory.CategoryName" class="control-label">Main Category:</label>
+                <select asp-for="ProductCategory.CategoryName" id="main-category" >
                 </select>
                 <span asp-validation-for="ProductCategory.CategoryName" class="text-danger"></span>
             </div>
-           @* <div class="form-group">
-                <label asp-for="Product.ProductCategory" class="control-label"></label>
-                <input asp-for="Product.ProductCategory" class="form-control" />
-                <span asp-validation-for="Product.ProductCategory" class="text-danger"></span>
-            </div>*@
+            <div class="form-group">
+                <label asp-for="ProductSubCategory.SubCategoryName" class="control-label">Subcategory:</label>
+                <select asp-for="ProductSubCategory.SubCategoryName" id="subcategory" >
+                </select>
+                <span asp-validation-for="ProductSubCategory.SubCategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category-label" class="control-label">Sub-Subcategory:</label>
+                <select asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category" >
+                </select>
+                <span asp-validation-for="ProductNestedCategory.NestedCategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductBrand" class="control-label">Brand Of Product:</label>
+                <select asp-for="Product.ProductBrand" id="product-brand" >
+                </select>
+                <span asp-validation-for="Product.ProductBrand" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Product.Price" class="control-label"></label>
                 <input asp-for="Product.Price" class="form-control" />
                 <span asp-validation-for="Product.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Product.Image" class="control-label"></label>
-                <input asp-for="Product.Image" class="form-control" type="file" />
-                <span asp-validation-for="Product.Image" class="text-danger"></span>
+                <label asp-for="Product.PriceUnit" class="control-label">Price Unit:</label>
+                <select asp-for="Product.PriceUnit" id="price-unit" >
+                </select>
+                <span asp-validation-for="Product.PriceUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductDescription" class="control-label">Description:</label>
+                <textarea asp-for="Product.ProductDescription" class="form-control" ></textarea>
+                <span asp-validation-for="Product.ProductDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductImage" class="control-label"></label>
+                <input asp-for="Product.ProductImage" class="form-control" type="file" />
+                <span asp-validation-for="Product.ProductImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

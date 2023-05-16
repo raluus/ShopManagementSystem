@@ -35,11 +35,11 @@ namespace ShopManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("NormalizedName")
+                    b.Property<string>("ProductName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -152,13 +152,13 @@ namespace ShopManagementSystem.Migrations
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "ProductName");
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
@@ -186,7 +186,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Cart", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.Product", b =>
@@ -197,26 +197,6 @@ namespace ShopManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
@@ -225,9 +205,29 @@ namespace ShopManagementSystem.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("ProductBrand")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("ProductDescription")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ProductImage")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductAttributes", b =>
@@ -253,7 +253,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductAttributes");
+                    b.ToTable("ProductAttributes", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductCategory", b =>
@@ -275,7 +275,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductCategory");
+                    b.ToTable("ProductCategory", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductInventory", b =>
@@ -337,7 +337,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductInventory");
+                    b.ToTable("ProductInventory", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductNestedCategory", b =>
@@ -359,7 +359,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductNestedCategory");
+                    b.ToTable("ProductNestedCategory", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.ProductSubCategory", b =>
@@ -381,7 +381,7 @@ namespace ShopManagementSystem.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductSubCategory");
+                    b.ToTable("ProductSubCategory", (string)null);
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.Users", b =>

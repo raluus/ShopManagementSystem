@@ -40,6 +40,9 @@ namespace ShopManagementSystem.Pages.Products
         [BindProperty]
         public ProductNestedCategory ProductNestedCategory { get; set; } = default!;
 
+        [BindProperty]
+        public ProductAttributes ProductAttributes { get; set; } = default!;
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -55,6 +58,25 @@ namespace ShopManagementSystem.Pages.Products
             ProductCategory.ProductId = Product.Id;
             ProductSubCategory.ProductId = Product.Id;
             ProductNestedCategory.ProductId = Product.Id;
+
+            if (Request.Form.TryGetValue("attributeKeys", out var attributeKeys) && Request.Form.TryGetValue("attributeValues", out var attributeValues))
+            {
+                for (var i = 0; i < attributeKeys.Count; i++)
+                {
+                    var key = attributeKeys[i];
+                    var value = attributeValues[i];
+
+                    ProductAttributes = new ProductAttributes
+                    {
+                        AttributeValue = value,
+                        AttributeKey = key,
+                        ProductId = Product.Id
+                    };
+                    _context.ProductAttributes.Add(ProductAttributes);
+                    await _context.SaveChangesAsync();
+                    
+                }
+            }
 
             _context.ProductCategory.Add(ProductCategory);
             _context.ProductSubCategory.Add(ProductSubCategory);

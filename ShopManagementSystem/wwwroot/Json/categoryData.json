@@ -52,6 +52,17 @@
       "Kilogram",
       "Each"
     ]
+  },
+
+  "attributes": {
+    "Grocery": [
+      "Country of origin",
+      "Weight",
+      "Recommended Storage Guidelines",
+      "Ingredients",
+      "Nutritional Information",
+      "Packaging Type"
+    ]
   }
 }
 

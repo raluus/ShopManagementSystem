@@ -1,4 +1,0 @@
-{
-  "attributes": [ "Country of origin", "Weight", "Recommended Storage Guidelines", "Ingredients", "Nutritional Information", "Packaging Type" ],
-  "nutritionalInformation": [ "Kcal", "KJ", "Fats", "Saturated Fats", "Carbohydrates", "Sugars", "Salt", "Fiber", "Proteins", "Percentage of Fat" ]
-}

@@ -1,0 +1,4 @@
+{
+  "suppliers": [ "Supplier A", "Supplier B", "Supplier C" ],
+  "locations": ["Warehouse A","Warehouse B","Retail Store"]
+}

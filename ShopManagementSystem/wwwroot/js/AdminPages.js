@@ -1,6 +1,15 @@
 ﻿
 document.addEventListener('DOMContentLoaded', function () {
-    
+
+    function populateOptions(selectElement, options) {
+        selectElement.innerHTML = '';
+        for (let option of options) {
+            const optionElement = document.createElement('option');
+            optionElement.value = option;
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+        }
+    }
     // Fetch the JSON file
     fetch('/Json/categoryData.json')
         .then(response => response.json())
@@ -16,15 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             // Function to populate select element options
-            function populateOptions(selectElement, options) {
-                selectElement.innerHTML = '';
-                for (let option of options) {
-                    const optionElement = document.createElement('option');
-                    optionElement.value = option;
-                    optionElement.textContent = option;
-                    selectElement.appendChild(optionElement);
-                }
-            }
+           
 
             // Function to set the default value of the subcategory select
             function setDefaultSubcategory() {
@@ -268,6 +269,23 @@ document.addEventListener('DOMContentLoaded', function () {
         })
      .catch (error => {
         console.error('Error fetching category data:', error);
-    });
+     });
+
+    fetch('/Json/inventoryData.json')
+        .then(response => response.json())
+        .then(data => {
+
+            const suppliers = data.suppliers;
+            const locations = data.locations;
+            const supplierSelect = document.getElementById('product-supplier');
+            const locationSelect = document.getElementById('product-location');
+
+            populateOptions(supplierSelect, suppliers);
+            populateOptions(locationSelect, locations);
+
+        })
+        .catch(error => {
+            console.error('Error fetching inventory data:', error);
+        });
 
 });

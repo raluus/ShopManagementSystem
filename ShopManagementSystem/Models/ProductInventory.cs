@@ -10,10 +10,6 @@ namespace ShopManagementSystem.Models
 
         public string Location { get; set; } = string.Empty;
         public string BatchNumber { get; set; }= string.Empty;
-        public string SerialNumber { get; set; }= string.Empty;
-        public int ReorderPoint { get; set; }
-        public int SafetyStock { get; set; }
-
         public DateTime LastUpdated { get; set; }
 
         public string Supplier { get; set; } = string.Empty;
@@ -22,10 +18,7 @@ namespace ShopManagementSystem.Models
         public decimal RetailPrice { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int Status { get; set; } 
-
-        public string Notes { get; set; } = string.Empty;
-
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
 
     }

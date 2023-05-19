@@ -64,6 +64,36 @@
                 <input asp-for="Product.ProductImage" class="form-control" type="file" />
                 <span asp-validation-for="Product.ProductImage" class="text-danger"></span>
             </div>
+            <div id="inventory-details">
+                <h3>Inventory</h3>
+                <div class="form-group">
+                    <label asp-for="ProductInventory.Quantity" class="control-label">Quantity:</label>
+                    <input asp-for="ProductInventory.Quantity" class="form-control" />
+                    <span asp-validation-for="ProductInventory.Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductInventory.Location" class="control-label">Location:</label>
+                    <select asp-for="ProductInventory.Location" id="product-location">
+                    </select>
+                    <span asp-validation-for="ProductInventory.Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductInventory.Supplier" class="control-label">Supplier:</label>
+                    <select asp-for="ProductInventory.Supplier" id="product-supplier">
+                     </select>
+                    <span asp-validation-for="ProductInventory.Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductInventory.Cost" class="control-label">Cost(per Product):</label>
+                    <input asp-for="ProductInventory.Cost" class="form-control" />
+                    <span asp-validation-for="ProductInventory.Cost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductInventory.ExpirationDate" class="control-label">Expiration Date(Where it's applicable):</label>
+                    <input asp-for="ProductInventory.ExpirationDate" class="form-control" type="date" />
+                    <span asp-validation-for="ProductInventory.ExpirationDate" class="text-danger"></span>
+                </div>
+            </div>
             <div id="additionalAttributesSection">
                  <h3>Additional Attributes</h3>
                <div id="attributeList">

@@ -91,6 +91,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 populateNestedOptions(selectedSubcategory);
 
                 maxAllowedInputs = attributes[mainCategorySelect.value].length;
+                var addAttriList = document.getElementById("attributeList");
+                while (addAttriList.firstChild) {
+                    addAttriList.removeChild(addAttriList.firstChild);
+                }
+
+                chosenAttributesKeysAndValues.splice(0, chosenAttributesKeysAndValues.length);
+                chosenAttributes.splice(0, chosenAttributes.length);
+                currentGeneratedInputs = 0;
+
 
             });
 

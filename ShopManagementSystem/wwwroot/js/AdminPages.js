@@ -81,9 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
             mainCategorySelect.addEventListener('change', () => {
                 const selectedMainCategory = mainCategorySelect.value;
 
-                // Populate subcategory options based on selected main category
                 const subcategorySelect = document.getElementById('subcategory');
-                const selectedSubcategory = subcategorySelect.value;
+                var selectedSubcategory = subcategorySelect.value;
                 populateOptions(subcategorySelect, subcategories[selectedMainCategory]);
 
                 const brandSelect = document.getElementById('product-brand');
@@ -92,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const priceUnitSelect = document.getElementById('price-unit');
                 populateOptions(priceUnitSelect, priceUnits[selectedMainCategory]);
 
-                // Reset sub-subcategory options
+                selectedSubcategory = subcategorySelect.value;
                 populateNestedOptions(selectedSubcategory);
 
                 maxAllowedInputs = attributes[mainCategorySelect.value].length;
@@ -110,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //additional attri js
 
-    //const nutri = data.nutritionalInformation;
     console.log(maxAllowedInputs);
     var currentGeneratedInputs = 0;
     let chosenAttributes = [];
@@ -145,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function removeInputs(event) {
         var button = event.target; // Get the clicked button
         var inputWrapper = button.parentElement; // Get the parent element containing the inputs
-        var selectElement = inputWrapper.previousElementSibling;
+        var selectElement = inputWrapper.querySelector('select');
         let valueToRemove = selectElement.value;
         chosenAttributesKeysAndValues.splice(chosenAttributesKeysAndValues.indexOf(valueToRemove));
         chosenAttributes.splice(chosenAttributes.indexOf(valueToRemove));

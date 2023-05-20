@@ -1,5 +1,5 @@
 {
-  "mainCategories": [ "Grocery", "Personal Care & Beauty", "Home,Furniture and Appliances", "Sports & Outdoors", "Toys & Video Games", "Electronics", "Baby", "Kids", "Pet Shop", "Garden & Auto", "Books,Music and Movies", "Clothes & Accesories" ],
+  "mainCategories": [ "Grocery", "Personal Care & Beauty", "Home,Furniture and Appliances", "Sports & Outdoors", "Toys & Video Games", "Electronics", "Baby", "Pet Shop", "Garden & Auto", "Books,Music and Movies" ],
   "subcategories": {
     "Grocery": [ "Fruits", "Vegetables", "Sweets", "Nuts", "Seeds", "Salads", "Herbs", "Dairy Products", "Eggs", "Cereal", "Basic Foodstuffs", "Meat", "Fish", "Deli", "Tobacco", "Water", "Tea", "Coffee", "Wine", "Champagne", "Beer", "Cider", "Hard Liquors", "Non-Alcoholic Drinks" ],
     "Personal Care & Beauty": [ "Dental Hygiene", "Perfumes","Hair Care Products","Body Care Products","Natural Cosmetics","Facial Care Products" ],

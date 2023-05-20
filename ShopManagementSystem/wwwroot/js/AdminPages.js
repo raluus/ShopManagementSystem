@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             selectElement.appendChild(optionElement);
         }
     }
-    // Fetch the JSON file
+  
     fetch('/Json/categoryData.json')
         .then(response => response.json())
         .then(data => {
@@ -22,11 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const priceUnits = data.priceUnit;
             const attributes = data.attributes;
             var maxAllowedInputs = 0;
-
-
-            // Function to populate select element options
            
-
             // Function to set the default value of the subcategory select
             function setDefaultSubcategory() {
                 const mainCategorySelect = document.getElementById('main-category');

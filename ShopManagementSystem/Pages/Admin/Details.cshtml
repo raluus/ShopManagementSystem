@@ -12,18 +12,39 @@
     <h4>Product</h4>
     <hr />
     <dl class="row">
-       @* <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Product.ProductCategory)
-        </dt>*@
-       @* <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Product.ProductCategory)
-        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Product.ProductName)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.ProductName)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductCategory.CategoryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductCategory.CategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSubCategory.SubCategoryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSubCategory.SubCategoryName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductNestedCategory.NestedCategoryName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductNestedCategory.NestedCategoryName)
+        </dd>
+         @foreach (var attribute in Model.ProductAttributes)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayFor(modelItem => attribute.AttributeKey)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => attribute.AttributeValue)
+            </dd>
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Product.Price)
         </dt>
@@ -35,6 +56,66 @@
         </dt>
         <dd class="col-sm-10">
             <img src="~/images/@Model.Product?.ProductImage" alt="Product Image" width="150" height="150" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.BatchNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.BatchNumber)
+        </dd>
+        @if (Model.Product.PriceUnit == "Each" || Model.Product.PriceUnit == "Bag" || Model.Product.PriceUnit == "Box")
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductInventory.Quantity) 
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductInventory.Quantity) pieces
+            </dd>
+        }
+        else if (Model.Product.PriceUnit == "Kilogram")
+        {
+                <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductInventory.Quantity) 
+                </dt>
+                <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductInventory.Quantity) Kilograms
+                </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.Location)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.Location)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.Supplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.Supplier)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.Cost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.Cost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.RetailPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.RetailPrice)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.ExpirationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.ExpirationDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductInventory.LastUpdated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductInventory.LastUpdated)
         </dd>
     </dl>
 </div>

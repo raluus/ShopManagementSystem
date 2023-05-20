@@ -22,7 +22,12 @@ namespace ShopManagementSystem.Pages.Products
             _context = context;
         }
 
-      public Product Product { get; set; } = default!; 
+      public Product Product { get; set; } = default!;
+      public ProductCategory ProductCategory { get; set; } = default!; 
+      public ProductSubCategory ProductSubCategory { get; set; } = default!;
+      public ProductNestedCategory ProductNestedCategory { get; set; } = default!;
+      public IList<ProductAttributes> ProductAttributes { get; set; } = default!;
+      public ProductInventory ProductInventory { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +44,26 @@ namespace ShopManagementSystem.Pages.Products
             else 
             {
                 Product = product;
+                var productCategory = await _context.ProductCategory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
+                var productSubCategory = await _context.ProductSubCategory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
+                var productNestedCategory = await _context.ProductNestedCategory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
+                var productInventory = await _context.ProductInventory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
+                if (productCategory == null || productSubCategory == null || productNestedCategory == null || productInventory == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    ProductCategory = productCategory;
+                    ProductSubCategory = productSubCategory;
+                    ProductNestedCategory = productNestedCategory;
+                    ProductInventory = productInventory;
+
+                    ProductAttributes = await _context.ProductAttributes
+                   .Where(pa => pa.ProductId == product.Id)
+                   .ToListAsync();
+                }
+                
             }
             return Page();
         }

@@ -25,6 +25,8 @@ namespace ShopManagementSystem.Pages.Products
 
         public IList<Product> Product { get;set; } = default!;
 
+        public IList<ProductInventory> ProductInventory { get; set; } = default!;
+
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
 
@@ -33,12 +35,14 @@ namespace ShopManagementSystem.Pages.Products
 
             var products = from m in _context.Product
                           select m;
+            var productInventory = from m in _context.ProductInventory select m;
             if (!string.IsNullOrEmpty(SearchString))
             {
                 products = products.Where(s => s.ProductName.Contains(SearchString));
             }
 
             Product = await products.ToListAsync();
+            ProductInventory = await productInventory.ToListAsync();
             //if (_context.Product != null)
             //{
             //    Product = await _context.Product.ToListAsync();

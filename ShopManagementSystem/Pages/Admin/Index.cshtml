@@ -22,29 +22,29 @@
 <table class="table">
     <thead>
         <tr>
-           @* <th>
-                @Html.DisplayNameFor(model => model.Product[0].ProductCategory)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].ProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)
+                @Html.DisplayNameFor(model => model.Product[0].Price) without TVA
             </th>
-            <th></th>
+            <th>
+                Price with TVA
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Product) {
+        var inventoryItem = Model.ProductInventory.FirstOrDefault(i => i.ProductId == item.Id);
         <tr>
-           @* <td>
-                @Html.DisplayFor(modelItem => item.ProductCategory)
-            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
                 @Html.DisplayFor( modelItem => item.Price) RON
+            </td>
+             <td>
+                @Html.DisplayFor( modelItem => inventoryItem.RetailPrice) RON
             </td>
             <td>
                <img src="~/images/@item.ProductImage" alt="Product Image" width="150" height="150"/>

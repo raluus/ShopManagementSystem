@@ -90,7 +90,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ProductInventory.ExpirationDate" class="control-label">Expiration Date(Where it's applicable):</label>
-                    <input asp-for="ProductInventory.ExpirationDate" class="form-control" type="date" />
+                    <input type="checkbox" id="checkboxForExpirationDate" />
+                    <input asp-for="ProductInventory.ExpirationDate" class="form-control" type="date" id="expirationDate-input" />
                     <span asp-validation-for="ProductInventory.ExpirationDate" class="text-danger"></span>
                 </div>
             </div>

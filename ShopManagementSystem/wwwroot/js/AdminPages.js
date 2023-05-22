@@ -10,6 +10,24 @@ document.addEventListener('DOMContentLoaded', function () {
             selectElement.appendChild(optionElement);
         }
     }
+
+    const checkboxForExpirationDate = document.getElementById('checkboxForExpirationDate');
+    checkboxForExpirationDate.addEventListener('change', () => {
+        const expirationDateInput = document.getElementById('expirationDate-input');
+
+        expirationDateInput.disabled = !checkboxForExpirationDate.checked;
+
+        if (!checkboxForExpirationDate.checked) {
+
+            expirationDateInput.value = '0001-01-01 00:00:00';
+            expirationDateInput.type = "hidden";
+        }
+        else {
+            expirationDateInput.type = "date";
+        }
+    });
+        
+   
   
     fetch('/Json/categoryData.json')
         .then(response => response.json())

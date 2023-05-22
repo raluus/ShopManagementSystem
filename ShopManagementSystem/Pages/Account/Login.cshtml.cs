@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShopManagementSystem.Migrations;
 using ShopManagementSystem.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,7 +27,19 @@ namespace ShopManagementSystem.Pages.Account
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToPage("/Index");
+                var user = await _userManager.GetUserAsync(User);
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                if (userRoles.Contains("Admin"))
+                {
+                    // Redirect to admin page
+                    return RedirectToPage("/Admin/Index");
+                }
+                else if (userRoles.Contains("User"))
+                {
+                    // Redirect to user page
+                    return RedirectToPage("/Index");
+                }
             }
 
             ReturnUrl = returnUrl;

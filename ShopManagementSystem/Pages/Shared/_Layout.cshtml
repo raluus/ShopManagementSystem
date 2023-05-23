@@ -34,8 +34,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-page="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                               Account
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/Account/SignUp">Sign Up</a></li>
+                                <li><a class="dropdown-item" asp-page="/Account/Login">Login</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">My Account</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/UserCart/Index">Cart</a>
@@ -48,17 +56,6 @@
                                 </form>
                             </li>
                         }
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-page="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                All
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace ShopManagementSystem.Pages.Products
 {
@@ -18,14 +13,16 @@ namespace ShopManagementSystem.Pages.Products
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
         private DateTime currentDateTime = DateTime.MinValue;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly int status = 1;
         private readonly decimal tva19 = decimal.Round(19m / 100m, 2);
         private readonly decimal tva9 = decimal.Round(9m / 100m, 2);
         private readonly decimal tva5 = decimal.Round(5m / 100m, 2);
 
-        public CreateModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
+        public CreateModel(ShopManagementSystem.Data.ShopManagementSystemContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult OnGet()
@@ -55,7 +52,8 @@ namespace ShopManagementSystem.Pages.Products
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || _context.Product == null || Product == null ||   _context.ProductCategory == null || ProductCategory == null ||  _context.ProductSubCategory == null || ProductSubCategory == null ||  _context.ProductNestedCategory == null || ProductNestedCategory == null)
+          
+            if (!ModelState.IsValid || _context.Product == null || Product == null || _context.ProductCategory == null || ProductCategory == null || _context.ProductSubCategory == null || ProductSubCategory == null || _context.ProductNestedCategory == null || ProductNestedCategory == null)
             {
                 return Page();
             }
@@ -72,6 +70,8 @@ namespace ShopManagementSystem.Pages.Products
             ProductInventory.LastUpdated = currentDateTime;
             ProductInventory.BatchNumber = GenerateBatchNumber();
 
+            
+
             if (Request.Form.TryGetValue("attributeKeys", out var attributeKeys) && Request.Form.TryGetValue("attributeValues", out var attributeValues))
             {
                 for (var i = 0; i < attributeKeys.Count; i++)
@@ -87,7 +87,7 @@ namespace ShopManagementSystem.Pages.Products
                     };
                     _context.ProductAttributes.Add(ProductAttributes);
                     await _context.SaveChangesAsync();
-                    
+
                 }
             }
 
@@ -101,6 +101,11 @@ namespace ShopManagementSystem.Pages.Products
 
             return RedirectToPage("./Index");
         }
+
+     
+
+        
+
         private static string GenerateBatchNumber()
         {
             string prefix = "BT";

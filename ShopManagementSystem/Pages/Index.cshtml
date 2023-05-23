@@ -4,14 +4,69 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec placerat libero. Curabitur eleifend neque nulla, id semper magna volutpat ac. In rutrum dignissim tortor, eget condimentum velit blandit id. Ut vel vulputate magna. Nulla tincidunt mattis massa, ut volutpat dui mollis vel. Mauris facilisis congue nisi nec dignissim. Curabitur et mollis velit. Vestibulum lacinia efficitur risus eu euismod.
+<div>
+   <div id="top-information">
 
-    Cras nec est nec turpis sollicitudin tincidunt at vel turpis. Praesent ante quam, scelerisque ac accumsan sit amet, commodo ut est. Fusce nec nulla ac sapien commodo dapibus vel sit amet nulla. Donec non sapien at tellus semper dapibus in egestas risus. Aenean nec eros mi. Fusce vitae tellus non felis elementum vehicula. Integer sed metus cursus, porta metus quis, tincidunt tellus. Cras sagittis pharetra felis, lobortis vestibulum enim ultrices in. Nunc laoreet pretium euismod. Maecenas quis sollicitudin diam. Vestibulum nunc augue, laoreet eget cursus non, aliquet vitae quam.
+   </div>
+   <div id="popular-products-list">
 
-    Ut rhoncus tortor ipsum, quis euismod velit sollicitudin eu. Vestibulum eu varius mi. Nunc mauris est, sagittis hendrerit nisl sed, feugiat faucibus libero. Integer vitae lobortis justo. Morbi eget sem a purus dignissim convallis. In metus eros, vulputate ut quam eu, ullamcorper ultricies lectus. Sed pretium ipsum sit amet tincidunt viverra. Pellentesque cursus velit vitae imperdiet ullamcorper. Suspendisse sem risus, venenatis eu aliquam a, gravida et est. Cras id accumsan magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae imperdiet nibh. Integer auctor neque efficitur augue interdum, at posuere eros lobortis.
-
-    Nam egestas, libero nec finibus ultricies, tortor sapien vestibulum purus, ac pretium nulla tortor et dui. Maecenas porta, ante eu laoreet venenatis, lorem diam interdum diam, sed mollis magna enim vel odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean diam tortor, feugiat ac ligula eu, posuere hendrerit urna. Mauris aliquet augue nunc, eu ultricies lectus ornare vel. Proin ac metus id justo tincidunt pharetra quis quis nisl. Quisque eros nisi, congue eget sollicitudin vitae, tincidunt a arcu. Mauris egestas ligula nec lectus euismod tempus. Quisque vel enim sagittis, convallis turpis eu, consectetur eros.
-
-    Aliquam ut maximus ligula. Nunc interdum pharetra feugiat. Pellentesque finibus scelerisque ipsum, eget aliquet ante aliquam venenatis. Pellentesque nec condimentum purus. Fusce mattis fermentum tortor vel ullamcorper. Duis vestibulum, libero nec volutpat rhoncus, lectus sapien pulvinar justo, id dictum eros nisi ut purus. Pellentesque nisi nunc, lacinia sed nibh dictum, maximus iaculis felis.
+   </div>
+   <div id="products-list">
+       @foreach(var category in Model.MainCategories)
+        {
+            var productCategories = Model.ProductCategory.Where(i => i.CategoryName == category);   
+            @if (productCategories.Count() > 0)
+            {
+                 var modifiedCategoryName = category.Replace(" ", "-").Replace("&", "").Replace("--", "-").Replace(",", "");
+             <div id="category-@modifiedCategoryName">
+                <div id="name-@modifiedCategoryName">
+                    <p>@category</p>
+                 </div>
+             </div>
+                <div id="container-@modifiedCategoryName">
+                @foreach (var productCategory in productCategories)
+                {
+                    var products = Model.Product.Where(i => i.Id == productCategory.ProductId).ToList();
+                    var productsInventory = Model.ProductInventory.Where(i => i.ProductId == productCategory.ProductId).ToList();
+                        @for(int i = 0; i < products.Count(); i++)
+                        {
+                            <a asp-page="/Index">
+                            <div class="products-allList">
+                                <div class="product-image">
+                                  <img src="~/images/@products[i].ProductImage" alt="Product Image">
+                                </div>
+                                <div class="product-name">
+                                    <p>@products[i].ProductName</p>
+                                </div>
+                                <div class="product-status">
+                                    @switch (productsInventory[i].Status)
+                                     {
+                                      case 1:
+                                         <p>In Stock</p>
+                                        break;
+                                      case 2:
+                                         <p>Out of Stock</p>
+                                       break;
+                                      case 3:
+                                       <p>Out of Stock - Seasonal</p>
+                                          break;
+                                      default:
+                                         <p>Unknown Status</p>
+                                      break;
+                                     }
+                                </div>
+                                <div class="product-price">
+                                   <p>@productsInventory[i].RetailPrice</p>
+                                </div>
+                            </div>
+                            <div class="add-cart">
+                                <a asp-page="">button</a>
+                            </div>
+                            </a>
+                        }
+                    }
+                </div>       
+            }          
+        }
+    </div>
 </div>

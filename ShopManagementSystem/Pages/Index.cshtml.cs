@@ -1,21 +1,31 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace ShopManagementSystem.Pages
 {
-    public class IndexModel : PageModel
+    public partial class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ShopManagementSystemContext _context;
         private readonly UserManager<Users> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public List<string> MainCategories { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, UserManager<Users> userManager)
+        public IndexModel(ShopManagementSystemContext context, UserManager<Users> userManager, IWebHostEnvironment webHostEnvironment)
         {
-            _logger = logger;
+            _context = context;
             _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;   
         }
 
+        public IList<ProductCategory> ProductCategory { get; set; } = default!;
+        public IList<Product> Product { get; set; } = default!;
+        public IList<ProductInventory> ProductInventory { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync()
         {
             if (User.Identity.IsAuthenticated)
@@ -28,7 +38,42 @@ namespace ShopManagementSystem.Pages
                     return RedirectToPage("/Admin/Index");
                 }
             }
+
+            GetJsonData();
+            var products = from m in _context.Product
+                           select m;
+            var productCategory = from m in _context.ProductCategory select m;
+            var productInventory = from m in _context.ProductInventory select m;
+
+            Product = await products.ToListAsync();
+            ProductCategory = await productCategory.ToListAsync();
+            ProductInventory = await productInventory.ToListAsync();
             return Page();
+        }
+
+        private void GetJsonData()
+        {
+            var jsonFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "Json");
+            var jsonFilePath = Path.Combine(jsonFolderPath, "categoryData.json");
+
+            if (System.IO.File.Exists(jsonFilePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(jsonFilePath);
+                var parsedJson = JsonDocument.Parse(jsonData);
+
+                var mainCategoriesArray = parsedJson.RootElement.GetProperty("mainCategories").EnumerateArray();
+
+                MainCategories = new List<string>();
+
+                foreach (var category in mainCategoriesArray)
+                {
+                    MainCategories.Add(category.GetString());
+                }
+            }
+            else
+            {
+                MainCategories = new List<string>();
+            }
         }
     }
 }

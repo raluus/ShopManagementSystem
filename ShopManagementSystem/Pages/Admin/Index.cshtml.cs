@@ -16,9 +16,9 @@ namespace ShopManagementSystem.Pages.Products
     [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
-        private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
+        private readonly ShopManagementSystemContext _context;
 
-        public IndexModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
+        public IndexModel(ShopManagementSystemContext context)
         {
             _context = context;
         }

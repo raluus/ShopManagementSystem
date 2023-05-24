@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
@@ -26,6 +27,8 @@ namespace ShopManagementSystem.Pages
         public IList<ProductCategory> ProductCategory { get; set; } = default!;
         public IList<Product> Product { get; set; } = default!;
         public IList<ProductInventory> ProductInventory { get; set; } = default!;
+
+        public Cart Cart { get; set; }= default!;
         public async Task<IActionResult> OnGetAsync()
         {
             if (User.Identity.IsAuthenticated)
@@ -74,6 +77,72 @@ namespace ShopManagementSystem.Pages
             {
                 MainCategories = new List<string>();
             }
+        }
+
+
+        public async Task<IActionResult> OnPostAddToCart(string productId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var userId = user.Id;
+
+                var existingCart = await _context.Cart
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+                if (existingCart == null)
+                {
+                   
+                    var cart = new Cart
+                    {
+                        UserId = userId,
+                        Products = new List<CartProduct>
+                        {
+                              new CartProduct
+                               {
+                                ProductId = int.Parse(productId),
+                                Quantity = 1
+                               }
+                         }
+                    };
+
+                   
+                    _context.Cart.Add(cart);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    var found = false;
+                    foreach(var product in existingCart.Products)
+                    {
+                        if(product.ProductId == int.Parse(productId))
+                        {
+                            product.Quantity++;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        existingCart.Products.Add(new CartProduct
+                        {
+                            ProductId = int.Parse(productId),
+                            Quantity = 1
+                        });
+
+                    }
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            await OnGetAsync();
+            return Page();
+           
         }
     }
 }

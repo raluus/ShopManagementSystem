@@ -12,13 +12,14 @@ namespace ShopManagementSystem.Models
 
         public string? UserId { get; set; }
 
-        public int ProductId { get; set; }
+        public Users? User { get; set; }
 
-        public decimal Quantity { get; set; }
+        public List<CartProduct> Products { get; set; }
 
-        public Users User { get; set; }
-
-        public Product Product { get; set; }
+        public Cart()
+        {
+            Products = new List<CartProduct>();
+        }
 
     }
 }

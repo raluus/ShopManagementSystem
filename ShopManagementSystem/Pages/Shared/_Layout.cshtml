@@ -42,11 +42,11 @@
                                 <li><a class="dropdown-item" asp-page="/Account/SignUp">Sign Up</a></li>
                                 <li><a class="dropdown-item" asp-page="/Account/Login">Login</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">My Account</a></li>
+                                <li><a class="dropdown-item text-dark" href="#">My Account</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/UserCart/Index">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Carts/UserCart">Cart</a>
                         </li>
                         @if (SignInManager.IsSignedIn(Context.User))
                         {

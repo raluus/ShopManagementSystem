@@ -10,18 +10,110 @@
     <div id="cart-title">
 
     </div>
-    <div id="cart-details">
-        <div id="cart-list">
+        <div id="cart-details">
+            <div id="cart-list">
+                @for (int i = 0; i < Model.Product.Count(); i++)
+                {
+                    <div class="item-product">
+                        <div class="product-label">
+                            <label class="item-label">
+                                Product
+                            </label>
+                        </div>
+                        <div class="item-image">
+                            <img src="~/images/@Model.Product[i].ProductImage">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-title">
+                                <p class="title-pph">
+                                    @Model.Product[i].ProductName
+                                </p>
+                            </div>
+                            <div class="item-status">
+                                <p class="status-pph">
+                                    @(
+                                    Model.ProductInventory[i].Status == 1 ? "In Stock" : "Out of Stock"
+                                    )
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item-price">
+                            <div class="item-label">
+                                <label class="label-name">
+                                    Price
+                                </label>
+                            </div>
+                            <div class="item-price-number">
+                                <span class="price-without-tva" style="display:none">@Model.Product[i].Price</span>
+                                <p class="price-pph">
+                                    @Model.ProductInventory[i].RetailPrice
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <div class="item-label">
+                                <label class="label-name">
+                                    Quantity
+                                </label>
+                            </div>
+                            <div class="item-quantity-container">
+                                <div class="plus-button">
+                                    <button class="plusBtn">
+                                        +
+                                    </button>
+                                </div>
+                                <div class="quantity-display">
+                                    <p class="quantity-pph"> @Model.CartProducts[i].Quantity </p>
+                                </div>
+                                <div class="minus-button">
+                                    <button class="minusBtn">
+                                        -
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="total-price">
+                            <div class="item-label">
+                                <label class="label-name">Total Price</label>
+                            </div>
+                            <p class="total-price-number">
 
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="back-btn">
+                <a asp-page="/Index"> Continue shopping </a>
+            </div>
         </div>
-        <div id="back-btn">
+        <div id="total-details">
+        <form method="post">
+            <div id="total-label">
+                <label class="item-label">
+                    TOTAL
+                </label>
+            </div>
+            <div id="subtotal">
+                <div id="subtotal-label">
+                    <label class="item-label">
+                        Subtotal
+                    </label>
+                </div>
+                <div id="subtotal-number">
+                    <input type="hidden" id="subtotal-value" name="SubtotalValue" />
+                    <input type="hidden" id="tva-value" name="TvaValue" />
+                   <p id="subtotal-display">
 
+                   </p>
+                </div>
+            </div>
+            <input type="hidden" name="finalQuantity" id="final-quantity"/>
+            <div id="done-btn">
+                <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />
+            </div>
+        </form>
         </div>
-    </div>
-    <div id="total-details">
-        <div id="done-btn">
-
-        </div>
-    </div>
-    
 </div>
+
+<script src="~/js/minusPlusQuantity.js" asp-append-version="true"></script>

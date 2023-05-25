@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
@@ -14,57 +15,63 @@ namespace ShopManagementSystem.Pages.Carts
     public class UserCartModel : PageModel
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
+        private readonly UserManager<Users> _userManager;
 
-        public UserCartModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
+        public UserCartModel(ShopManagementSystem.Data.ShopManagementSystemContext context, UserManager<Users> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
+        [BindProperty]
         public Cart Cart { get;set; } = default!;
+        [BindProperty]
+        public List<CartProduct> CartProducts { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty]
+        public List<Product> Product { get; set; } = default!;
+
+        [BindProperty]
+        public List<ProductInventory> ProductInventory { get; set; } = default!;
+
+        private string SubtotalValue { get; set; }
+
+        private string TvaValue { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return NotFound();
-            }
+                var user = await _userManager.GetUserAsync(User);
+                var cart = await _context.Cart
+                .Include(c => c.Products.OrderBy(p => p.ProductId))
+                .FirstOrDefaultAsync(c => c.UserId == user.Id);
+                if (cart == null)
+                {
+                    return Page();
+                }
+                var productIds = cart.Products.Select(item => item.ProductId).ToList();
+                var products = await _context.Product.Where(p => productIds.Contains(p.Id)).OrderBy(p => p.Id).ToListAsync();
+                var productInventory = await _context.ProductInventory.Where(pi => productIds.Contains(pi.ProductId)).OrderBy(pi => pi.ProductId).ToListAsync();
 
-            var cart = await _context.Cart.FirstOrDefaultAsync(m => m.Id == id);
-            if (cart == null)
+
+                Cart = cart;
+                CartProducts = cart.Products;
+                Product = products;
+                ProductInventory = productInventory;
+            }
+            else
             {
                 return Page();
             }
-
-            Cart = cart;
-
             return Page();
         }
 
-        public IActionResult OnPostAddToCart(int productId)
+        public async Task<IActionResult> OnPostAsync()
         {
-            // Logic for adding the product with the specified ID to the cart
-            // You can access the user's cart, update the cart items, etc.
-
-            
-        
-        
-            // Logic to add the product to the user's cart
-            // You can access the logged-in user's ID using User.Identity.Name
-
-            // Example logic to add the product to the cart
-            //var cartItem = new CartItem
-            //{
-            //    ProductId = ProductId,
-            //    Quantity = 1
-            //};
-
-            //// Save the cart item to the database
-            //_context.CartItems.Add(cartItem);
-            //_context.SaveChanges();
-            // Return a JSON response indicating the success status or additional information
-            return new JsonResult(new { success = true });
-            //return RedirectToPage("/Carts/UserCart");
+            SubtotalValue = Request.Form["SubtotalValue"];
+            TvaValue = Request.Form["TvaValue"];
+          
+            return RedirectToPage("/PaymentSuccess");
         }
+
     }
 }

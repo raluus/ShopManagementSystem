@@ -109,6 +109,8 @@
         tvaValueElement.value = tva.toFixed(2);
     }
 
+    
+
     calculateTVA();
 
     var minusButtons = document.querySelectorAll('.minusBtn');

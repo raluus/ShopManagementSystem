@@ -94,12 +94,6 @@ namespace ShopManagementSystem.Pages
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
-                if(productInventory.Quantity - 1 == 0)
-                {
-                    productInventory.Status = 2;
-                }
-                await _context.SaveChangesAsync();
-
                 if (existingCart == null)
                 {
                    

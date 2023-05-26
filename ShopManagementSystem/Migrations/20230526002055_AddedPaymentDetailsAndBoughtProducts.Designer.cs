@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Data;
 namespace ShopManagementSystem.Migrations
 {
     [DbContext(typeof(ShopManagementSystemContext))]
-    partial class ShopManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230526002055_AddedPaymentDetailsAndBoughtProducts")]
+    partial class AddedPaymentDetailsAndBoughtProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,7 +174,10 @@ namespace ShopManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PaymentDetailsId")
+                    b.Property<int?>("PaymentDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -571,9 +577,7 @@ namespace ShopManagementSystem.Migrations
                 {
                     b.HasOne("ShopManagementSystem.Models.PaymentDetails", "PaymentDetails")
                         .WithMany("PayedProducts")
-                        .HasForeignKey("PaymentDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentDetailsId");
 
                     b.HasOne("ShopManagementSystem.Models.Product", "Product")
                         .WithMany()

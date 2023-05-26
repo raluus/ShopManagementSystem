@@ -10,11 +10,23 @@
     <div id="cart-title">
 
     </div>
-        <div id="cart-details">
+    @if (Model.Cart != null)
+    {
+     <div id="cart-details">
             <div id="cart-list">
+
+
                 @for (int i = 0; i < Model.Product.Count(); i++)
                 {
-                    <div class="item-product">
+                    <div class="item-product" data-product-id="@Model.Product[i].Id">
+                        <div class="remove-product">
+                            <form method="post" asp-page="/Carts/UserCart"  asp-page-handler="Remove" class="remove-form">
+
+                                <input type="hidden" name="productId" value="@Model.Product[i].Id" />
+                                <input class="removeBtn" type="submit" value="Remove Product" />
+                             
+                            </form>
+                        </div>
                         <div class="product-label">
                             <label class="item-label">
                                 Product
@@ -32,8 +44,8 @@
                             <div class="item-status">
                                 <p class="status-pph">
                                     @(
-                                    Model.ProductInventory[i].Status == 1 ? "In Stock" : "Out of Stock"
-                                    )
+                                Model.ProductInventory[i].Status == 1 ? "In Stock" : "Out of Stock"
+                            )
                                 </p>
                             </div>
                         </div>
@@ -52,7 +64,7 @@
                         </div>
                         <div class="item-quantity">
                             <div class="item-label">
-                                <label class="label-name">
+                                <label class="label-name" >
                                     Quantity
                                 </label>
                             </div>
@@ -88,7 +100,7 @@
             </div>
         </div>
         <div id="total-details">
-        <form method="post">
+            <form method="post" id="pay-form">
             <div id="total-label">
                 <label class="item-label">
                     TOTAL
@@ -113,7 +125,14 @@
                 <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />
             </div>
         </form>
+        
         </div>
+    }
+    else
+    {
+        <p> No products in your cart!</p>
+    }
+
 </div>
 
 <script src="~/js/minusPlusQuantity.js" asp-append-version="true"></script>

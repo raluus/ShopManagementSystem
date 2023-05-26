@@ -15,6 +15,7 @@ namespace ShopManagementSystem.Pages
         private readonly ShopManagementSystemContext _context;
         private readonly UserManager<Users> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly int maxCartLimit = 10;
         public List<string> MainCategories { get; set; }
 
         public IndexModel(ShopManagementSystemContext context, UserManager<Users> userManager, IWebHostEnvironment webHostEnvironment)
@@ -118,18 +119,28 @@ namespace ShopManagementSystem.Pages
                     {
                         if(product.ProductId == int.Parse(productId))
                         {
-                            product.Quantity++;
-                            found = true;
-                            break;
+                            if (product.Quantity <= maxCartLimit)
+                            {
+                                product.Quantity++;
+                                found = true;
+                                break;
+                            }
                         }
                     }
                     if (!found)
                     {
-                        existingCart.Products.Add(new CartProduct
+                        if (existingCart.Products.Count == maxCartLimit)
                         {
-                            ProductId = int.Parse(productId),
-                            Quantity = 1
-                        });
+
+                        }
+                        else
+                        {
+                            existingCart.Products.Add(new CartProduct
+                            {
+                                ProductId = int.Parse(productId),
+                                Quantity = 1
+                            });
+                        }
 
                     }
                     await _context.SaveChangesAsync();

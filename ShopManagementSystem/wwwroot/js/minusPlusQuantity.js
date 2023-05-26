@@ -202,8 +202,11 @@
             var totalPrice = parseFloat(totalPriceElement.value);
             console.log(totalPrice);
             if (selected == 0) {
+                selected = 2;
+            }
+            else if (selected == 1) {
                 totalPrice -= 15;
-                selected = 1;
+                selected = 2;
             }
             totalPrice += 25;
             console.log(totalPrice);
@@ -222,9 +225,12 @@
             var totalPriceElement = document.getElementById('subtotal-value');
             var totalPrice = parseFloat(totalPriceElement.value);
             console.log(totalPrice);
-            if (selected == 1) {
+            if (selected == 0) {
+                selected = 1;
+            }
+            else if (selected == 2) {
                 totalPrice -= 25;
-                selected = 0;
+                selected = 1;
             }
             totalPrice += 15;
             console.log(totalPrice);
@@ -237,4 +243,5 @@
 
         }
     });
+
 });

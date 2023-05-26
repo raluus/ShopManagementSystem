@@ -88,9 +88,17 @@ namespace ShopManagementSystem.Pages
                 var user = await _userManager.GetUserAsync(User);
                 var userId = user.Id;
 
+                var productInventory = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == int.Parse(productId));
+                
                 var existingCart = await _context.Cart
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
+
+                if(productInventory.Quantity - 1 == 0)
+                {
+                    productInventory.Status = 2;
+                }
+                await _context.SaveChangesAsync();
 
                 if (existingCart == null)
                 {

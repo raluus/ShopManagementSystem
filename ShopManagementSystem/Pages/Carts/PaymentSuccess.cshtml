@@ -1,4 +1,17 @@
 ﻿@page
 @model ShopManagementSystem.Pages.Carts.PaymentSuccessModel
 @{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Success</title>
+</head>
+<body>
+    <h1>Payment Successful</h1>
+    <p>Thank you for your purchase!</p>
+    <p>You will receive the payment details via email.</p>
+    <a asp-page="/Index">Go back to shopping</a>
+</body>
+</html>

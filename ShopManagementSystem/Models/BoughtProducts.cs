@@ -10,6 +10,8 @@
 
         public int Quantity { get; set; }
 
+        public decimal TotalPrice { get; set; }
+
         public PaymentDetails? PaymentDetails { get; set; }
 
         public Product? Product { get; set; }

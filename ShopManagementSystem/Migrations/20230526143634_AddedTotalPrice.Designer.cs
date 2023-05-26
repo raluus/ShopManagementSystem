@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Data;
 namespace ShopManagementSystem.Migrations
 {
     [DbContext(typeof(ShopManagementSystemContext))]
-    partial class ShopManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230526143634_AddedTotalPrice")]
+    partial class AddedTotalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,8 +183,8 @@ namespace ShopManagementSystem.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

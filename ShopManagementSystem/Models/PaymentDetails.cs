@@ -10,6 +10,8 @@
 
         public float TotalPriceWithTva { get; set; }
 
+        public DateTime? DateOfPayment { get; set; }
+
         public Users? User { get; set; }
 
         public List<BoughtProducts> PayedProducts { get; set; }

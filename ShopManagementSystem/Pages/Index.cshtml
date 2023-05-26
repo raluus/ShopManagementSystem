@@ -63,7 +63,7 @@
                                 <div class="add-cart">
                                     <form method="post" asp-page-handler="AddToCart">
                                         <input type="hidden" name="productId" value="@products[i].Id" />
-                                        <button type="submit">Add</button>
+                                    <button type="submit" @(productsInventory[i].Status == 2 ||productsInventory[i].Status == 3 || productsInventory[i].Quantity == 0 ? "disabled" : "")>Add</button>
                                     </form>
                                 </div>
                            

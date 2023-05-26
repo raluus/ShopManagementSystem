@@ -120,7 +120,11 @@
                    </p>
                 </div>
             </div>
-            <input type="hidden" name="finalQuantity" id="final-quantity"/>
+                <input type="radio" name="deliveryMethod" value="courier" id="choice1" required/>
+                <label for="choice1">Livrare prin curierat rapid: 25 RON </label>
+                <br />
+                <input type="radio" name="deliveryMethod" value="postMail" id="choice2" required />
+                <label for="choice2">Posta Romana: 15 RON </label>
             <div id="done-btn">
                 <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />
             </div>

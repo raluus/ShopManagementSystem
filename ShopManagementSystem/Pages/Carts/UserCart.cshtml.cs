@@ -33,8 +33,12 @@ namespace ShopManagementSystem.Pages.Carts
         [BindProperty]
         public List<ProductInventory> ProductInventory { get; set; } = default!;
 
-        private string SubtotalValue = string.Empty;
-        private string TvaValue = string.Empty;
+        [BindProperty]
+        public PaymentDetails PaymentDetails { get; set; } = default!;
+
+        private float SubtotalValue = 0;
+        private float TvaValue = 0;
+        private string paymentMethod = string.Empty;
 
         private Dictionary<int, int> selectedQuantities = new();
         
@@ -103,9 +107,34 @@ namespace ShopManagementSystem.Pages.Carts
             }
 
 
-            SubtotalValue = Request.Form["SubtotalValue"];
-            TvaValue = Request.Form["TvaValue"];
-            
+            SubtotalValue = float.Parse(Request.Form["SubtotalValue"]);
+            TvaValue = float.Parse(Request.Form["TvaValue"]);
+            paymentMethod = Request.Form["deliveryMethod"];
+
+            PaymentDetails.TotalPriceWithoutTva = SubtotalValue - TvaValue;
+            PaymentDetails.TotalPriceWithTva = SubtotalValue;
+            PaymentDetails.UserId = user.Id;
+            if(paymentMethod == "courier")
+              PaymentDetails.TypeOfDelivery = 0;
+            else
+              PaymentDetails.TypeOfDelivery = 1;
+            PaymentDetails.PayedProducts = new List<BoughtProducts>();
+            foreach(var item in selectedQuantities)
+            {
+                PaymentDetails.PayedProducts.Add(new BoughtProducts
+                {
+                    PaymentDetailsId = PaymentDetails.Id,
+                    ProductId = item.Key,
+                    Quantity = item.Value,
+                }) ;
+         
+                await _context.SaveChangesAsync();
+            }
+            _context.PaymentDetails.Add(PaymentDetails);
+            await _context.SaveChangesAsync();
+
+
+
 
             return RedirectToPage("/Carts/PaymentSuccess");
             

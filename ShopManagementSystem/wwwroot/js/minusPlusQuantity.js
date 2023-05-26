@@ -134,6 +134,7 @@
             var basePrice = itemContainer.querySelector('.price-without-tva');
             var currentPrice = itemContainer.querySelector('.price-pph');
             var quantity = itemContainer.querySelector('.quantity-pph');
+         
             tva += (parseFloat(currentPrice.textContent) - parseFloat(basePrice.textContent)) * parseInt(quantity.textContent);
         });
         var tvaValueElement = document.getElementById('tva-value');
@@ -191,5 +192,49 @@
         });
     });
 
-      
+    var checkbox1 = document.getElementById('choice1');
+    var checkbox2 = document.getElementById('choice2');
+    var selected = 0;
+
+    checkbox1.addEventListener('change', function () {
+        if (checkbox1.checked) {
+            var totalPriceElement = document.getElementById('subtotal-value');
+            var totalPrice = parseFloat(totalPriceElement.value);
+            console.log(totalPrice);
+            if (selected == 0) {
+                totalPrice -= 15;
+                selected = 1;
+            }
+            totalPrice += 25;
+            console.log(totalPrice);
+
+            calculateTVA();
+            totalPriceElement.value = totalPrice.toFixed(2);
+
+            var subtotalDisplayElement = document.getElementById('subtotal-display');
+            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "(from which " + tva.toFixed(2) + " TVA)";
+
+        }
+    });
+
+    checkbox2.addEventListener('change', function () {
+        if (checkbox2.checked) {
+            var totalPriceElement = document.getElementById('subtotal-value');
+            var totalPrice = parseFloat(totalPriceElement.value);
+            console.log(totalPrice);
+            if (selected == 1) {
+                totalPrice -= 25;
+                selected = 0;
+            }
+            totalPrice += 15;
+            console.log(totalPrice);
+
+            calculateTVA();
+            totalPriceElement.value = totalPrice.toFixed(2);
+
+            var subtotalDisplayElement = document.getElementById('subtotal-display');
+            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "(from which " + tva.toFixed(2) + " TVA)";
+
+        }
+    });
 });

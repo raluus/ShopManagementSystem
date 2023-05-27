@@ -30,7 +30,7 @@
                     var productsInventory = Model.ProductInventory.Where(i => i.ProductId == productCategory.ProductId).ToList();
                         @for(int i = 0; i < products.Count(); i++)
                         {
-                            <a asp-page="/Index">
+                            <a asp-page="/ProductDetails" asp-route-Id="@products[i].Id">
                             <div class="products-allList">
                                 <div class="product-image">
                                   <img src="~/images/@products[i].ProductImage" alt="Product Image">
@@ -66,7 +66,6 @@
                                     <button type="submit" @(productsInventory[i].Status == 2 ||productsInventory[i].Status == 3 || productsInventory[i].Quantity == 0 ? "disabled" : "")>Add</button>
                                     </form>
                                 </div>
-                           
                         }
                     }
                 </div>       

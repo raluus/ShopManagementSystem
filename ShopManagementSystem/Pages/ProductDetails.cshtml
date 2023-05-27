@@ -1,0 +1,137 @@
+﻿@page
+@model ShopManagementSystem.Pages.ProductDetailsModel
+
+@{
+    ViewData["Title"] = "ProductDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div id="nav-details">
+    <p id="nav-details-value">
+        Home > @Model.ProductCategory.CategoryName > @Model.ProductSubCategory.SubCategoryName > @Model.ProductNestedCategory.NestedCategoryName > @Model.Product.ProductName
+    </p>
+</div>
+
+<h1>ProductDetails</h1>
+
+<div id="details-container">
+    <div id="product-presentation">
+        <div id="product-image">
+            <img src="~/images/@Model.Product.ProductImage" alt="Product Image">
+        </div>
+        <div id="main-details">
+            <div id="product-name">
+                <p id="name-value">
+                    @Model.Product.ProductName
+                </p>
+            </div>
+            <div id="product-status">
+                @switch (Model.ProductInventory.Status)
+                {
+                    case 1:
+                        <p>In Stock</p>
+                        break;
+                    case 2:
+                        <p>Out of Stock</p>
+                        break;
+                    case 3:
+                        <p>Out of Stock - Seasonal</p>
+                        break;
+                    default:
+                        <p>Unknown Status</p>
+                        break;
+                }
+            </div>
+            <div id="product-price">
+                <p id="price-value">
+                    @Model.ProductInventory.RetailPrice
+                </p>
+            </div>
+             <div class="add-cart">
+                   <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <button type="submit" @(Model.ProductInventory.Status == 2 ||Model.ProductInventory.Status == 3 || Model.ProductInventory.Quantity == 0 ? "disabled" : "")>Add</button>
+                  </form>
+             </div>
+        </div>
+    </div>
+    <div id="similar-products">
+        <div id="similar-products-label">
+            <p id="similar-products-value">Similar Products</p>
+        </div>
+        <div id="similar-products-list">
+            @foreach(var item in Model.SimilarProducts)
+            {
+                var itemInventory = Model.SimilarProductsInventory.FirstOrDefault(spi => spi.ProductId == item.Id);
+                <a asp-page="/ProductDetails" asp-route-Id="@item.Id">
+                        <div class="products-allList">
+                            <div class="product-image">
+                                <img src="~/images/@item.ProductImage" alt="Product Image">
+                            </div>
+                            <div class="product-name">
+                                <p>@item.ProductName</p>
+                            </div>
+                            <div class="product-status">
+                            @switch (itemInventory.Status)
+                                {
+                                    case 1:
+                                        <p>In Stock</p>
+                                        break;
+                                    case 2:
+                                        <p>Out of Stock</p>
+                                        break;
+                                    case 3:
+                                        <p>Out of Stock - Seasonal</p>
+                                        break;
+                                    default:
+                                        <p>Unknown Status</p>
+                                        break;
+                                }
+                            </div>
+                            <div class="product-price">
+                            <p>@itemInventory.RetailPrice</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="add-cart">
+                        <form method="post" asp-page-handler="AddToCart">
+                        <input type="hidden" name="productId" value="@itemInventory.Id" />
+                        <button type="submit" @(itemInventory.Status == 2 ||itemInventory.Status == 3 || itemInventory.Quantity == 0 ? "disabled" : "")>Add</button>
+                        </form>
+                    </div>  
+            }
+        </div>
+    </div>
+    <div id="product-general-information">
+        <div id="product-description">
+            <div id="product-description-label">
+                <p id="product-description-label-p">Description</p>
+            
+            </div>
+            <div id="product-description-value">
+                <p id="product-description-value-p">
+                    @Model.Product.ProductDescription
+                </p>
+            </div>
+        </div>
+        @if (Model.ProductAttributes.Count > 0)
+        {
+            <div id="product-additional-information">
+                <div id="product-additional-information-label">
+                    <p id="product-additional-information-label-p">
+                        Additional Information About the Product
+                    </p>
+                </div>
+                @foreach (var item in Model.ProductAttributes)
+                {
+                    <div class="info-row">
+                        <div class="info-label">@item.AttributeKey</div>
+                        <div class="info-value">@item.AttributeValue</div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+</div>  
+

@@ -154,8 +154,10 @@ namespace ShopManagementSystem.Pages
             }
 
             await OnGetAsync();
-            return Page();
-           
+         
+            string previousPageUrl = Request.Headers["Referer"].ToString();
+            return Redirect(previousPageUrl);
+
         }
     }
 }

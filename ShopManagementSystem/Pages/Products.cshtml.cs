@@ -35,6 +35,21 @@ namespace ShopManagementSystem.Pages
 
         public IList<Product> Product { get;set; } = default!;
 
+        [BindProperty]
+        public ProductCategory ProductCategory { get; set; } = default!;
+
+        [BindProperty]
+        public ProductSubCategory ProductSubCategory { get; set; } = default!;
+
+        [BindProperty]
+        public ProductNestedCategory ProductNestedCategory { get; set; } = default!;
+
+        [BindProperty]
+        public ProductInventory ProductInventory { get; set; } = default!;
+
+        [BindProperty]
+        public List<ProductAttributes> ProductAttributes { get; set; } = default!;
+
         public async Task OnGetAsync()
         {
             if (_context.Product != null)

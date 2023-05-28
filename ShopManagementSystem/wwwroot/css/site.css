@@ -33,15 +33,14 @@ nav.main-products-category-navigation {
 
 .main-category-list {
     position: absolute;
-    /* top: 100%;*/
     left: 0;
     display: none;
     padding-left: 0px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    height: 74.5%;
+    width: 900px;
+    height: 500px;
     margin-left: 120px;
-    background-color:white;
+    background-color: white;
 }
 
 
@@ -62,40 +61,36 @@ nav.main-products-category-navigation {
         }
 
         .main-category-list li:hover a {
-            background-color: #f1f1f1; 
-            color: #333; 
+            background-color: #f1f1f1;
+            color: #333;
         }
 
 
 
 .subcategory-navigation {
     position: absolute;
-    /*top: 100%;*/ /* Position the menu below the main navigation */
-    background-color: #fff; /* Customize the background color */
-    margin-left: 350px; /* Customize the spacing */
-    width: 50%;
-    height: 74.5%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow */
+    background-color: #fff; 
+    margin-left: 350px; 
+    width: 900px;
+    height: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     display: none;
-    
+    overflow: auto;
 }
 
     .subcategory-navigation.open {
         display: block;
     }
 
-    .subcategory-list{
-        list-style-type:none;
-    }
-    .subcategory-list a{
-        text-decoration:none;
-        color:black !important;
+.subcategory-list {
+    list-style-type: none;
+}
+
+    .subcategory-list a {
+        text-decoration: none;
+        color: black !important;
     }
 
 .category-container {
     display: flex;
 }
-
-
-
-

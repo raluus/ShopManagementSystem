@@ -11,48 +11,86 @@
         {
             <p>Home</p>
         }
-        else if (Model.Subcategory == "")
+        else if (Model.Subcategory.Count == 0)
         {
             <p>Home > @Model.GetCategoryDisplayName(Model.Category)</p>
         }
-        else if (Model.NestedCategory == "")
+        else if (Model.NestedCategory.Count == 0)
         {
-            <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory)</p>
+            <p>
+                Home > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
+                {
+
+                    @Model.GetSubCategoryDisplayName(subcategory)
+                    if (subcategory != Model.Subcategory.Last())
+                    {
+                        @: >
+                    }
+                }
+            </p>
         }
         else
         {
-            <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory) > @Model.GetNestedCategoryDisplayName(Model.NestedCategory)</p>
+            <p>
+                Home > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
+                {
+
+                    @Model.GetSubCategoryDisplayName(subcategory)
+                    if (subcategory != Model.Subcategory.Last())
+                    {
+                        @: >
+                    }
+                } > @foreach (var nestedCategory in Model.NestedCategory)
+                {
+                    @Model.GetNestedCategoryDisplayName(nestedCategory)
+                    if (nestedCategory != Model.NestedCategory.Last())
+                    {
+                        @: >
+                    }
+                }
+            </p>
         }
     </div>
 
     <div class="container">
-        <div class="filter-list">
-            <input id="chosen-category" type="hidden" value="@Model.GetCategoryDisplayName(Model.Category)"/>
-            @if (Model.Subcategory == "")
-            {
-                <div id="filter-for-subcategory">
-                    <div class="label-for-filter">
-                        <label class="label-for-filter-value">
-                            Subcategories
-                        </label>
+        <form method="post" asp-page="/Products" asp-page-handler="FilterProducts">
+            <div class="filter-list">
+                <input type="submit" value="Apply Filters" />
+                <input id="chosen-category" type="hidden" name="Category" value="@Model.GetCategoryDisplayName(Model.Category)" />
+                @if (Model.Subcategory.Count == 0)
+                {
+                    <div id="filter-for-subcategory">
+                        <div class="label-for-filter">
+                            <label id="label-for-subcategory" class="label-for-filter-value">
+                                Subcategories
+                            </label>
+                        </div>
+                        <div id="subcategory-filters-container" class="hidden">
+                        </div>
                     </div>
+                }
+                else if(Model.NestedCategory.Count == 0)
+                {
+                    @foreach (var subcategory in Model.Subcategory)
+                    {
+                        <input class="chosen-subcategory" type="hidden" name="Subcategory" value="@Model.GetSubCategoryDisplayName(subcategory)" />
+                    }
+                    <div id="filter-for-nestedcategory">
+                        <div class="label-for-filter">
+                            <label id="label-for-nestedcategory" class="label-for-filter-value">
+                                Product Type
+                            </label>
+                        </div>
+                        <div id="nestedcategory-filters-container" class="hidden">
+                        </div>
+                    </div>
+                }
+                <div id="filter-for-brand">
                 </div>
-            }
-            else if (Model.NestedCategory == "")
-            {
-                <div id="filter-for-nestedcategory">
+                <div id="filter-for-price">
                 </div>
-            }
-           <div id="filter-for-brand">
-
-           </div>
-           <div id="filter-for-price">
-
-           </div>
-           <div id="additional-filters">
-
-           </div>
-        </div>
+            </div>
+        </form>
         <div class="product-display">
             @for (int i = 0; i < Model.Product.Count(); i++)
             {

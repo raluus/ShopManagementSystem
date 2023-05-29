@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace ShopManagementSystem.Pages
 {
@@ -16,21 +19,19 @@ namespace ShopManagementSystem.Pages
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
 
-        [BindProperty(SupportsGet = true)]
-        public string Category { get; set; }
+        [BindProperty(SupportsGet = true)] 
+        public string Category { get; set; } = string.Empty;
 
         [BindProperty(SupportsGet = true)]
-        public string Subcategory { get; set; }
+        public List<string> Subcategory { get; set; } = new List<string>();
 
         [BindProperty(SupportsGet = true)]
-        public string NestedCategory { get; set; }
+        public List<string> NestedCategory { get; set; } = new List<string>();
 
         public ProductsModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
         {
             _context = context;
-            Category = "";
-            Subcategory = "";
-            NestedCategory = "";
+            FilteredProducts = new List<Product>();
         }
 
         public List<Product> Product { get;set; } = default!;
@@ -50,55 +51,119 @@ namespace ShopManagementSystem.Pages
         [BindProperty]
         public List<ProductAttributes> ProductAttributes { get; set; } = default!;
 
+        public List<Product> FilteredProducts { get; set; }
+
         public async Task OnGetAsync()
         {
-            Product = new List<Product>();
             var productInventory = from m in _context.ProductInventory
                                    select m;
-            if (_context.Product != null)
+            ProductInventory = await productInventory.ToListAsync();
+            if (FilteredProducts.Count > 0)
             {
-                if(Category != "" && Subcategory == "")
+                Product = FilteredProducts;
+            }
+            else
+            {
+                Product = new List<Product>();
+                if (_context.Product != null)
                 {
-                    Product = await _context.Product
-                   .Join(
-                    _context.ProductCategory.Where(pc => pc.CategoryName == GetCategoryDisplayName(Category)),
-                    p => p.Id,
-                    pc => pc.ProductId,
-                    (p, pc) => p
-                    )
-                    .ToListAsync();
-                }else if(Subcategory != "" && NestedCategory == "")
-                {
-                    Product = await _context.Product
-                   .Join(
-                    _context.ProductSubCategory.Where(pc => pc.SubCategoryName == GetSubCategoryDisplayName(Subcategory)),
-                    p => p.Id,
-                    pc => pc.ProductId,
-                    (p, pc) => p
-                    )
-                    .ToListAsync();
-                }else
-                {
-                    Product = await _context.Product
-                  .Join(
-                   _context.ProductNestedCategory.Where(pc => pc.NestedCategoryName == GetNestedCategoryDisplayName(NestedCategory)),
-                   p => p.Id,
-                   pc => pc.ProductId,
-                   (p, pc) => p
-                   )
-                   .ToListAsync();
+                    if (Category != "" && Subcategory.IsNullOrEmpty())
+                    {
+                        Product = await _context.Product
+                       .Join(
+                        _context.ProductCategory.Where(pc => pc.CategoryName == GetCategoryDisplayName(Category)),
+                        p => p.Id,
+                        pc => pc.ProductId,
+                        (p, pc) => p
+                        )
+                        .ToListAsync();
+                    }
+                    else if (!Subcategory.IsNullOrEmpty() && NestedCategory.IsNullOrEmpty())
+                    {
+                        Product = await _context.Product
+                       .Join(
+                        _context.ProductSubCategory.Where(pc => pc.SubCategoryName == GetSubCategoryDisplayName(Subcategory.FirstOrDefault())),
+                        p => p.Id,
+                        pc => pc.ProductId,
+                        (p, pc) => p
+                        )
+                        .ToListAsync();
+                    }
+                    else
+                    {
+                        Product = await _context.Product
+                      .Join(
+                       _context.ProductNestedCategory.Where(pc => pc.NestedCategoryName == GetNestedCategoryDisplayName(NestedCategory.FirstOrDefault())),
+                       p => p.Id,
+                       pc => pc.ProductId,
+                       (p, pc) => p
+                       )
+                       .ToListAsync();
+                    }
+                    
                 }
-                ProductInventory = await productInventory.ToListAsync();
             }
         }
 
-        public IActionResult OnPostFilterProducts([FromBody] dynamic filters)
+        public async Task<IActionResult> OnPostFilterProductsAsync(List<string> checkboxFiltersForSubcategory,List<string> checkboxFiltersForNestedCategory,List<string> checkboxFiltersForBrand)
         {
-            return new OkResult();
+            checkboxFiltersForSubcategory = Request.Form["subcategoryFilters"].ToList();
+            checkboxFiltersForNestedCategory = Request.Form["nestedCategoryFilters"].ToList();
+            if (checkboxFiltersForSubcategory.Count > 0)
+            {
+                Category = Request.Form["Category"];
+                foreach(var subcategory in checkboxFiltersForSubcategory)
+                {
+                    Subcategory.Add(subcategory);
+                }
+                FilteredProducts = await GetFilteredProductsAsync(checkboxFiltersForSubcategory);
+            }
+            if(checkboxFiltersForNestedCategory.Count > 0)
+            {
+                Category = Request.Form["Category"];
+                FilteredProducts = await GetFilteredProductsAsync(checkboxFiltersForNestedCategory);
+                foreach (var subcategory in Request.Form["Subcategory"])
+                {
+                    Subcategory.Add(subcategory);
+                }
+                foreach(var nestedCategory in checkboxFiltersForNestedCategory)
+                {
+                    NestedCategory.Add(nestedCategory);
+                }
+            }
+            await OnGetAsync();
+            return Page();
 
         }
 
-            public string GetCategoryDisplayName(string categoryName)
+        private async Task<List<Product>> GetFilteredProductsAsync(List<string> checkboxFilters)
+        {
+            var product = from m in _context.Product
+                                   select m;
+            List<Product> filteredProducts = await _context.Product
+                   .Join(
+                    _context.ProductSubCategory.Where(pc => checkboxFilters.Contains(pc.SubCategoryName)),
+                    p => p.Id,
+                    pc => pc.ProductId,
+                    (p, pc) => p
+                    )
+                    .ToListAsync();
+            if (filteredProducts.Count == 0)
+            {
+                Subcategory.Clear();
+                filteredProducts = await _context.Product
+                      .Join(
+                       _context.ProductNestedCategory.Where(pc => checkboxFilters.Contains(pc.NestedCategoryName)),
+                       p => p.Id,
+                       pc => pc.ProductId,
+                       (p, pc) => p
+                       )
+                       .ToListAsync();
+            }
+            return filteredProducts;
+        }
+
+        public string GetCategoryDisplayName(string categoryName)
         {
             switch (categoryName)
             {
@@ -107,7 +172,7 @@ namespace ShopManagementSystem.Pages
                 case "personalCareAndBeauty":
                     return "Personal Care & Beauty";
                 case "homeFurnitureAndAppliances":
-                    return "Home, Furniture and Appliances";
+                    return "Home,Furniture and Appliances";
                 case "sportsAndOutdoors":
                     return "Sports & Outdoors";
                 case "toysAndGames":

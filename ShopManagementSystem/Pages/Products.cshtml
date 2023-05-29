@@ -6,42 +6,96 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <div class="page-container">
-<div class="header">
-    @if(Model.Category == "")
+    <div class="header">
+        @if (Model.Category == "")
         {
             <p>Home</p>
         }
-        else if(Model.Subcategory == "")
+        else if (Model.Subcategory == "")
         {
             <p>Home > @Model.GetCategoryDisplayName(Model.Category)</p>
         }
-        else if(Model.NestedCategory == "")
+        else if (Model.NestedCategory == "")
         {
-             <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory)</p>
+            <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory)</p>
         }
-        else{
-        <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory) > @Model.GetNestedCategoryDisplayName(Model.NestedCategory)</p>
+        else
+        {
+            <p>Home > @Model.GetCategoryDisplayName(Model.Category) > @Model.GetSubCategoryDisplayName(Model.Subcategory) > @Model.GetNestedCategoryDisplayName(Model.NestedCategory)</p>
         }
-</div>
-
-<div class="container">
-    <div class="filter-list">
-
     </div>
-    <div class="product-display">
-            @foreach (var item in Model.Product)
+
+    <div class="container">
+        <div class="filter-list">
+            <input id="chosen-category" type="hidden" value="@Model.GetCategoryDisplayName(Model.Category)"/>
+            @if (Model.Subcategory == "")
             {
-                <div class="item">
-                    @Html.DisplayFor(modelItem => item.ProductImage)
-                    <div class="item-description">
-                        @Html.DisplayFor(modelItem => item.ProductDescription);
-                    </div>
-                    <div class="item-price">
-                        @Html.DisplayFor(modelItem => item.Price)
+                <div id="filter-for-subcategory">
+                    <div class="label-for-filter">
+                        <label class="label-for-filter-value">
+                            Subcategories
+                        </label>
                     </div>
                 </div>
             }
+            else if (Model.NestedCategory == "")
+            {
+                <div id="filter-for-nestedcategory">
+                </div>
+            }
+           <div id="filter-for-brand">
+
+           </div>
+           <div id="filter-for-price">
+
+           </div>
+           <div id="additional-filters">
+
+           </div>
         </div>
-</div>
+        <div class="product-display">
+            @for (int i = 0; i < Model.Product.Count(); i++)
+            {
+                var productInventory = Model.ProductInventory.FirstOrDefault(pi => pi.ProductId == Model.Product[i].Id);
+                <a asp-page="/ProductDetails" asp-route-Id="@Model.Product[i].Id">
+                    <div class="products-allList">
+                        <div class="product-image">
+                            <img src="~/images/@Model.Product[i].ProductImage" alt="Product Image">
+                        </div>
+                        <div class="product-name">
+                            <p>@Model.Product[i].ProductName</p>
+                        </div>
+                        <div class="product-status">
+                            @switch (productInventory.Status)
+                            {
+                                case 1:
+                                    <p>In Stock</p>
+                                    break;
+                                case 2:
+                                    <p>Out of Stock</p>
+                                    break;
+                                case 3:
+                                    <p>Out of Stock - Seasonal</p>
+                                    break;
+                                default:
+                                    <p>Unknown Status</p>
+                                    break;
+                            }
+                        </div>
+                        <div class="product-price">
+                            <p>@productInventory.RetailPrice</p>
+                        </div>
+                    </div>
+                </a>
+                <div class="add-cart">
+                    <form method="post" asp-page-handler="AddToCart">
+                        <input type="hidden" name="productId" value="@productInventory.Id" />
+                        <button type="submit" @(productInventory.Status == 2 ||productInventory.Status == 3 || productInventory.Quantity == 0 ? "disabled" : "")>Add</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
+<script src="~/js/filters.js" asp-append-version="true"></script>

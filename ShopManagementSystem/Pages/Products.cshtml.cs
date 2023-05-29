@@ -33,10 +33,10 @@ namespace ShopManagementSystem.Pages
             NestedCategory = "";
         }
 
-        public IList<Product> Product { get;set; } = default!;
+        public List<Product> Product { get;set; } = default!;
 
         [BindProperty]
-        public ProductCategory ProductCategory { get; set; } = default!;
+        public List<ProductCategory> ProductCategory { get; set; } = default!;
 
         [BindProperty]
         public ProductSubCategory ProductSubCategory { get; set; } = default!;
@@ -45,20 +45,60 @@ namespace ShopManagementSystem.Pages
         public ProductNestedCategory ProductNestedCategory { get; set; } = default!;
 
         [BindProperty]
-        public ProductInventory ProductInventory { get; set; } = default!;
+        public List<ProductInventory> ProductInventory { get; set; } = default!;
 
         [BindProperty]
         public List<ProductAttributes> ProductAttributes { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
+            Product = new List<Product>();
+            var productInventory = from m in _context.ProductInventory
+                                   select m;
             if (_context.Product != null)
             {
-                Product = await _context.Product.ToListAsync();
+                if(Category != "" && Subcategory == "")
+                {
+                    Product = await _context.Product
+                   .Join(
+                    _context.ProductCategory.Where(pc => pc.CategoryName == GetCategoryDisplayName(Category)),
+                    p => p.Id,
+                    pc => pc.ProductId,
+                    (p, pc) => p
+                    )
+                    .ToListAsync();
+                }else if(Subcategory != "" && NestedCategory == "")
+                {
+                    Product = await _context.Product
+                   .Join(
+                    _context.ProductSubCategory.Where(pc => pc.SubCategoryName == GetSubCategoryDisplayName(Subcategory)),
+                    p => p.Id,
+                    pc => pc.ProductId,
+                    (p, pc) => p
+                    )
+                    .ToListAsync();
+                }else
+                {
+                    Product = await _context.Product
+                  .Join(
+                   _context.ProductNestedCategory.Where(pc => pc.NestedCategoryName == GetNestedCategoryDisplayName(NestedCategory)),
+                   p => p.Id,
+                   pc => pc.ProductId,
+                   (p, pc) => p
+                   )
+                   .ToListAsync();
+                }
+                ProductInventory = await productInventory.ToListAsync();
             }
         }
 
-        public string GetCategoryDisplayName(string categoryName)
+        public IActionResult OnPostFilterProducts([FromBody] dynamic filters)
+        {
+            return new OkResult();
+
+        }
+
+            public string GetCategoryDisplayName(string categoryName)
         {
             switch (categoryName)
             {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Data;
 namespace ShopManagementSystem.Migrations
 {
     [DbContext(typeof(ShopManagementSystemContext))]
-    partial class ShopManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230531180227_AddedFieldsToUsersTable")]
+    partial class AddedFieldsToUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -447,35 +450,6 @@ namespace ShopManagementSystem.Migrations
                     b.ToTable("ProductSubCategory");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Models.Reviews", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReviewText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reviews");
-                });
-
             modelBuilder.Entity("ShopManagementSystem.Models.Users", b =>
                 {
                     b.Property<string>("Id")
@@ -723,23 +697,6 @@ namespace ShopManagementSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Models.Reviews", b =>
-                {
-                    b.HasOne("ShopManagementSystem.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShopManagementSystem.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Models.Cart", b =>

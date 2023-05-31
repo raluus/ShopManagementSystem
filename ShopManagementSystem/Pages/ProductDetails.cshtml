@@ -1,5 +1,8 @@
 ﻿@page
+@using ShopManagementSystem.Models;
+@using Microsoft.AspNetCore.Identity;
 @model ShopManagementSystem.Pages.ProductDetailsModel
+@inject UserManager<Users> UserManager
 
 @{
     ViewData["Title"] = "ProductDetails";
@@ -47,12 +50,12 @@
                     @Model.ProductInventory.RetailPrice
                 </p>
             </div>
-             <div class="add-cart">
-                   <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
+            <div class="add-cart">
+                <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
                     <button type="submit" @(Model.ProductInventory.Status == 2 ||Model.ProductInventory.Status == 3 || Model.ProductInventory.Quantity == 0 ? "disabled" : "")>Add</button>
-                  </form>
-             </div>
+                </form>
+            </div>
         </div>
     </div>
     <div id="similar-products">
@@ -60,45 +63,45 @@
             <p id="similar-products-value">Similar Products</p>
         </div>
         <div id="similar-products-list">
-            @foreach(var item in Model.SimilarProducts)
+            @foreach (var item in Model.SimilarProducts)
             {
                 var itemInventory = Model.SimilarProductsInventory.FirstOrDefault(spi => spi.ProductId == item.Id);
                 <a asp-page="/ProductDetails" asp-route-Id="@item.Id">
-                        <div class="products-allList">
-                            <div class="product-image">
-                                <img src="~/images/@item.ProductImage" alt="Product Image">
-                            </div>
-                            <div class="product-name">
-                                <p>@item.ProductName</p>
-                            </div>
-                            <div class="product-status">
-                            @switch (itemInventory.Status)
-                                {
-                                    case 1:
-                                        <p>In Stock</p>
-                                        break;
-                                    case 2:
-                                        <p>Out of Stock</p>
-                                        break;
-                                    case 3:
-                                        <p>Out of Stock - Seasonal</p>
-                                        break;
-                                    default:
-                                        <p>Unknown Status</p>
-                                        break;
-                                }
-                            </div>
-                            <div class="product-price">
-                            <p>@itemInventory.RetailPrice</p>
-                            </div>
+                    <div class="products-allList">
+                        <div class="product-image">
+                            <img src="~/images/@item.ProductImage" alt="Product Image">
                         </div>
-                    </a>
-                    <div class="add-cart">
-                        <form method="post" asp-page-handler="AddToCart">
+                        <div class="product-name">
+                            <p>@item.ProductName</p>
+                        </div>
+                        <div class="product-status">
+                            @switch (itemInventory.Status)
+                            {
+                                case 1:
+                                    <p>In Stock</p>
+                                    break;
+                                case 2:
+                                    <p>Out of Stock</p>
+                                    break;
+                                case 3:
+                                    <p>Out of Stock - Seasonal</p>
+                                    break;
+                                default:
+                                    <p>Unknown Status</p>
+                                    break;
+                            }
+                        </div>
+                        <div class="product-price">
+                            <p>@itemInventory.RetailPrice</p>
+                        </div>
+                    </div>
+                </a>
+                <div class="add-cart">
+                    <form method="post" asp-page-handler="AddToCart">
                         <input type="hidden" name="productId" value="@itemInventory.Id" />
                         <button type="submit" @(itemInventory.Status == 2 ||itemInventory.Status == 3 || itemInventory.Quantity == 0 ? "disabled" : "")>Add</button>
-                        </form>
-                    </div>  
+                    </form>
+                </div>
             }
         </div>
     </div>
@@ -106,7 +109,7 @@
         <div id="product-description">
             <div id="product-description-label">
                 <p id="product-description-label-p">Description</p>
-            
+
             </div>
             <div id="product-description-value">
                 <p id="product-description-value-p">
@@ -133,5 +136,70 @@
         }
     </div>
 
-</div>  
+    <div id="product-reviews">
+        <form method="post" asp-page-handler="AddReview">
+            <div asp-validation-summary="All" class="text-danger" ></div>
+            <input type="hidden"  name="productId" asp-for="Product.Id" />
+
+            <div class="form-group">
+                <label asp-for="Reviews.Rating">Rating:</label>
+                <select asp-for="Reviews.Rating" id="reviews-rating">
+                    <option> 1</option>
+                    <option> 2</option>
+                    <option> 3</option>
+                    <option> 4</option>
+                    <option> 5</option>
+                </select>
+                <span asp-validation-for="Reviews.Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Reviews.ReviewText">Review:</label>
+                <textarea asp-for="Reviews.ReviewText" class="form-control"></textarea>
+                <span asp-validation-for="Reviews.ReviewText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit Review" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div id="reviews-list-container">
+        <div id="label-for-reviews">
+            <label id="label-for-reviews-value">
+                Reviews
+            </label>
+        </div>
+        <div id="reviews-list">
+            @if (Model.ReviewsList.Count == 0)
+            {
+                <div id="no-reviews-msg-container">
+                    <label id="no-reviews-msg-value">
+                        There are no reviews left for this product.
+                    </label>
+                </div>
+            }
+            else
+            {
+                @foreach (var review in Model.ReviewsList)
+                {
+                    var user = await UserManager.FindByIdAsync(review.UserId);
+                    if (user != null)
+                    {
+                        var username = await UserManager.GetUserNameAsync(user);
+                        <span> by @user.UserName</span>
+                        <div id="rating-container">
+                            <label id="rating-value">@review.Rating</label>
+                        </div>
+                        <div id="rating-text-container">
+                            <label id="rating-text-value">@review.ReviewText</label>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+</div>
 

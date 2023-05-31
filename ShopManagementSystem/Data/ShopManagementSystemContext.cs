@@ -27,6 +27,7 @@ namespace ShopManagementSystem.Data
         public DbSet<ShopManagementSystem.Models.ProductNestedCategory> ProductNestedCategory { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.PaymentDetails> PaymentDetails { get; set; } = default!;
         public DbSet<ShopManagementSystem.Models.BoughtProducts> BoughtProducts { get; set; } = default!;
+        public DbSet<ShopManagementSystem.Models.Reviews> Reviews { get; set; } = default!;
        
 
     

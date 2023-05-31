@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
@@ -14,13 +15,20 @@ namespace ShopManagementSystem.Pages
     public class ProductDetailsModel : PageModel
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
+        private readonly UserManager<Users> _userManager;
 
-        public ProductDetailsModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
+        public ProductDetailsModel(ShopManagementSystem.Data.ShopManagementSystemContext context, UserManager<Users> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Product Product { get; set; } = default!;
+
+        [BindProperty]
+        public Reviews Reviews { get; set; } = default!;
+
+        public List<Reviews> ReviewsList { get; set; } = default!;
 
         public List<Product> SimilarProducts { get; set; } = default!;
 
@@ -46,6 +54,7 @@ namespace ShopManagementSystem.Pages
             var productAttributes = await _context.ProductAttributes.Where(pa => pa.ProductId == id).ToListAsync();
             var productSubCategory = await _context.ProductSubCategory.FirstOrDefaultAsync(ps => ps.ProductId == id);
             var productCategory = await _context.ProductCategory.FirstOrDefaultAsync(pc => pc.ProductId== id);
+            var productReviews = await _context.Reviews.Where(pr => pr.ProductId == id).ToListAsync();
             if (product == null || productInventory == null || productNestedCategory == null || productSubCategory == null || productCategory == null)
             {
                 return NotFound();
@@ -58,6 +67,7 @@ namespace ShopManagementSystem.Pages
                 ProductAttributes = productAttributes;
                 ProductCategory = productCategory; 
                 ProductSubCategory = productSubCategory;
+                ReviewsList = productReviews;
             }
             var similarProducts = await _context.Product
             .Join(_context.ProductNestedCategory,
@@ -86,6 +96,24 @@ namespace ShopManagementSystem.Pages
             var allProductInventory = await _context.ProductInventory.ToListAsync();
             SimilarProductsInventory = allProductInventory;
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAddReview()
+        {
+            int productId = int.Parse(Request.Form["productId"]);
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var userId = user.Id;
+                Reviews.UserId = userId;
+                Reviews.ProductId = productId;
+                _context.Reviews.Add(Reviews);
+                await _context.SaveChangesAsync();
+
+            }
+
+            await OnGetAsync(productId);
             return Page();
         }
     }

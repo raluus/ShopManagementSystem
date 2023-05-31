@@ -84,85 +84,92 @@ namespace ShopManagementSystem.Pages.Carts
             var error = 0;
             var productName = "";
             var prodId = 0;
-            foreach (var key in Request.Form.Keys)
+            var user = await _userManager.GetUserAsync(User);
+            if (user.Address == null || user.FirstName == null || user.LastName == null || user.City == null || user.ZipCode == null)
             {
-                if (key.StartsWith("selectedQuantities["))
-                {
-                    int productId = int.Parse(key.Substring(19, key.Length - 20));
-                    int quantity = int.Parse(Request.Form[key]);
-
-                    selectedQuantities.Add(productId, quantity);
-                }
+                return RedirectToPage("/Account/EditUserProfile");
             }
-
-            foreach (var item in selectedQuantities)
+            else
             {
-
-                var productQuantity = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == item.Key);
-                var product = await _context.Product.FirstOrDefaultAsync(p => p.Id ==item.Key);
-                if (productQuantity.Quantity - item.Value < 0)
+                foreach (var key in Request.Form.Keys)
                 {
-                    prodId = item.Key;
-                    productName = product.ProductName;
-                    error = 1;
-                    break;
+                    if (key.StartsWith("selectedQuantities["))
+                    {
+                        int productId = int.Parse(key.Substring(19, key.Length - 20));
+                        int quantity = int.Parse(Request.Form[key]);
+
+                        selectedQuantities.Add(productId, quantity);
+                    }
                 }
-            }
-            if (error == 0)
-            {
+
                 foreach (var item in selectedQuantities)
                 {
 
                     var productQuantity = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == item.Key);
-                    productQuantity.Quantity -= item.Value;
-                    await _context.SaveChangesAsync();
-
-                }
-
-                var user = await _userManager.GetUserAsync(User);
-                var cartItems = await _context.Cart
-                .Where(c => c.UserId == user.Id)
-                .ToListAsync();
-
-                if (cartItems != null && cartItems.Count > 0)
-                {
-                    _context.Cart.RemoveRange(cartItems);
-                    await _context.SaveChangesAsync();
-                }
-
-                await AddPaymentDetails(user);
-
-                await SendEmail(user);
-                return RedirectToPage("/Carts/PaymentSuccess");
-            }
-            else
-            {
-                var productInventory = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == prodId);
-                productInventory.Status = 1;
-                var user = await _userManager.GetUserAsync(User);
-                var cart = await _context.Cart
-               .Include(c => c.Products)
-               .FirstOrDefaultAsync(c => c.UserId == user.Id);
-
-
-                if (cart != null)
-                {
-                    var cartProducts = cart.Products;
-                    var itemToRemove = await _context.CartProduct.FirstOrDefaultAsync(cp => cp.ProductId == prodId && cp.CartId == cart.Id);
-                    if (itemToRemove != null)
+                    var product = await _context.Product.FirstOrDefaultAsync(p => p.Id == item.Key);
+                    if (productQuantity.Quantity - item.Value < 0)
                     {
-                        _context.CartProduct.Remove(itemToRemove);
-                        await _context.SaveChangesAsync();
+                        prodId = item.Key;
+                        productName = product.ProductName;
+                        error = 1;
+                        break;
                     }
-                    if (cartProducts.Count() == 0)
+                }
+                if (error == 0)
+                {
+                    foreach (var item in selectedQuantities)
                     {
-                        _context.Cart.Remove(cart);
+
+                        var productQuantity = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == item.Key);
+                        productQuantity.Quantity -= item.Value;
+                        await _context.SaveChangesAsync();
+
+                    }
+
+
+                    var cartItems = await _context.Cart
+                    .Where(c => c.UserId == user.Id)
+                    .ToListAsync();
+
+                    if (cartItems != null && cartItems.Count > 0)
+                    {
+                        _context.Cart.RemoveRange(cartItems);
                         await _context.SaveChangesAsync();
                     }
 
+                    await AddPaymentDetails(user);
+
+                    await SendEmail(user);
+                    return RedirectToPage("/Carts/PaymentSuccess");
                 }
-                await _context.SaveChangesAsync();
-                return RedirectToPage("/Carts/PaymentError", new { productName = productName });
+                else
+                {
+                    var productInventory = await _context.ProductInventory.FirstOrDefaultAsync(pi => pi.ProductId == prodId);
+                    productInventory.Status = 1;
+                    var cart = await _context.Cart
+                   .Include(c => c.Products)
+                   .FirstOrDefaultAsync(c => c.UserId == user.Id);
+
+
+                    if (cart != null)
+                    {
+                        var cartProducts = cart.Products;
+                        var itemToRemove = await _context.CartProduct.FirstOrDefaultAsync(cp => cp.ProductId == prodId && cp.CartId == cart.Id);
+                        if (itemToRemove != null)
+                        {
+                            _context.CartProduct.Remove(itemToRemove);
+                            await _context.SaveChangesAsync();
+                        }
+                        if (cartProducts.Count() == 0)
+                        {
+                            _context.Cart.Remove(cart);
+                            await _context.SaveChangesAsync();
+                        }
+
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("/Carts/PaymentError", new { productName = productName });
+                }
             }
 
         }
@@ -253,7 +260,7 @@ namespace ShopManagementSystem.Pages.Carts
 
             bodyMessage.AppendLine("</table>");
 
-            // Append the total price and TVA with updated styles
+           
             bodyMessage.AppendLine("<p style='text-align: center; margin-top: 20px;'>");
             bodyMessage.AppendLine("<strong style='font-size: 18px;'>Total Price:</strong><br>");
             bodyMessage.AppendLine("<span style='font-size: 18px; color: #333; font-weight: bold;'>$" + SubtotalValue  + " (includes transport price +$"+ (PaymentDetails.TypeOfDelivery == 0 ? 25 : 15) + ")</span>");
@@ -264,7 +271,7 @@ namespace ShopManagementSystem.Pages.Carts
             bodyMessage.AppendLine("<span style='font-size: 18px; color: #333; font-weight: bold;'>$" + TvaValue + "</span>");
             bodyMessage.AppendLine("</p>");
 
-            // Add estimated arrival message based on delivery type
+           
             if (PaymentDetails.TypeOfDelivery == 0)
             {
                 bodyMessage.AppendLine("<p style='font-size: 16px;'>Your products will arrive shortly via Express Courier.</p>");
@@ -273,6 +280,36 @@ namespace ShopManagementSystem.Pages.Carts
             {
                 bodyMessage.AppendLine("<p style='font-size: 16px;'>Your products will arrive shortly via Post Fairy.</p>");
             }
+
+            bodyMessage.AppendLine("<div style='margin-top: 40px;'>");
+            bodyMessage.AppendLine("<h2 style='color: #333; text-align: center;'>Shipping Address Details</h2>");
+            bodyMessage.AppendLine("<table style='margin: 0 auto;'>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>First Name:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.FirstName}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>Last Name:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.LastName}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>Address:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.Address}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>Zip Code:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.ZipCode}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>City:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.City}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("<tr>");
+            bodyMessage.AppendLine("<td style='padding: 5px; text-align: right; font-weight: bold;'>Phone Number:</td>");
+            bodyMessage.AppendLine($"<td style='padding: 5px;'>{user.PhoneNumber}</td>");
+            bodyMessage.AppendLine("</tr>");
+            bodyMessage.AppendLine("</table>");
+            bodyMessage.AppendLine("</div>");
 
             bodyMessage.AppendLine("<p style='font-size: 16px;'>We appreciate you choosing us and hope you enjoy your purchase.</p>");
             bodyMessage.AppendLine("<p style='font-size: 16px;'>If you have any questions or need further assistance, please feel free to contact us.</p>");

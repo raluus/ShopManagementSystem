@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -109,6 +110,8 @@ namespace ShopManagementSystem.Pages
         {
             checkboxFiltersForSubcategory = Request.Form["subcategoryFilters"].ToList();
             checkboxFiltersForNestedCategory = Request.Form["nestedCategoryFilters"].ToList();
+            checkboxFiltersForBrand = Request.Form["brandFilters"].ToList();
+            bool done = false;
             if (checkboxFiltersForSubcategory.Count > 0)
             {
                 Category = Request.Form["Category"];
@@ -117,6 +120,16 @@ namespace ShopManagementSystem.Pages
                     Subcategory.Add(subcategory);
                 }
                 FilteredProducts = await GetFilteredProductsAsync(checkboxFiltersForSubcategory);
+                if(checkboxFiltersForBrand.Count > 0)
+                {
+                    done = true;
+                    List<Product> filteredProductsBrand = await _context.Product.Where(p => checkboxFiltersForBrand.Contains(p.ProductBrand)).ToListAsync();
+                    if (filteredProductsBrand.Count != 0)
+                    {
+                        FilteredProducts = FilteredProducts
+                        .Where(p => filteredProductsBrand.Contains(p)).ToList();
+                    }
+                }
             }
             if(checkboxFiltersForNestedCategory.Count > 0)
             {
@@ -127,6 +140,29 @@ namespace ShopManagementSystem.Pages
                     Subcategory.Add(subcategory);
                 }
                 foreach(var nestedCategory in checkboxFiltersForNestedCategory)
+                {
+                    NestedCategory.Add(nestedCategory);
+                }
+                if (checkboxFiltersForBrand.Count > 0)
+                {
+                    done = true;
+                    List<Product> filteredProductsBrand = await _context.Product.Where(p => checkboxFiltersForBrand.Contains(p.ProductBrand)).ToListAsync();
+                    if (filteredProductsBrand.Count != 0)
+                    {
+                        FilteredProducts = FilteredProducts
+                        .Where(p => filteredProductsBrand.Contains(p)).ToList();
+                    }
+                }
+            }
+            if (checkboxFiltersForBrand.Count > 0 && !done)
+            {
+                Category = Request.Form["Category"];
+                FilteredProducts = await GetFilteredProductsAsync(checkboxFiltersForBrand);
+                foreach (var subcategory in Request.Form["Subcategory"])
+                {
+                    Subcategory.Add(subcategory);
+                }
+                foreach (var nestedCategory in checkboxFiltersForNestedCategory)
                 {
                     NestedCategory.Add(nestedCategory);
                 }
@@ -146,19 +182,21 @@ namespace ShopManagementSystem.Pages
                     p => p.Id,
                     pc => pc.ProductId,
                     (p, pc) => p
-                    )
-                    .ToListAsync();
+                    ).ToListAsync();
             if (filteredProducts.Count == 0)
             {
                 Subcategory.Clear();
-                filteredProducts = await _context.Product
+                filteredProducts =  await _context.Product
                       .Join(
                        _context.ProductNestedCategory.Where(pc => checkboxFilters.Contains(pc.NestedCategoryName)),
                        p => p.Id,
                        pc => pc.ProductId,
                        (p, pc) => p
-                       )
-                       .ToListAsync();
+                       ).ToListAsync();
+            }
+            if(filteredProducts.Count == 0)
+            {
+                filteredProducts = await _context.Product.Where(p => checkboxFilters.Contains(p.ProductBrand)).ToListAsync();
             }
             return filteredProducts;
         }

@@ -37,9 +37,6 @@ namespace ShopManagementSystem.Pages.Admin
 
             TotalNumberOfPayments = paymentDetailsList.Count;
 
-
-
-
             foreach (var paymentDetails in paymentDetailsList)
             {
                 List<string> transaction = paymentDetails.PayedProducts
@@ -61,10 +58,7 @@ namespace ShopManagementSystem.Pages.Admin
                 confidenceData = apriori.associationRules.Select(rule => rule.Confidence)
             };
 
-
-
-
-            var productsSold = _context.BoughtProducts
+           var productsSold = _context.BoughtProducts
            .GroupBy(bp => bp.ProductId)
            .Select(group => new
            {
@@ -78,6 +72,7 @@ namespace ShopManagementSystem.Pages.Admin
                 .Select(p => new { p.Id, p.ProductName })
                 .ToList();
             var productLabel = productNames.ToDictionary(p => p.Id, p => p.ProductName);
+
             var productChartData = new
             {
                 labels = productsSold.Select(p => productLabel[p.ProductId]),
@@ -88,6 +83,7 @@ namespace ShopManagementSystem.Pages.Admin
             .GroupBy(pd => pd.DateOfPayment.Date)
             .Select(g => new { Date = g.Key, TotalProfit = g.Sum(pd => pd.TotalPriceWithoutTva) })
             .ToList();
+
             var totalSalesChartData = new
             {
                 labels = totalSalesPerDay.Select(p => p.Date.ToString("yyyy-MM-dd")),

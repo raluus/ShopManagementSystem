@@ -99,15 +99,6 @@ namespace ShopManagementSystem.Pages.Products
 
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-
-                // Log or display the error messages
-                foreach (var error in errors)
-                {
-                    // You can log the error or display it to the user
-                    // For example, you can use TempData to store the error message and display it on the redirected page
-                    TempData["ErrorMessage"] = error;
-                }
                 return Page();
             }
 

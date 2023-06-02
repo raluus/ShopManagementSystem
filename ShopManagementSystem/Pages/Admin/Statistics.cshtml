@@ -1,0 +1,23 @@
+﻿@page
+@model ShopManagementSystem.Pages.Admin.StatisticsModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
+
+    var chartData = ViewData["ChartData"];
+}
+<div id="totalNumberOfPay-container">
+    <label id="totalNumberOfPay-value">
+        @Model.TotalNumberOfPayments
+    </label>
+</div>
+
+<canvas id="chart"></canvas>
+
+<div id="chartData" data-chartdata='@Html.Raw(Json.Serialize(chartData))'></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="~/js/chartCreation.js" asp-append-version="true"></script>
+

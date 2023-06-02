@@ -5,6 +5,10 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 
     var chartData = ViewData["ChartData"];
+
+    var productChartData = ViewData["productChartData"];
+
+    var totalSalesChartData = ViewData["totalSalesChartData"];
 }
 <div id="totalNumberOfPay-container">
     <label id="totalNumberOfPay-value">
@@ -15,6 +19,14 @@
 <canvas id="chart"></canvas>
 
 <div id="chartData" data-chartdata='@Html.Raw(Json.Serialize(chartData))'></div>
+
+<canvas id="productChart"></canvas>
+
+<div id="productChartData" data-chartdata='@Html.Raw(Json.Serialize(productChartData))'></div>
+
+<canvas id="totalSalesChart"></canvas>
+
+<div id="totalSalesChartData" data-chartdata='@Html.Raw(Json.Serialize(totalSalesChartData))'></div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

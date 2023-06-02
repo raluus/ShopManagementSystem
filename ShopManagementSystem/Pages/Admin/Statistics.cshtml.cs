@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data;
 using ShopManagementSystem.Models;
@@ -36,6 +37,9 @@ namespace ShopManagementSystem.Pages.Admin
 
             TotalNumberOfPayments = paymentDetailsList.Count;
 
+
+
+
             foreach (var paymentDetails in paymentDetailsList)
             {
                 List<string> transaction = paymentDetails.PayedProducts
@@ -45,9 +49,58 @@ namespace ShopManagementSystem.Pages.Admin
                 transactions.Add(transaction);
             }
 
+
             Apriori apriori = new Apriori(transactions, minSupport, minConfidence);
             apriori.DoApriori();
+            await GetProductNames(apriori);
 
+            var chartData = new
+            {
+                labels = AntecedentProductNames.Zip(ConsequentProductNames, (antecedent, consequent) => $"{antecedent} => {consequent}"),
+                supportData = apriori.associationRules.Select(rule => rule.Support),
+                confidenceData = apriori.associationRules.Select(rule => rule.Confidence)
+            };
+
+
+
+
+            var productsSold = _context.BoughtProducts
+           .GroupBy(bp => bp.ProductId)
+           .Select(group => new
+           {
+               ProductId = group.Key,
+               numberOfProductsSold = group.Sum(bp => bp.Quantity)
+           })
+          .ToList();
+            var productIds = productsSold.Select(p => p.ProductId).ToList();
+            var productNames = _context.Product
+                .Where(p => productIds.Contains(p.Id))
+                .Select(p => new { p.Id, p.ProductName })
+                .ToList();
+            var productLabel = productNames.ToDictionary(p => p.Id, p => p.ProductName);
+            var productChartData = new
+            {
+                labels = productsSold.Select(p => productLabel[p.ProductId]),
+                productData = productsSold.Select(p => p.numberOfProductsSold)
+            };
+
+            var totalSalesPerDay = paymentDetailsList
+            .GroupBy(pd => pd.DateOfPayment.Date)
+            .Select(g => new { Date = g.Key, TotalProfit = g.Sum(pd => pd.TotalPriceWithoutTva) })
+            .ToList();
+            var totalSalesChartData = new
+            {
+                labels = totalSalesPerDay.Select(p => p.Date.ToString("yyyy-MM-dd")),
+                totalSalesData = totalSalesPerDay.Select(p => p.TotalProfit)
+            };
+
+            ViewData["ChartData"] = chartData;
+            ViewData["productChartData"] = productChartData;
+            ViewData["totalSalesChartData"] = totalSalesChartData;
+        }
+
+        private async Task GetProductNames(Apriori apriori)
+        {
             foreach (var rule in apriori.associationRules)
             {
                 var antecedentNames = new List<string>();
@@ -77,15 +130,6 @@ namespace ShopManagementSystem.Pages.Admin
                 AntecedentProductNames.Add(antecedentLabel);
                 ConsequentProductNames.Add(consequentLabel);
             }
-
-            var chartData = new
-            {
-                labels = AntecedentProductNames.Zip(ConsequentProductNames, (antecedent, consequent) => $"{antecedent} => {consequent}"),
-                supportData = apriori.associationRules.Select(rule => rule.Support),
-                confidenceData = apriori.associationRules.Select(rule => rule.Confidence)
-            };
-
-            ViewData["ChartData"] = chartData;
         }
     }
 }

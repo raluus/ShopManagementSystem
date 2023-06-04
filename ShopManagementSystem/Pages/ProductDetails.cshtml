@@ -15,10 +15,13 @@
     </p>
 </div>
 
-<h1>ProductDetails</h1>
+<div class="category-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Product Details</h1>
+</div>
 
 <div id="details-container">
-    <div id="product-presentation">
+    <div id="product-presentation" class="product-presentation-grid">
         <div id="product-image">
             <img src="~/images/@Model.Product.ProductImage" alt="Product Image">
         </div>
@@ -32,42 +35,47 @@
                 @switch (Model.ProductInventory.Status)
                 {
                     case 1:
-                        <p>In Stock</p>
+                        <p id="status-value" >Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
                         break;
                     case 2:
-                        <p>Out of Stock</p>
+                        <p id="status-value">Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
                         break;
                     case 3:
-                        <p>Out of Stock - Seasonal</p>
+                        <p id="status-value">Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
                         break;
                     default:
-                        <p>Unknown Status</p>
+                        <p id="status-value">Status: Unknown Status</p>
                         break;
                 }
             </div>
             <div id="product-price">
+                <span><img class="lemon-icon-image" src="~/images/bestPriceIcon.png" alt="Logo" /></span>
                 <p id="price-value">
-                    @Model.ProductInventory.RetailPrice
+                    $@Model.ProductInventory.RetailPrice
                 </p>
             </div>
-            <div class="add-cart">
-                <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
+            <div class="add-cart product-details-page-add-button">
+                <form method="post" asp-page-handler="AddToCart">
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
-                    <button type="submit" @(Model.ProductInventory.Status == 2 ||Model.ProductInventory.Status == 3 || Model.ProductInventory.Quantity == 0 ? "disabled" : "")>Add</button>
+                    <button type="submit" class="btn btn-success btn-details-page" @(Model.ProductInventory.Status == 2 || Model.ProductInventory.Status == 3 || Model.ProductInventory.Quantity == 0 ? "disabled" : "")>
+                        +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
+                    </button>
                 </form>
             </div>
         </div>
     </div>
     <div id="similar-products">
-        <div id="similar-products-label">
-            <p id="similar-products-value">Similar Products</p>
+        <div id="similar-products-label category-name">
+            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+            <h4 class="hover-effect" id="similar-products-value">Similar Products</h4>
         </div>
-        <div id="similar-products-list">
+        <div id="similar-products-list" class="product-grid">
             @foreach (var item in Model.SimilarProducts)
             {
                 var itemInventory = Model.SimilarProductsInventory.FirstOrDefault(spi => spi.ProductId == item.Id);
-                <a asp-page="/ProductDetails" asp-route-Id="@item.Id">
-                    <div class="products-allList">
+                <div class="product-item">
+                    <a asp-page="/ProductDetails" asp-route-Id="@item.Id">
+
                         <div class="product-image">
                             <img src="~/images/@item.ProductImage" alt="Product Image">
                         </div>
@@ -78,30 +86,36 @@
                             @switch (itemInventory.Status)
                             {
                                 case 1:
-                                    <p>In Stock</p>
+                                    <p>Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
                                     break;
                                 case 2:
-                                    <p>Out of Stock</p>
+                                    <p>Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
                                     break;
                                 case 3:
-                                    <p>Out of Stock - Seasonal</p>
+                                    <p>Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
                                     break;
                                 default:
-                                    <p>Unknown Status</p>
+                                    <p>Status: Unknown Status</p>
                                     break;
                             }
                         </div>
                         <div class="product-price">
                             <p>@itemInventory.RetailPrice</p>
                         </div>
+
+
+                    </a>
+                    <div class="add-cart">
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <button type="submit" class="btn btn-success" @(itemInventory.Status == 2 || itemInventory.Status == 3 || itemInventory.Quantity == 0 ? "disabled" : "")>
+                                +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
+                            </button>
+                        </form>
                     </div>
-                </a>
-                <div class="add-cart">
-                    <form method="post" asp-page-handler="AddToCart">
-                        <input type="hidden" name="productId" value="@itemInventory.Id" />
-                        <button type="submit" @(itemInventory.Status == 2 ||itemInventory.Status == 3 || itemInventory.Quantity == 0 ? "disabled" : "")>Add</button>
-                    </form>
+
                 </div>
+
             }
         </div>
     </div>
@@ -138,8 +152,8 @@
 
     <div id="product-reviews">
         <form method="post" asp-page-handler="AddReview">
-            <div asp-validation-summary="All" class="text-danger" ></div>
-            <input type="hidden"  name="productId" asp-for="Product.Id" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="productId" asp-for="Product.Id" />
 
             <div class="form-group">
                 <label asp-for="Reviews.Rating">Rating:</label>

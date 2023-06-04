@@ -154,7 +154,7 @@
 
         private void GenerateAssociationRule(List<string> subset, string itemset)
         {
-            AssociationRule rule = new AssociationRule()
+            AssociationRule rule = new()
             {
                 Antecedent = subset,
                 Consequent = itemset.Split(',').Except(subset).ToList(),

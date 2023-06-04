@@ -49,7 +49,23 @@ namespace ShopManagementSystem.Pages
             var productCategory = from m in _context.ProductCategory select m;
             var productInventory = from m in _context.ProductInventory select m;
 
-            Product = await products.ToListAsync();
+            var categoryProducts = new List<Product>();
+
+            foreach (var category in MainCategories)
+            {
+                var limitedProducts = await _context.Product
+                   .Join(_context.ProductCategory,
+                    p => p.Id,
+                    pnc => pnc.ProductId,
+                (p, pnc) => new { Product = p, ProductCategory = pnc })
+               .Where(joined => joined.ProductCategory.CategoryName == category)
+               .Select(joined => joined.Product)
+               .Take(6)
+               .ToListAsync();
+                categoryProducts.AddRange(limitedProducts);
+            }
+
+            Product = categoryProducts;
             ProductCategory = await productCategory.ToListAsync();
             ProductInventory = await productInventory.ToListAsync();
             return Page();

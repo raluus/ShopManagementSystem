@@ -2,6 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    
 }
 
 <div>
@@ -52,67 +53,80 @@
    <div id="popular-products-list">
 
    </div>
-   <div id="products-list">
-       @foreach(var category in Model.MainCategories)
+    <div id="products-list">
+        @foreach (var category in Model.MainCategories)
         {
-            var productCategories = Model.ProductCategory.Where(i => i.CategoryName == category);   
+            var productCategories = Model.ProductCategory.Where(i => i.CategoryName == category);
             @if (productCategories.Count() > 0)
             {
-                 var modifiedCategoryName = category.Replace(" ", "-").Replace("&", "").Replace("--", "-").Replace(",", "");
-             <div id="category-@modifiedCategoryName">
-                <div id="name-@modifiedCategoryName">
-                    <p>@category</p>
-                 </div>
-             </div>
-                <div id="container-@modifiedCategoryName">
-                @foreach (var productCategory in productCategories)
-                {
-                    var products = Model.Product.Where(i => i.Id == productCategory.ProductId).ToList();
-                    var productsInventory = Model.ProductInventory.Where(i => i.ProductId == productCategory.ProductId).ToList();
-                        @for(int i = 0; i < products.Count(); i++)
+                var modifiedCategoryName = category.Replace(" ", "-").Replace("&", "").Replace("--", "-").Replace(",", "");
+                <div id="category-@modifiedCategoryName">
+                    <div class="category-name" id="name-@modifiedCategoryName">
+                        <a asp-page="/Products" asp-route-category="@category" style="text-decoration: none; color: black;">
+                            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                            <h4 class="hover-effect">@category</h4>
+                        </a>
+
+                    </div>
+                </div>
+                <div id="container-@modifiedCategoryName" class="product-grid">
+                    @foreach (var productCategory in productCategories)
+                    {
+                        var products = Model.Product.Where(i => i.Id == productCategory.ProductId).ToList();
+                        var productsInventory = Model.ProductInventory.Where(i => i.ProductId == productCategory.ProductId).ToList();
+                        @foreach (var product in products)
                         {
-                            <a asp-page="/ProductDetails" asp-route-Id="@products[i].Id">
-                            <div class="products-allList">
-                                <div class="product-image">
-                                  <img src="~/images/@products[i].ProductImage" alt="Product Image">
+                            var inventory = productsInventory.FirstOrDefault(i => i.ProductId == product.Id);
+                            if (inventory != null)
+                            {
+                                <div class="product-item">
+                                    <a asp-page="/ProductDetails" asp-route-Id="@product.Id">
+                                        <div class="product-allList">
+                                            <div class="product-image">
+                                                <img src="~/images/@product.ProductImage" alt="Product Image">
+                                            </div>
+                                            <div class="product-name">
+                                                <p>@product.ProductName</p>
+                                            </div>
+                                            <div class="product-status">
+                                                @switch (inventory.Status)
+                                                {
+                                                    case 1:
+                                                        <p>Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo"/></p>
+                                                        break;
+                                                    case 2:
+                                                        <p>Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
+                                                        break;
+                                                    case 3:
+                                                        <p>Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
+                                                        break;
+                                                    default:
+                                                        <p>Status: Unknown Status</p>
+                                                        break;
+                                                }
+                                            </div>
+                                            <div class="product-price">
+                                                <p>$@inventory.RetailPrice</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="add-cart">
+                                        <form method="post" asp-page-handler="AddToCart">
+                                            <input type="hidden" name="productId" value="@product.Id" />
+                                            <button type="submit" class="btn btn-success" @(inventory.Status == 2 || inventory.Status == 3 || inventory.Quantity == 0 ? "disabled" : "")>
+                                                +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" /></button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="product-name">
-                                    <p>@products[i].ProductName</p>
-                                </div>
-                                <div class="product-status">
-                                    @switch (productsInventory[i].Status)
-                                     {
-                                      case 1:
-                                         <p>In Stock</p>
-                                        break;
-                                      case 2:
-                                         <p>Out of Stock</p>
-                                       break;
-                                      case 3:
-                                       <p>Out of Stock - Seasonal</p>
-                                          break;
-                                      default:
-                                         <p>Unknown Status</p>
-                                      break;
-                                     }
-                                </div>
-                                <div class="product-price">
-                                   <p>@productsInventory[i].RetailPrice</p>
-                                </div>
-                            </div>
-                            </a>
-                                <div class="add-cart">
-                                    <form method="post" asp-page-handler="AddToCart">
-                                        <input type="hidden" name="productId" value="@products[i].Id" />
-                                    <button type="submit" @(productsInventory[i].Status == 2 ||productsInventory[i].Status == 3 || productsInventory[i].Quantity == 0 ? "disabled" : "")>Add</button>
-                                    </form>
-                                </div>
+                               
+                            }
                         }
                     }
-                </div>       
-            }          
+                </div>
+            }
         }
     </div>
+
 </div>
 
 <script src="~/js/saveScrollPosition.js" asp-append-version="true"></script>

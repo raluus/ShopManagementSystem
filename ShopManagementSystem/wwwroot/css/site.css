@@ -29,6 +29,8 @@ body {
 
 nav.main-products-category-navigation {
     background-color: #f1f1f1;
+    position: relative;
+    z-index: 9999;
 }
 
 .main-category-list {
@@ -93,4 +95,34 @@ nav.main-products-category-navigation {
 
 .category-container {
     display: flex;
+}
+
+.carousel {
+    width: 900px; 
+    height: 390px; 
+    justify-content: center;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    background-color: #ffffe0;
+    border: 3px solid yellow;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.carousel-item {
+    width: 900px;
+    height: 350px;
+    position: relative;
+}
+
+.carousel-button-container {
+    position: absolute;
+    top: 85%;
+    left: 80px;
+    transform: translateY(-50%);
+}
+
+.btn-outline-light {
+    color: black;
 }

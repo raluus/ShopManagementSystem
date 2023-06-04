@@ -29,6 +29,7 @@ body {
 
 nav.main-products-category-navigation {
     background-color: #f1f1f1;
+    margin-top:100px;
     position: relative;
     z-index: 9999;
 }
@@ -125,4 +126,27 @@ nav.main-products-category-navigation {
 
 .btn-outline-light {
     color: black;
+}
+
+.brand-image{
+    width:100px;
+    height:50px;
+}
+
+.products-button {
+    margin-right: 20px; 
+}
+
+.form-control {
+    width: 600px;
+}
+
+.icon-image {
+    width: 21px;
+    height: 21px;
+}
+
+.icon-image-home {
+    width: 30px;
+    height: 30px;
 }

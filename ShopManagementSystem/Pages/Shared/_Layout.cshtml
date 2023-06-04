@@ -17,9 +17,11 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ShopManagementSystem</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img class="brand-image" src="~/images/logo-image.png" alt="Logo" />
+                </a>
                 <div class="products-button">
                     <a class="products-field" href="#">Products</a>
                 </div>
@@ -31,13 +33,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index"> <img class="icon-image-home" src="~/images/homeIcon.png" alt="Logo" /></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" asp-area="" asp-page="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                               Account
+                                <img class="icon-image" src="~/images/accountIcon.png" alt="Logo" />
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-page="/Account/SignUp">Sign Up</a></li>
@@ -47,7 +49,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Carts/UserCart">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Carts/UserCart"> <img class="icon-image" src="~/images/cartIcon.png" alt="Logo" /></a>
                         </li>
                         @if (SignInManager.IsSignedIn(Context.User))
                         {

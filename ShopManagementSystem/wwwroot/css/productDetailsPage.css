@@ -71,3 +71,84 @@
 #similar-products {
     margin-top: 40px;
 }
+
+.info-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: table-row;
+}
+
+.info-cell {
+    display: table-cell;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.info-label {
+    font-weight: bold;
+}
+
+.info-grid {
+    margin-top: 35px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 100px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid black;
+}
+
+.info-labels {
+    font-weight: bold;
+}
+
+#product-reviews {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.btn-info {
+    margin-top: 15px;
+}
+
+.star-icon-image {
+    width: 200px;
+    margin: 10px;
+    margin-left: 50px;
+}
+
+#reviews-list-container {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+#rating-container {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid black;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.lemi-icon-image {
+    width: 100px;
+}
+
+#rating-text-value {
+    margin-left: 50px;
+}
+
+.cane-icon-image {
+    width: 60px;
+}

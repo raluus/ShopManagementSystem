@@ -112,6 +112,10 @@ namespace ShopManagementSystem.Pages
                 await _context.SaveChangesAsync();
 
             }
+            else
+            {
+                return RedirectToPage("/Account/Login");
+            }
 
             await OnGetAsync(productId);
             return Page();

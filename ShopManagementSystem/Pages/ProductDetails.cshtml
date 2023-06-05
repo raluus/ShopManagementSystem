@@ -11,7 +11,7 @@
 
 <div id="nav-details">
     <p id="nav-details-value">
-        Home > @Model.ProductCategory.CategoryName > @Model.ProductSubCategory.SubCategoryName > @Model.ProductNestedCategory.NestedCategoryName > @Model.Product.ProductName
+        <img class="cane-icon-image" src="~/images/lemiWithACane.png" alt="Logo" /> > @Model.ProductCategory.CategoryName > @Model.ProductSubCategory.SubCategoryName > @Model.ProductNestedCategory.NestedCategoryName > @Model.Product.ProductName
     </p>
 </div>
 
@@ -35,7 +35,7 @@
                 @switch (Model.ProductInventory.Status)
                 {
                     case 1:
-                        <p id="status-value" >Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
+                        <p id="status-value">Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
                         break;
                     case 2:
                         <p id="status-value">Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
@@ -55,7 +55,7 @@
                 </p>
             </div>
             <div class="add-cart product-details-page-add-button">
-                <form method="post" asp-page-handler="AddToCart">
+                <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
                     <button type="submit" class="btn btn-success btn-details-page" @(Model.ProductInventory.Status == 2 || Model.ProductInventory.Status == 3 || Model.ProductInventory.Quantity == 0 ? "disabled" : "")>
                         +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
@@ -106,7 +106,7 @@
 
                     </a>
                     <div class="add-cart">
-                        <form method="post" asp-page-handler="AddToCart">
+                        <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
                             <input type="hidden" name="productId" value="@item.Id" />
                             <button type="submit" class="btn btn-success" @(itemInventory.Status == 2 || itemInventory.Status == 3 || itemInventory.Quantity == 0 ? "disabled" : "")>
                                 +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
@@ -120,100 +120,146 @@
         </div>
     </div>
     <div id="product-general-information">
-        <div id="product-description">
-            <div id="product-description-label">
-                <p id="product-description-label-p">Description</p>
-
+        <div class="info-grid">
+            <div class="info-labels">
+                Description:
             </div>
-            <div id="product-description-value">
-                <p id="product-description-value-p">
-                    @Model.Product.ProductDescription
-                </p>
+            <div>
+                @Model.Product.ProductDescription
             </div>
         </div>
-        @if (Model.ProductAttributes.Count > 0)
-        {
-            <div id="product-additional-information">
-                <div id="product-additional-information-label">
-                    <p id="product-additional-information-label-p">
-                        Additional Information About the Product
-                    </p>
-                </div>
+    </div>
+    @if (Model.ProductAttributes.Count > 0)
+    {
+        <div id="product-additional-information">
+            <div id="product-additional-information-label category-name">
+                <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                <h4 class="hover-effect" id="product-additional-information-label-p">
+                    Additional Information About the Product
+                </h4>
+            </div>
+            <div class="info-table">
                 @foreach (var item in Model.ProductAttributes)
                 {
                     <div class="info-row">
-                        <div class="info-label">@item.AttributeKey</div>
-                        <div class="info-value">@item.AttributeValue</div>
+                        <div class="info-cell info-label">@item.AttributeKey</div>
+                        <div class="info-cell info-value">@item.AttributeValue</div>
                     </div>
                 }
             </div>
-        }
-    </div>
-
-    <div id="product-reviews">
-        <form method="post" asp-page-handler="AddReview">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" name="productId" asp-for="Product.Id" />
-
-            <div class="form-group">
-                <label asp-for="Reviews.Rating">Rating:</label>
-                <select asp-for="Reviews.Rating" id="reviews-rating">
-                    <option> 1</option>
-                    <option> 2</option>
-                    <option> 3</option>
-                    <option> 4</option>
-                    <option> 5</option>
-                </select>
-                <span asp-validation-for="Reviews.Rating" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Reviews.ReviewText">Review:</label>
-                <textarea asp-for="Reviews.ReviewText" class="form-control"></textarea>
-                <span asp-validation-for="Reviews.ReviewText" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Submit Review" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-
-    <div id="reviews-list-container">
-        <div id="label-for-reviews">
-            <label id="label-for-reviews-value">
-                Reviews
-            </label>
         </div>
-        <div id="reviews-list">
-            @if (Model.ReviewsList.Count == 0)
+    }
+</div>
+
+<div id="product-reviews">
+    <div id="category-name">
+        <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+        <h4 class="hover-effect">
+            Leave a rating for this product!
+        </h4>
+    </div>
+    <form method="post" asp-page-handler="AddReview">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input type="hidden" name="productId" asp-for="Product.Id" />
+
+        <div class="form-group form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="Reviews.Rating" id="reviews-rating">
+                <option value="1"> 1 star</option>
+                <option value="2"> 2 stars</option>
+                <option value="3"> 3 stars</option>
+                <option value="4"> 4 stars</option>
+                <option value="5"> 5 stars</option>
+            </select>
+            <label for="floatingSelect">Choose a star rating!</label>
+            <span asp-validation-for="Reviews.Rating" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div id="category-name">
+                <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                <h4 class="hover-effect">
+                    Review:
+                </h4>
+            </div>
+            <textarea asp-for="Reviews.ReviewText" class="form-control"></textarea>
+            <span asp-validation-for="Reviews.ReviewText" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit Review" class=" btn btn-info" />
+        </div>
+    </form>
+</div>
+
+<div id="reviews-list-container">
+    <div id="category-name">
+        <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+        <h4 class="hover-effect">
+            Reviews:
+        </h4>
+    </div>
+    <div id="reviews-list">
+        @if (Model.ReviewsList.Count == 0)
+        {
+            <div id="no-reviews-msg-container">
+                <label id="no-reviews-msg-value">
+                    There are no reviews left for this product.
+                </label>
+            </div>
+        }
+        else
+        {
+            @foreach (var review in Model.ReviewsList)
             {
-                <div id="no-reviews-msg-container">
-                    <label id="no-reviews-msg-value">
-                        There are no reviews left for this product.
-                    </label>
-                </div>
-            }
-            else
-            {
-                @foreach (var review in Model.ReviewsList)
+                var user = await UserManager.FindByIdAsync(review.UserId);
+                if (user != null)
                 {
-                    var user = await UserManager.FindByIdAsync(review.UserId);
-                    if (user != null)
-                    {
-                        var username = await UserManager.GetUserNameAsync(user);
-                        <span> by @user.UserName</span>
-                        <div id="rating-container">
-                            <label id="rating-value">@review.Rating</label>
+                    var username = await UserManager.GetUserNameAsync(user);
+                    <div id="rating-container">
+                        <span class="username-review">  <img class="lemi-icon-image" src="~/images/Lemi.png" alt="Logo" /> Rating left by @user.UserName</span>
+                        <div id="category-name">
+                            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                            <h6 class="hover-effect">
+                                Rating:
+                            </h6>
                         </div>
-                        <div id="rating-text-container">
-                            <label id="rating-text-value">@review.ReviewText</label>
-                        </div>
-                    }
+                        @switch (@review.Rating)
+                        {
+                            case 1:
+                                <img class="star-icon-image" src="~/images/oneStarRating.png" alt="Logo" />
+                                break;
+                            case 2:
+                                <img class="star-icon-image" src="~/images/twoStarRating.png" alt="Logo" />
+                                break;
+                            case 3:
+                                <img class="star-icon-image" src="~/images/threeStarRating.png" alt="Logo" />
+                                break;
+                            case 4:
+                                <img class="star-icon-image" src="~/images/fourStarRating.png" alt="Logo" />
+                                break;
+                            case 5:
+                                <img class="star-icon-image" src="~/images/fiveStarRating.png" alt="Logo" />
+                                break;
+                            default:
+                                <p>Couldn't retrieve star count</p>
+                                break;
+                        }
+                   
+                    <div id="rating-text-container">
+                            <div id="category-name">
+                                <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                                <h6 class="hover-effect">
+                                    Review:
+                                </h6>
+                            </div>
+                        <textarea disabled id="rating-text-value">@review.ReviewText</textarea>
+                    </div>
+                    </div>
                 }
             }
-        </div>
+        }
     </div>
+</div>
 
 </div>
 

@@ -122,7 +122,7 @@
         subtotalValueElement.value = subtotalValue.toFixed(2);
 
         var subtotalDisplayElement = document.getElementById('subtotal-display');
-        subtotalDisplayElement.textContent = subtotalValue.toFixed(2) + "(from which " + tva.toFixed(2) + " TVA)";
+        subtotalDisplayElement.textContent = subtotalValue.toFixed(2) + "$ (from which " + tva.toFixed(2) + "$ TVA)";
     }
 
 

@@ -8,8 +8,7 @@ namespace ShopManagementSystem.Models
     {
         public int Id { get; set; }
 
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-
+        [RegularExpression(@"^[a-zA-Z0-9,. ]*$")]
         [Required]
         [StringLength(500)]
         public string ProductDescription { get; set; } = string.Empty;

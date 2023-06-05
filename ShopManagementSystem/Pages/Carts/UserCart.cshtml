@@ -8,135 +8,155 @@
 
 <div id="cart-container">
     <div id="cart-title">
-
     </div>
-    @if (Model.Cart != null)
-    {
-     <div id="cart-details">
-            <div id="cart-list">
+    <div id="cart-details-container">
+        @if (Model.Cart != null)
+        {
+            <div id="cart-details">
+                <div id="cart-list">
 
 
-                @for (int i = 0; i < Model.Product.Count(); i++)
-                {
-                    <div class="item-product" data-product-id="@Model.Product[i].Id">
-                        <div class="remove-product">
-                            <form method="post" asp-page="/Carts/UserCart"  asp-page-handler="Remove" class="remove-form">
+                    @for (int i = 0; i < Model.Product.Count(); i++)
+                    {
+                        <div class="item-product" data-product-id="@Model.Product[i].Id">
+                            <div class="remove-product">
+                                <form method="post" asp-page="/Carts/UserCart" asp-page-handler="Remove" class="remove-form">
+                                    <input type="hidden" name="productId" value="@Model.Product[i].Id" />
+                                    <button class="removeBtn btn btn-danger" type="submit">
+                                        <img src="~/images/removeIcon.png" alt="Remove Product" />
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="product-label">
+                                <label class="item-label">
+                                    Product
+                                </label>
+                            </div>
+                            <div class="item-image">
+                                <img src="~/images/@Model.Product[i].ProductImage">
+                            </div>
+                            <div class="item-details">
+                                <div class="item-title">
+                                    <p class="title-pph">
+                                        @Model.Product[i].ProductName
+                                    </p>
+                                </div>
+                                <div class="item-status">
 
-                                <input type="hidden" name="productId" value="@Model.Product[i].Id" />
-                                <input class="removeBtn" type="submit" value="Remove Product" />
-                             
-                            </form>
+                                    @switch (Model.ProductInventory[i].Status)
+                                    {
+                                        case 1:
+                                            <p class="status-pph">Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
+                                            break;
+                                        case 2:
+                                            <p class="status-pph">Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
+                                            break;
+                                        case 3:
+                                            <p class="status-pph">Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
+                                            break;
+                                        default:
+                                            <p class="status-pph">Status: Unknown Status</p>
+                                            break;
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                <div class="item-label">
+                                    <label class="label-name">
+                                        Price
+                                    </label>
+                                </div>
+                                <div class="item-price-number">
+                                    <span class="price-without-tva" style="display:none">@Model.Product[i].Price</span>
+                                    <p class="price-pph">
+                                        @Model.ProductInventory[i].RetailPrice
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item-quantity">
+                                <div class="item-label">
+                                    <label class="label-name">
+                                        Quantity
+                                    </label>
+                                </div>
+                                <div class="item-quantity-container">
+                                    <div class="plus-button">
+                                        <button class="plusBtn btn btn-light">
+                                            +
+                                        </button>
+                                    </div>
+                                    <div class="quantity-display">
+                                        <p class="quantity-pph"> @Model.CartProducts[i].Quantity </p>
+                                    </div>
+                                    <div class="minus-button">
+                                        <button class="minusBtn btn btn-light">
+                                            -
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="total-price">
+                                <div class="item-label">
+                                    <label class="label-name">Total Price</label>
+                                </div>
+                                <p class="total-price-number">
+
+                                </p>
+                            </div>
                         </div>
-                        <div class="product-label">
-                            <label class="item-label">
-                                Product
+                    }
+                </div>
+            </div>
+            <div id="total-details">
+                <form method="post" id="pay-form">
+                    <div id="total-label">
+                        <label class="item-label-total-details">
+                            TOTAL
+                        </label>
+                    </div>
+                    <div id="subtotal">
+                        <div id="subtotal-label">
+                            <label class="item-label-total-details">
+                                Subtotal
                             </label>
                         </div>
-                        <div class="item-image">
-                            <img src="~/images/@Model.Product[i].ProductImage">
-                        </div>
-                        <div class="item-details">
-                            <div class="item-title">
-                                <p class="title-pph">
-                                    @Model.Product[i].ProductName
-                                </p>
-                            </div>
-                            <div class="item-status">
-                                <p class="status-pph">
-                                    @(
-                                Model.ProductInventory[i].Status == 1 ? "In Stock" : "Out of Stock"
-                            )
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item-price">
-                            <div class="item-label">
-                                <label class="label-name">
-                                    Price
-                                </label>
-                            </div>
-                            <div class="item-price-number">
-                                <span class="price-without-tva" style="display:none">@Model.Product[i].Price</span>
-                                <p class="price-pph">
-                                    @Model.ProductInventory[i].RetailPrice
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item-quantity">
-                            <div class="item-label">
-                                <label class="label-name" >
-                                    Quantity
-                                </label>
-                            </div>
-                            <div class="item-quantity-container">
-                                <div class="plus-button">
-                                    <button class="plusBtn">
-                                        +
-                                    </button>
-                                </div>
-                                <div class="quantity-display">
-                                    <p class="quantity-pph"> @Model.CartProducts[i].Quantity </p>
-                                </div>
-                                <div class="minus-button">
-                                    <button class="minusBtn">
-                                        -
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="total-price">
-                            <div class="item-label">
-                                <label class="label-name">Total Price</label>
-                            </div>
-                            <p class="total-price-number">
+                        <div id="subtotal-number">
+                            <input type="hidden" id="subtotal-value" name="SubtotalValue" />
+                            <input type="hidden" id="tva-value" name="TvaValue" />
+                            <p id="subtotal-display">
 
                             </p>
                         </div>
                     </div>
-                }
-            </div>
-            <div id="back-btn">
-                <a asp-page="/Index"> Continue shopping </a>
-            </div>
-        </div>
-        <div id="total-details">
-            <form method="post" id="pay-form">
-            <div id="total-label">
-                <label class="item-label">
-                    TOTAL
-                </label>
-            </div>
-            <div id="subtotal">
-                <div id="subtotal-label">
-                    <label class="item-label">
-                        Subtotal
-                    </label>
-                </div>
-                <div id="subtotal-number">
-                    <input type="hidden" id="subtotal-value" name="SubtotalValue" />
-                    <input type="hidden" id="tva-value" name="TvaValue" />
-                   <p id="subtotal-display">
+                    <input type="radio" name="deliveryMethod" value="courier" id="choice1" required />
+                    <label for="choice1">Express Courier: $25 </label>
+                    <br />
+                    <input type="radio" name="deliveryMethod" value="postMail" id="choice2" required />
+                    <label for="choice2">Post Courier: $15 </label>
+                    <div id="done-btn">
+                      @*  <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />*@
+                        <button class="submitBtn btn btn-info" type="submit">
+                           Pay
+                        </button>
+                    </div>
+                </form>
 
-                   </p>
-                </div>
             </div>
-                <input type="radio" name="deliveryMethod" value="courier" id="choice1" required/>
-                <label for="choice1">Livrare prin curierat rapid: 25 RON </label>
-                <br />
-                <input type="radio" name="deliveryMethod" value="postMail" id="choice2" required />
-                <label for="choice2">Posta Romana: 15 RON </label>
-            <div id="done-btn">
-                <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />
-            </div>
-        </form>
-        
-        </div>
-    }
-    else
-    {
-        <p> No products in your cart!</p>
-    }
+        }
+        else
+        {
+            <p> No products in your cart!</p>
+        }
 
+
+    </div>
+    <div id="back-btn">
+        <a asp-page="/Index">
+            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+            <h4 class="hover-effect">Continue Shopping</h4>
+        </a>
+    </div>
 </div>
 
 <script src="~/js/minusPlusQuantity.js" asp-append-version="true"></script>

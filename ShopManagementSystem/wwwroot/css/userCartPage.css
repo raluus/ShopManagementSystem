@@ -1,0 +1,143 @@
+﻿#cart-details-container {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.item-image img {
+    width: 100px;
+}
+
+#cart-details {
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 1px solid dimgray;
+    border-radius: 10px;
+    padding: 20px;
+    width: 1130px;
+    height: 400px;
+    overflow: auto;
+}
+
+.item-product {
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 1px solid dimgray;
+    padding: 20px;
+    margin: 15px;
+}
+
+#cart-details::-webkit-scrollbar {
+    width: 5px;
+}
+
+#cart-details::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 10px;
+}
+
+    #cart-details::-webkit-scrollbar-thumb:hover {
+        background-color: dimgray;
+    }
+
+#cart-details::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+}
+
+.item-quantity-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-light {
+    width: 50px;
+    height: 50px;
+}
+
+.item-label {
+    margin-bottom: 60px;
+    text-align: center;
+    font-family: Sana Sans Alt sans-serif,cursive;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid dimgrey;
+    padding: 5px;
+}
+
+.quantity-display {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 7px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid dimgrey;
+    font-size: 20px;
+}
+
+.item-image {
+    margin-top: 45px;
+}
+
+.item-details {
+    margin-top: 45px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.title-pph {
+    width: 140px;
+}
+
+.price-pph {
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.label-name {
+    width: 150px;
+}
+
+.total-price-number {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.removeBtn img {
+    width: 15px;
+    height: 20px;
+    padding-bottom: 3px;
+}
+
+.item-label-total-details {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#total-details {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid dimgrey;
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+#subtotal-display {
+    font-weight: bold;
+}
+
+#back-btn {
+    margin-top: 50px;
+}
+
+    #back-btn a {
+        text-decoration: none;
+        color: black;
+    }

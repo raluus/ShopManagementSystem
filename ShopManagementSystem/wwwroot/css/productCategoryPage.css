@@ -1,3 +1,78 @@
 ﻿.hidden {
     display: none;
 }
+
+
+
+.category-page-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+}
+
+.filter-list {
+    margin-top: 100px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.product-display {
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.products-allList {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    border: 1px solid dimgrey;
+    border-radius: 10px;
+}
+
+.header {
+    margin-top: 100px;
+}
+
+.label-for-filter {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.label-for-filter-value {
+    font-size: 18px;
+    color: #333;
+}
+
+#filter-for-subcategory {
+    margin-bottom: 20px;
+}
+
+    #filter-for-subcategory .label-for-filter-value {
+        font-size: 16px;
+    }
+
+#subcategory-filters-container {
+    margin-top: 10px;
+    height: 150px;
+    overflow: auto;
+}
+
+#filter-for-brand {
+    margin-bottom: 20px;
+}
+
+    #filter-for-brand .label-for-filter-value {
+        font-size: 16px;
+    }
+
+#brand-filters-container {
+    margin-top: 10px;
+}

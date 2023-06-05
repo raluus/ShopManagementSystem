@@ -9,16 +9,16 @@
     <div class="header">
         @if (Model.Category == "")
         {
-            <p>Home</p>
+            <p>  <img class="cane-icon-image" src="~/images/lemiWithACane.png" alt="Logo" /></p>
         }
         else if (Model.Subcategory.Count == 0)
         {
-            <p>Home > @Model.GetCategoryDisplayName(Model.Category)</p>
+            <p>  <img class="cane-icon-image" src="~/images/lemiWithACane.png" alt="Logo" /> > @Model.GetCategoryDisplayName(Model.Category)</p>
         }
         else if (Model.NestedCategory.Count == 0)
         {
             <p>
-                Home > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
+                <img class="cane-icon-image" src="~/images/lemiWithACane.png" alt="Logo" /> > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
                 {
 
                     @Model.GetSubCategoryDisplayName(subcategory)
@@ -32,7 +32,7 @@
         else
         {
             <p>
-                Home > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
+                <img class="cane-icon-image" src="~/images/lemiWithACane.png" alt="Logo" /> > @Model.GetCategoryDisplayName(Model.Category) > @foreach (var subcategory in Model.Subcategory)
                 {
 
                     @Model.GetSubCategoryDisplayName(subcategory)
@@ -52,18 +52,17 @@
         }
     </div>
 
-    <div class="container">
+    <div class="category-page-container">
         <form method="post" asp-page="/Products" asp-page-handler="FilterProducts">
             <div class="filter-list">
-                <input type="submit" value="Apply Filters" />
+               <button class="btn btn-info" type="submit">Apply Filters</button>
                 <input id="chosen-category" type="hidden" name="Category" value="@Model.GetCategoryDisplayName(Model.Category)" />
                 @if (Model.Subcategory.Count == 0)
                 {
                     <div id="filter-for-subcategory">
                         <div class="label-for-filter">
-                            <label id="label-for-subcategory" class="label-for-filter-value">
-                                Subcategories
-                            </label>
+                          <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                           <h4 id="label-for-subcategory" class="hover-effect">Subcategory</h4>
                         </div>
                         <div id="subcategory-filters-container" class="hidden">
                         </div>
@@ -77,9 +76,10 @@
                     }
                     <div id="filter-for-nestedcategory">
                         <div class="label-for-filter">
-                            <label id="label-for-nestedcategory" class="label-for-filter-value">
-                                Product Type
-                            </label>
+                           
+                                <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                                <h4 id="label-for-nestedcategory" class="hover-effect">Product Type</h4>
+                          
                         </div>
                         <div id="nestedcategory-filters-container" class="hidden">
                         </div>
@@ -87,9 +87,10 @@
                 }
                 <div id="filter-for-brand">
                     <div class="label-for-filter">
-                        <label id="label-for-brand" class="label-for-filter-value">
-                            Brand
-                        </label>
+                       
+                            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+                            <h4 id="label-for-brand" class="hover-effect">Brand</h4>
+                       
                     </div>
                     <div id="brand-filters-container" class="hidden">
                     </div>
@@ -102,8 +103,9 @@
             @for (int i = 0; i < Model.Product.Count(); i++)
             {
                 var productInventory = Model.ProductInventory.FirstOrDefault(pi => pi.ProductId == Model.Product[i].Id);
+                <div class="product-item">
                 <a asp-page="/ProductDetails" asp-route-Id="@Model.Product[i].Id">
-                    <div class="products-allList">
+                   
                         <div class="product-image">
                             <img src="~/images/@Model.Product[i].ProductImage" alt="Product Image">
                         </div>
@@ -114,30 +116,35 @@
                             @switch (productInventory.Status)
                             {
                                 case 1:
-                                    <p>In Stock</p>
+                                    <p>Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
                                     break;
                                 case 2:
-                                    <p>Out of Stock</p>
+                                    <p>Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
                                     break;
                                 case 3:
-                                    <p>Out of Stock - Seasonal</p>
+                                    <p>Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
                                     break;
                                 default:
-                                    <p>Unknown Status</p>
+                                    <p>Status: Unknown Status</p>
                                     break;
                             }
                         </div>
                         <div class="product-price">
                             <p>@productInventory.RetailPrice</p>
                         </div>
-                    </div>
+                   
                 </a>
                 <div class="add-cart">
                     <form method="post" asp-page-handler="AddToCart">
-                        <input type="hidden" name="productId" value="@productInventory.Id" />
-                        <button type="submit" @(productInventory.Status == 2 ||productInventory.Status == 3 || productInventory.Quantity == 0 ? "disabled" : "")>Add</button>
+                        <form method="post" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@productInventory.Id" />
+                            <button type="submit" class="btn btn-success" @(productInventory.Status == 2 || productInventory.Status == 3 || productInventory.Quantity == 0 ? "disabled" : "")>
+                                +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
+                            </button>
+                        </form>
                     </form>
                 </div>
+             </div>
             }
         </div>
     </div>

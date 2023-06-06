@@ -70,7 +70,12 @@
 </div>
 
 <div>
-    <a asp-page="/Index">Back to Shopping</a>
+    <a asp-page="/Index">
+        <a style="text-decoration:none;color=black !important;" asp-page="/Index">
+            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+            <h4 class="hover-effect">Continue Shopping</h4>
+        </a>
+    </a>
 </div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

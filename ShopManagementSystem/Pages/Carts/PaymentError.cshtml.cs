@@ -7,8 +7,12 @@ namespace ShopManagementSystem.Pages.Carts
     {
         [BindProperty(SupportsGet = true)]
         public string ProductName { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if(ProductName == null)
+                return NotFound();
+
+            return Page();
         }
     }
 }

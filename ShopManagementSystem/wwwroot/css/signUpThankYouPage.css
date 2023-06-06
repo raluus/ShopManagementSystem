@@ -1,0 +1,23 @@
+﻿.thankyou-box {
+    position: relative;
+    width: 1400px;
+    height: 280px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(100px);
+}
+
+    .thankyou-box p {
+        font-size: 20px;
+    }
+
+#thankyou-title {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 30px;
+}
+
+.thankyou-info {
+    padding-left: 20px;
+}

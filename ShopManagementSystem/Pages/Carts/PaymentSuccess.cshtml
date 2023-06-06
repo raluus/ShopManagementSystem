@@ -2,16 +2,17 @@
 @model ShopManagementSystem.Pages.Carts.PaymentSuccessModel
 @{
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Payment Success";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment Success</title>
-</head>
-<body>
-    <h1>Payment Successful</h1>
-    <p>Thank you for your purchase!</p>
-    <p>You will receive the payment details via email.</p>
-    <a asp-page="/Index">Go back to shopping</a>
-</body>
-</html>
+
+<div class="section-container">
+    <div class="thankyou-box">
+    <p id="thankyou-title">Payment Successful</p>
+    <p class="thankyou-info">Thank you for your purchase!</p>
+    <p class="thankyou-info">You will receive the payment details via email.</p>
+        <a style="text-decoration:none;color=black !important;" asp-page="/Index">
+            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+            <h4 class="hover-effect">Continue Shopping</h4>
+        </a>
+    </div>
+</div>

@@ -5,7 +5,15 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Payment Error</h1>
+<div class="section-container">
+    <div class="thankyou-box">
+        <p id="thankyou-title">Payment Error</p>
 
-<p>Sorry, there was an error processing your payment for product: <strong>@Model.ProductName</strong>.</p>
-<p>It seems we don't have in stock the requested amount!</p>
+        <p class="thankyou-info">Sorry, there was an error processing your payment for product: <strong>@Model.ProductName</strong>.</p>
+        <p class="thankyou-info">It seems we don't have in stock the requested amount!</p>
+         <a style="text-decoration:none;color=black !important;" asp-page="/Index">
+            <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+            <h4 class="hover-effect">Continue Shopping</h4>
+        </a>
+    </div>
+</div>

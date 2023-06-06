@@ -42,6 +42,10 @@ namespace ShopManagementSystem.Pages.Account
                     return NotFound();
                 }
             }
+            else
+            {
+                return RedirectToPage("/Account/Login");
+            }
             return Page();
         }
 

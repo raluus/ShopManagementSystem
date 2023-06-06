@@ -9,53 +9,63 @@
 <h1>User Profile</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Users.Id" />
-            <div class="form-group">
-                <label asp-for="Users.UserName" class="control-label"> Display Name: </label>
-                <input asp-for="Users.UserName" class="form-control" />
-                <span asp-validation-for="Users.UserName" class="text-danger"></span>
-            </div>
-            <div id="shipping-address-container">
-                <label id="shipping-address-label">Shipping Address Details</label>
-                <div class="form-group">
-                    <label asp-for="Users.FirstName">First Name: </label>
-                    <input asp-for="Users.FirstName" class="form-control"/>
-                    <span asp-validation-for="Users.FirstName" class="text-danger"></span>
+<div class="section-container">
+    <div class="form-box-second">
+        <div class="form-value">
+            <form method="post">
+                <h4 class="login-value">Account Details</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Users.Id" />
+                <div class="inputbox">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <label asp-for="Users.UserName" class="control-label"> Display Name: </label>
+                    <input asp-for="Users.UserName" class="form-control" />
+                    <span asp-validation-for="Users.UserName" class="text-danger"></span>
+                </div>
+                <div id="shipping-address-container">
+                    <label id="shipping-address-label">Shipping Address Details</label>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="Users.FirstName">First Name: </label>
+                        <input asp-for="Users.FirstName" class="form-control" />
+                        <span asp-validation-for="Users.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="Users.LastName">Last Name: </label>
+                        <input asp-for="Users.LastName" class="form-control" />
+                        <span asp-validation-for="Users.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <label asp-for="Users.PhoneNumber">Phone: </label>
+                        <input asp-for="Users.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Users.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="Users.City">City: </label>
+                        <input asp-for="Users.City" class="form-control" />
+                        <span asp-validation-for="Users.City" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="Users.Address">Full Address: </label>
+                        <input asp-for="Users.Address" class="form-control" />
+                        <span asp-validation-for="Users.Address" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="Users.ZipCode">Zip Code: </label>
+                        <input asp-for="Users.ZipCode" class="form-control" />
+                        <span asp-validation-for="Users.ZipCode" class="text-danger"></span>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Users.LastName">Last Name: </label>
-                    <input asp-for="Users.LastName" class="form-control" />
-                    <span asp-validation-for="Users.LastName" class="text-danger"></span>
+                    <input type="submit" value="Save" class="loginBtn" />
                 </div>
-                <div class="form-group">
-                    <label asp-for="Users.PhoneNumber">Phone: </label>
-                    <input asp-for="Users.PhoneNumber" class="form-control" />
-                    <span asp-validation-for="Users.PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Users.City">City: </label>
-                    <input asp-for="Users.City" class="form-control" />
-                    <span asp-validation-for="Users.City" class="text-danger"></span>
-                </div>
-                 <div class="form-group">
-                    <label asp-for="Users.Address">Full Address: </label>
-                    <input asp-for="Users.Address" class="form-control" />
-                    <span asp-validation-for="Users.Address" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Users.ZipCode">Zip Code: </label>
-                    <input asp-for="Users.ZipCode" class="form-control" />
-                    <span asp-validation-for="Users.ZipCode" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -63,3 +73,5 @@
     <a asp-page="/Index">Back to Shopping</a>
 </div>
 
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

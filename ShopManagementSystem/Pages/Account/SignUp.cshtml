@@ -6,18 +6,31 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form method="post">
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="Email" class="form-control" required>
+<div class="section-container">
+    <div class="form-box">
+        <div class="form-value">
+            <form method="post">
+                <h4 class="login-value">Sign Up</h4>
+                <div class="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="Email" class="form-control" required>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="Password" class="form-control" required>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="loginBtn">Sign Up</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="Password" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign Up</button>
-</form>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -108,7 +108,8 @@ nav.main-products-category-navigation {
     height: 390px;
     justify-content: center;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
-    background-color: #ffffe0;
+    background-color: transparent;
+    backdrop-filter:blur(70px);
     border: 3px solid yellow;
     padding-top: 20px;
     padding-left: 20px;
@@ -169,15 +170,17 @@ nav.main-products-category-navigation {
     text-align: center;
     padding: 10px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
-    background-color: white;
-    border: 1px solid dimgrey;
+    background: transparent;
+    border-radius: 20px;
+    backdrop-filter: blur(30px);
+    border: 2px solid white;
     border-radius: 10px;
 }
 
 .product-image img {
     height: 150px;
     width: 200px;
-    border: 2px solid lightblue;
+    border: 2px solid white;
     border-radius: 10px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
     margin-bottom: 15px;
@@ -233,10 +236,15 @@ nav.main-products-category-navigation {
 
 .hover-effect {
     display: inline;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    padding:5px;
+    background:transparent;
+    border-radius: 20px;
+    backdrop-filter: blur(70px);
 }
 
     .hover-effect:hover {
-        color: lightblue;
+        color: dimgray;
     }
 
 .row {

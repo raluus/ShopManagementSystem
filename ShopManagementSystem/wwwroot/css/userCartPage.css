@@ -19,6 +19,8 @@
     width: 1130px;
     height: 400px;
     overflow: auto;
+    background: transparent;
+    backdrop-filter: blur(70px);
 }
 
 .item-product {
@@ -127,6 +129,8 @@
     padding: 5px;
     width: 200px;
     text-align: center;
+    background: transparent;
+    backdrop-filter: blur(70px);
 }
 
 #subtotal-display {

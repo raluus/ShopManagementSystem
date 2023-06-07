@@ -4,10 +4,11 @@
 @{
     ViewData["Title"] = "Products";
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
+    var reorderPoint = 120;
 }
 <div class="title-name">
-<img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
-<h1 class="hover-effect">Product Management</h1>
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Product Management</h1>
 </div>
 
 <p>
@@ -34,32 +35,48 @@
                 Price with TVA
             </th>
             <th>
+                Available Quantity
+            </th>
+            <th>
                 Product Image
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Product) {
-        var inventoryItem = Model.ProductInventory.FirstOrDefault(i => i.ProductId == item.Id);
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td class="price">
-               $@Html.DisplayFor( modelItem => item.Price) 
-            </td>
-             <td class="price">
-                $@Html.DisplayFor( modelItem => inventoryItem.RetailPrice) 
-            </td>
-            <td>
-               <img src="~/images/@item.ProductImage" alt="Product Image" width="150" height="150"/>
-            </td>
-            <td>
-                <a class="adminBtn" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="adminBtn" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a class="adminBtn"  asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Product)
+        {
+            var inventoryItem = Model.ProductInventory.FirstOrDefault(i => i.ProductId == item.Id);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td class="price">
+                    $@Html.DisplayFor( modelItem => item.Price)
+                </td>
+                <td class="price">
+                    $@Html.DisplayFor( modelItem => inventoryItem.RetailPrice)
+                </td>
+                @if (inventoryItem.Quantity >= reorderPoint)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => inventoryItem.Quantity) pieces
+                    </td>
+                }
+                else
+                {
+                    <td style="color:red;">
+                        @Html.DisplayFor(modelItem => inventoryItem.Quantity) pieces <label style="color:red;font-weight:600;">Must restock! Below Reorder Point</label>
+                    </td>
+                }
+                <td>
+                    <img src="~/images/@item.ProductImage" alt="Product Image" width="150" height="150" />
+                </td>
+                <td>
+                    <a class="adminBtn" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="adminBtn" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="adminBtn" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

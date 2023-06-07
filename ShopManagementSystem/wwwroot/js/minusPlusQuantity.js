@@ -215,7 +215,7 @@
             totalPriceElement.value = totalPrice.toFixed(2);
 
             var subtotalDisplayElement = document.getElementById('subtotal-display');
-            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "(from which " + tva.toFixed(2) + " TVA)";
+            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "$ (from which " + tva.toFixed(2) + "$ TVA)";
 
         }
     });
@@ -239,7 +239,7 @@
             totalPriceElement.value = totalPrice.toFixed(2);
 
             var subtotalDisplayElement = document.getElementById('subtotal-display');
-            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "(from which " + tva.toFixed(2) + " TVA)";
+            subtotalDisplayElement.textContent = totalPrice.toFixed(2) + "$ (from which " + tva.toFixed(2) + "$ TVA)";
 
         }
     });

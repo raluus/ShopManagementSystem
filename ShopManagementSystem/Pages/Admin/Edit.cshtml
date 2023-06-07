@@ -81,8 +81,11 @@
                 <div id="inventory-details">
                     <h3>Inventory</h3>
                    
-                        <div class="form-group">
-                            <input type="hidden" asp-for="ProductInventory.Quantity" class="form-control" />
+                        <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="ProductInventory.Quantity" class="control-label">Quantity:</label>
+                         <input asp-for="ProductInventory.Quantity" class="form-control" />
+                        <span asp-validation-for="ProductInventory.Quantity" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input type="hidden" asp-for="ProductInventory.BatchNumber" class="form-control" />

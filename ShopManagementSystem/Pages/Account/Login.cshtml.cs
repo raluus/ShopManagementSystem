@@ -32,12 +32,12 @@ namespace ShopManagementSystem.Pages.Account
 
                 if (userRoles.Contains("Admin"))
                 {
-                    // Redirect to admin page
+                  
                     return RedirectToPage("/Admin/Index");
                 }
                 else if (userRoles.Contains("User"))
                 {
-                    // Redirect to user page
+                   
                     return RedirectToPage("/Index");
                 }
             }

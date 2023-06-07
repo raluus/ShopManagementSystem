@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     optionElement.value = option;
                     optionElement.textContent = option;
                     selectElement.appendChild(optionElement);
-                    console.log("here");  
         }
     }
 

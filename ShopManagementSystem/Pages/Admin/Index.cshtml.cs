@@ -43,10 +43,6 @@ namespace ShopManagementSystem.Pages.Products
 
             Product = await products.ToListAsync();
             ProductInventory = await productInventory.ToListAsync();
-            //if (_context.Product != null)
-            //{
-            //    Product = await _context.Product.ToListAsync();
-            //}
         }
     }
 }

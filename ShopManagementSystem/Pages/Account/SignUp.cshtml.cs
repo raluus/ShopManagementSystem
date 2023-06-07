@@ -57,18 +57,18 @@ namespace ShopManagementSystem.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Check if the "RegularUser" role already exists
+           
             if (!await _roleManager.RoleExistsAsync("User"))
             {
-                // Create the "RegularUser" role
+              
                 var role = new UsersRole { Name = "User" };
                 await _roleManager.CreateAsync(role);
             }
 
-            // Check if the "Admin" role already exists
+           
             if (!await _roleManager.RoleExistsAsync("Admin"))
             {
-                // Create the "Admin" role
+                
                 var role = new UsersRole { Name = "Admin" };
                 await _roleManager.CreateAsync(role);
             }
@@ -80,21 +80,21 @@ namespace ShopManagementSystem.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    // Generate the email confirmation token
+                   
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    // Construct the confirmation link
+                   
                     var confirmationLink = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { userId = user.Id, token = token, email = Input.Email },
                         protocol: Request.Scheme);
 
-                    // Send the email confirmation message
+                  
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>clicking here</a>.");
 
-                    // Sign in  the user if their email has been confirmed
+                    
                    
                     if (_userManager.Options.SignIn.RequireConfirmedEmail)
                     {

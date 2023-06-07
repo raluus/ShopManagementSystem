@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('/Json/categoryData.json')
         .then(response => response.json())
         .then(data => {
-            // Extract the data from the JSON object
+          
             const mainCategories = data.mainCategories;
             const subcategories = data.subcategories;
             const nestedCategories = data.nestedcategories;
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const attributes = data.attributes;
             var maxAllowedInputs = 0;
            
-            // Function to set the default value of the subcategory select
+            
             function setDefaultSubcategory() {
                 const mainCategorySelect = document.getElementById('main-category');
                 const subcategorySelect = document.getElementById('subcategory');
@@ -64,34 +64,34 @@ document.addEventListener('DOMContentLoaded', function () {
                     nestedCategoriesLabel.style.display = 'block';
 
                 } else {
-                    nestedCategoriesSelect.innerHTML = ''; // Clear the options in the sub-subcategory select
-                    nestedCategoriesSelect.style.display = 'none'; // Hide the sub-subcategory select
+                    nestedCategoriesSelect.innerHTML = ''; 
+                    nestedCategoriesSelect.style.display = 'none'; 
                     nestedCategoriesLabel.style.display = 'none';
                 }
             }
 
-            // Function to populate sub-subcategory options
+          
             function populateNestedOptions(selectedSubcategory) {
                 const nestedCategoriesSelect = document.getElementById('nested-category');
                 const nestedCategoriesLabel = document.getElementById('nested-category-label')
                 if (nestedCategories[selectedSubcategory]) {
                     populateOptions(nestedCategoriesSelect, nestedCategories[selectedSubcategory]);
-                    nestedCategoriesSelect.style.display = 'block'; // Show the sub-subcategory select
+                    nestedCategoriesSelect.style.display = 'block'; 
                     nestedCategoriesLabel.style.display = 'block';
 
                 } else {
-                    nestedCategoriesSelect.innerHTML = ''; // Clear the options in the sub-subcategory select
-                    nestedCategoriesSelect.style.display = 'none'; // Hide the sub-subcategory select
+                    nestedCategoriesSelect.innerHTML = '';
+                    nestedCategoriesSelect.style.display = 'none'; 
                     nestedCategoriesLabel.style.display = 'none';
                 }
             }
-            // Populate main category options
+           
             const mainCategorySelect = document.getElementById('main-category');
             populateOptions(mainCategorySelect, mainCategories);
 
             setDefaultSubcategory();
 
-            // Event listener for main category change
+          
             mainCategorySelect.addEventListener('change', () => {
                 const selectedMainCategory = mainCategorySelect.value;
 
@@ -121,18 +121,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             });
 
-            // Event listener for subcategory change
+            
             const subcategorySelect = document.getElementById('subcategory');
             subcategorySelect.addEventListener('change', () => {
                 const selectedSubcategory = subcategorySelect.value;
 
-                // Populate sub-subcategory options based on selected subcategory
+              
                 populateNestedOptions(selectedSubcategory);
             });  
 
-    //additional attri js
+   
 
-    console.log(maxAllowedInputs);
+  
     var currentGeneratedInputs = 0;
     let chosenAttributes = [];
     let chosenAttributesKeysAndValues = [];
@@ -164,13 +164,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function removeInputs(event) {
-        var button = event.target; // Get the clicked button
-        var inputWrapper = button.parentElement; // Get the parent element containing the inputs
+        var button = event.target;
+        var inputWrapper = button.parentElement; 
         var selectElement = inputWrapper.querySelector('select');
         let valueToRemove = selectElement.value;
         chosenAttributesKeysAndValues.splice(chosenAttributesKeysAndValues.indexOf(valueToRemove));
         chosenAttributes.splice(chosenAttributes.indexOf(valueToRemove));
-        inputWrapper.remove(); // Remove the input wrapper element
+        inputWrapper.remove(); 
         currentGeneratedInputs--;
     }
 
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function submitForm() {
-        // Assign the attributes to hidden input fields or send them using AJAX
+      
         var attributeKeys = chosenAttributesKeysAndValues.map(a => a.attributeKey);
         var attributeValues = chosenAttributesKeysAndValues.map(a => a.attributeValue);
         var form = document.getElementById('create-form');

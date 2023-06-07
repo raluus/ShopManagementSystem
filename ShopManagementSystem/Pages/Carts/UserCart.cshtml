@@ -2,7 +2,7 @@
 @model ShopManagementSystem.Pages.Carts.UserCartModel
 
 @{
-    ViewData["Title"] = "UserCart";
+    ViewData["Title"] = "User Cart";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
@@ -135,7 +135,6 @@
                     <input type="radio" name="deliveryMethod" value="postMail" id="choice2" required />
                     <label for="choice2">Post Courier: $15 </label>
                     <div id="done-btn">
-                      @*  <input type="submit" id="submitBtn" value="Pay" class="btn btn-primary" />*@
                         <button class="submitBtn btn btn-info" type="submit">
                            Pay
                         </button>

@@ -41,11 +41,21 @@ namespace ShopManagementSystem.Pages
         public ProductSubCategory ProductSubCategory { get; set; } = default!;
 
         public List<ProductAttributes> ProductAttributes { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Reviews review = null;
             if (id == null)
             {
                 return NotFound();
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var userId = user.Id;
+                review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == userId);
+
             }
 
             var product = await _context.Product.FirstOrDefaultAsync(m => m.Id == id);
@@ -68,6 +78,10 @@ namespace ShopManagementSystem.Pages
                 ProductCategory = productCategory; 
                 ProductSubCategory = productSubCategory;
                 ReviewsList = productReviews;
+                if(review != null)
+                {
+                    Reviews = review;
+                }
             }
             var similarProducts = await _context.Product
             .Join(_context.ProductNestedCategory,
@@ -105,10 +119,20 @@ namespace ShopManagementSystem.Pages
             if (User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(User);
-                var userId = user.Id;
-                Reviews.UserId = userId;
-                Reviews.ProductId = productId;
-                _context.Reviews.Add(Reviews);
+                var review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == user.Id);
+                if (review == null)
+                {
+                    var userId = user.Id;
+                    Reviews.UserId = userId;
+                    Reviews.ProductId = productId;
+                    _context.Reviews.Add(Reviews);
+                }
+                else
+                {
+                    review.UserId = user.Id;
+                    review.ProductId = productId;
+                    review.ReviewText = Reviews.ReviewText;
+                }
                 await _context.SaveChangesAsync();
 
             }

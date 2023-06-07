@@ -54,7 +54,7 @@ namespace ShopManagementSystem.Pages
             {
                 var user = await _userManager.GetUserAsync(User);
                 var userId = user.Id;
-                review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == userId);
+                review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == userId && r.ProductId == id);
 
             }
 
@@ -119,7 +119,7 @@ namespace ShopManagementSystem.Pages
             if (User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(User);
-                var review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == user.Id);
+                var review = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == user.Id && r.ProductId == productId);
                 if (review == null)
                 {
                     var userId = user.Id;

@@ -5,11 +5,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
-
-<h1>Index</h1>
+<div class="title-name">
+<img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+<h1 class="hover-effect">Product Management</h1>
+</div>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="adminBtn" asp-page="Create">Create New</a>
 </p>
 
 <form>
@@ -31,6 +33,9 @@
             <th>
                 Price with TVA
             </th>
+            <th>
+                Product Image
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,19 +45,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.Price) RON
+            <td class="price">
+               $@Html.DisplayFor( modelItem => item.Price) 
             </td>
-             <td>
-                @Html.DisplayFor( modelItem => inventoryItem.RetailPrice) RON
+             <td class="price">
+                $@Html.DisplayFor( modelItem => inventoryItem.RetailPrice) 
             </td>
             <td>
                <img src="~/images/@item.ProductImage" alt="Product Image" width="150" height="150"/>
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="adminBtn" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="adminBtn" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a class="adminBtn"  asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

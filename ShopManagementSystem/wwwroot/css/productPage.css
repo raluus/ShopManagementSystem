@@ -13,10 +13,112 @@ html {
     min-height: 100%;
 }
 
+
 body {
+    margin-top: 100px;
+    background: url(/images/LemonBackgLoginForm.jpg)repeat;
+    background-position: center;
+    background-size: cover;
+    background-size: 100% auto;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none;
+}
+
+.table {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(100px);
+}
+
+    .table td img {
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+        border: 2px solid skyblue;
+        border-radius: 10px;
+        margin-left: 20px;
+    }
+
+.adminBtn {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.title-name {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.animated-icon-image {
+    width: 45px;
+    padding-bottom: 9px;
+}
+
+.hover-effect {
+    display: inline;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    background: transparent;
+    border-radius: 20px;
+    backdrop-filter: blur(70px);
+}
+
+    .hover-effect:hover {
+        color: dimgray;
+    }
+
+.price {
+    font-weight: 600;
+}
+
+.brand-image {
+    width: 100px;
+    height: 50px;
+}
+
+.row {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(100px);
+    padding: 10px;
+}
+
+.label-value {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+    margin-top: 10px;
+    background: transparent;
+    border-radius: 20px;
+    border: 2px solid orange;
+    backdrop-filter: blur(70px);
+}
+
+.info-value {
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.img-value img {
+    background: transparent;
+    border-radius: 20px;
+    margin-top: 15px;
+    border: 2px solid orange;
+}
+
+.details-container {
     margin-bottom: 60px;
 }
 
-.hidden{
-    display:none;
+.icon-image {
+    width: 21px;
+    height: 21px;
 }

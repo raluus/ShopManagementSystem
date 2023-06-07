@@ -6,129 +6,154 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Details</h1>
+<div class="title-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Details</h1>
+</div>
 
-<div>
+<div class="details-container">
     <h4>Product</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Product.ProductName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Product.ProductName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductCategory.CategoryName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductCategory.CategoryName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductSubCategory.SubCategoryName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductSubCategory.SubCategoryName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductNestedCategory.NestedCategoryName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductNestedCategory.NestedCategoryName)
         </dd>
-         @foreach (var attribute in Model.ProductAttributes)
+        @foreach (var attribute in Model.ProductAttributes)
         {
-            <dt class="col-sm-2">
+            <dt class="col-sm-2 label-value">
                 @Html.DisplayFor(modelItem => attribute.AttributeKey)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-10 info-value">
                 @Html.DisplayFor(modelItem => attribute.AttributeValue)
             </dd>
         }
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Product.Price)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Product.Price)
+        <dd class="col-sm-10 info-value">
+            $@Html.DisplayFor(model => model.Product.Price)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Product.ProductImage)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 img-value">
             <img src="~/images/@Model.Product?.ProductImage" alt="Product Image" width="150" height="150" />
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.BatchNumber)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.BatchNumber)
         </dd>
         @if (Model.Product.PriceUnit == "Each" || Model.Product.PriceUnit == "Bag" || Model.Product.PriceUnit == "Box")
         {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ProductInventory.Quantity) 
+            <dt class="col-sm-2 label-value">
+                @Html.DisplayNameFor(model => model.ProductInventory.Quantity)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-10 info-value">
                 @Html.DisplayFor(model => model.ProductInventory.Quantity) pieces
             </dd>
         }
         else if (Model.Product.PriceUnit == "Kilogram")
         {
-                <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ProductInventory.Quantity) 
-                </dt>
-                <dd class="col-sm-10">
+            <dt class="col-sm-2 label-value">
+                @Html.DisplayNameFor(model => model.ProductInventory.Quantity)
+            </dt>
+            <dd class="col-sm-10 info-value">
                 @Html.DisplayFor(model => model.ProductInventory.Quantity) Kilograms
-                </dd>
+            </dd>
         }
-        <dt class="col-sm-2">
+
+        <dt class="col-sm-2 label-value">
+            @Html.DisplayNameFor(model => model.ProductInventory.Status)
+        </dt>
+        <dd class="col-sm-10 info-value">
+            @switch (Model.ProductInventory.Status)
+            {
+                case 1:
+                    <p>Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
+                    break;
+                case 2:
+                    <p>Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
+                    break;
+                case 3:
+                    <p>Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
+                    break;
+                default:
+                    <p>Status: Unknown Status</p>
+                    break;
+            }
+        </dd>
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.Location)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.Location)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.Supplier)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.Supplier)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.Cost)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.Cost)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.RetailPrice)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.RetailPrice)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.ExpirationDate)
         </dt>
         @if (Model.ProductInventory.ExpirationDate.Equals(DateTime.MinValue.Date))
         {
-             <dd class="col-sm-10">
+            <dd class="col-sm-10 info-value">
                 N/A
             </dd>
         }
         else
         {
-            <dd class="col-sm-10">
+            <dd class="col-sm-10 info-value">
                 @Html.DisplayFor(model => model.ProductInventory.ExpirationDate)
             </dd>
         }
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.ProductInventory.LastUpdated)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.ProductInventory.LastUpdated)
         </dd>
     </dl>
+    <div>
+        <a class="adminBtn" asp-page="./Edit" asp-route-id="@Model.Product?.Id">Edit</a> |
+        <a class="adminBtn" asp-page="./Index">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Product?.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+

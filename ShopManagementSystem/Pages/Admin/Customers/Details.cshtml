@@ -6,62 +6,66 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Details</h1>
+<div class="title-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Details</h1>
+</div>
 
-<div>
-    <h4>UsersRole</h4>
+<div class="details-container">
+    <h4>Users</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.UserName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.UserName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.Email)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.Email)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.EmailConfirmed)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.EmailConfirmed)
         </dd>
-         <dt class="col-sm-2">
+         <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.FirstName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.FirstName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.LastName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.LastName)
         </dd>
-         <dt class="col-sm-2">
+         <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.City)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.City)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.Address)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.Address)
         </dd>
-         <dt class="col-sm-2">
+         <dt class="col-sm-2 label-value">
             @Html.DisplayNameFor(model => model.Users.ZipCode)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-10 info-value">
             @Html.DisplayFor(model => model.Users.ZipCode)
         </dd>
     </dl>
+    <div>
+        <a class="adminBtn" asp-page="./Index">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+

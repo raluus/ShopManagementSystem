@@ -6,7 +6,10 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Index</h1>
+<div class="title-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Users</h1>
+</div>
 
 
 <table class="table">
@@ -30,7 +33,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> 
+                <a class="adminBtn" asp-page="./Details" asp-route-id="@item.Id">Details</a> 
             </td>
         </tr>
 }

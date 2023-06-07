@@ -181,7 +181,7 @@ nav.main-products-category-navigation {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
 }
 

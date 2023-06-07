@@ -132,6 +132,7 @@ namespace ShopManagementSystem.Pages
                     review.UserId = user.Id;
                     review.ProductId = productId;
                     review.ReviewText = Reviews.ReviewText;
+                    review.Rating = Reviews.Rating;
                 }
                 await _context.SaveChangesAsync();
 

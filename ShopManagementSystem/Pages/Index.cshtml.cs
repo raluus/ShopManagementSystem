@@ -60,7 +60,7 @@ namespace ShopManagementSystem.Pages
                 (p, pnc) => new { Product = p, ProductCategory = pnc })
                .Where(joined => joined.ProductCategory.CategoryName == category)
                .Select(joined => joined.Product)
-               .Take(6)
+               .Take(10)
                .ToListAsync();
                 categoryProducts.AddRange(limitedProducts);
             }

@@ -191,3 +191,20 @@ body {
     font-weight: 600;
     margin-bottom: 10px;
 }
+
+#chart, #totalSalesChart, #productChart {
+    background: whitesmoke;
+    border-radius: 20px;
+    border: 2px solid orange;
+    backdrop-filter: blur(100px);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 5px;
+    padding: 10px;
+    width: 800px !important;
+    height: 500px !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    margin-bottom: 160px;
+}

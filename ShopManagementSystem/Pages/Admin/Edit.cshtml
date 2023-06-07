@@ -6,149 +6,162 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Edit</h1>
+<div class="title-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Edit</h1>
+</div>
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Product.Id" />
-            <input type="hidden" asp-for="ProductCategory.Id" />
-            <input type="hidden" asp-for="ProductSubCategory.Id" />
-            <input type="hidden" asp-for="ProductNestedCategory.Id" />
-            <input type="hidden" asp-for="ProductInventory.Id" />
-            @for (int i = 0; i < Model.ProductAttributes.Count; i++)
-            {
-                <input type="hidden" asp-for="ProductAttributes[i].Id" />
-                <input type="hidden" asp-for="ProductAttributes[i].AttributeKey" /> 
-            }
-            <div class="form-group">
-                <label asp-for="Product.ProductName" class="control-label"></label>
-                <input asp-for="Product.ProductName" class="form-control" />
-                <span asp-validation-for="Product.ProductName" class="text-danger"></span>
-            </div>
-           <div class="form-group">
-                <label asp-for="ProductCategory.CategoryName" class="control-label">Main Category:</label>
-                <select asp-for="ProductCategory.CategoryName" id="main-category" >
-                    <option asp-for="ProductCategory.CategoryName">@Html.DisplayFor(model => model.ProductCategory.CategoryName)</option>
-                </select>
-                <span asp-validation-for="ProductCategory.CategoryName" class="text-danger"></span>
-            </div>
-           <div class="form-group">
-                <label asp-for="ProductSubCategory.SubCategoryName" class="control-label">Subcategory:</label>
-                <select asp-for="ProductSubCategory.SubCategoryName" id="subcategory" >
-                    <option asp-for="ProductSubCategory.SubCategoryName">@Html.DisplayFor(model => model.ProductSubCategory.SubCategoryName)</option>
-                </select>
-                <span asp-validation-for="ProductSubCategory.SubCategoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category-label" class="control-label">Sub-Subcategory:</label>
-                <select asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category" >
-                     <option asp-for="ProductNestedCategory.NestedCategoryName">@Html.DisplayFor(model => model.ProductNestedCategory.NestedCategoryName)</option>
-                </select>
-                <span asp-validation-for="ProductNestedCategory.NestedCategoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.ProductBrand" class="control-label">Brand Of Product:</label>
-                <select asp-for="Product.ProductBrand" id="product-brand">
-                    <option asp-for="Product.ProductBrand">@Html.DisplayFor(model => model.Product.ProductBrand)</option>
-                </select>
-                <span asp-validation-for="Product.ProductBrand" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.Price" class="control-label"></label>
-                <input asp-for="Product.Price" class="form-control" />
-                <span asp-validation-for="Product.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="Product.PriceUnit" class="form-control" />
-                <span asp-validation-for="Product.PriceUnit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.ProductDescription" class="control-label">Description:</label>
-                <textarea asp-for="Product.ProductDescription" class="form-control"></textarea>
-                <span asp-validation-for="Product.ProductDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="Product.ProductImage" class="form-control" />
-            </div>
-            <div id="inventory-details">
-                <h3>Inventory</h3>
-                <div class="form-group">
-                    <div class="form-group">
-                        <input type="hidden" asp-for="ProductInventory.Quantity" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="ProductInventory.BatchNumber" class="form-control" />
-                    </div>
-                    <label asp-for="ProductInventory.Location" class="control-label">Location:</label>
-                    <select asp-for="ProductInventory.Location" id="product-location">
-                        <option asp-for="ProductInventory.Location">@Html.DisplayFor(model => model.ProductInventory.Location)</option>
-                    </select>
-                    <span asp-validation-for="ProductInventory.Location" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductInventory.Supplier" class="control-label">Supplier:</label>
-                    <select asp-for="ProductInventory.Supplier" id="product-supplier">
-                        <option asp-for="ProductInventory.Supplier">@Html.DisplayFor(model => model.ProductInventory.Supplier)</option>
-                    </select>
-                    <span asp-validation-for="ProductInventory.Supplier" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductInventory.Cost" class="control-label">Cost(per Product):</label>
-                    <input asp-for="ProductInventory.Cost" class="form-control" />
-                    <span asp-validation-for="ProductInventory.Cost" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ProductInventory.Status" class="control-label">Status of Product:</label>
-                    <select asp-for="ProductInventory.Status" id="product-brand">
-                        <option value="1">Active</option>
-                        <option value="2" >Inactive</option>
-                        <option value="3">Discontinued</option>
-                    </select>
-                    <span asp-validation-for="ProductInventory.Status" class="text-danger"></span>
-                </div>
-                @if (Model.ProductInventory.ExpirationDate.Equals(DateTime.MinValue))
+<div class="section-container">
+    <div class="form-box">
+        <div class="form-value">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Product.Id" />
+                <input type="hidden" asp-for="ProductCategory.Id" />
+                <input type="hidden" asp-for="ProductSubCategory.Id" />
+                <input type="hidden" asp-for="ProductNestedCategory.Id" />
+                <input type="hidden" asp-for="ProductInventory.Id" />
+                @for (int i = 0; i < Model.ProductAttributes.Count; i++)
                 {
-                    <div class="form-group">
-                        <input type="hidden" asp-for="ProductInventory.ExpirationDate" class="form-control" />
-                    </div>
+                    <input type="hidden" asp-for="ProductAttributes[i].Id" />
+                    <input type="hidden" asp-for="ProductAttributes[i].AttributeKey" />
                 }
-                else
-                {
-                    <div class="form-group">
-                        <label asp-for="ProductInventory.ExpirationDate" class="control-label">Expiration Date:</label>
-                        <input asp-for="ProductInventory.ExpirationDate" class="form-control" type="date" />
-                        <span asp-validation-for="ProductInventory.ExpirationDate" class="text-danger"></span>
-                    </div>
-                }
-            </div>
-           <div id="additionalAttributesSection">
-               <h3>Additional Attributes</h3>
-            @for (int i = 0; i < Model.ProductAttributes.Count; i++)
-            {
-                <div class="form-group">
-                        <label asp-for="ProductAttributes[i].AttributeKey" class="control-label">@Model.ProductAttributes[i].AttributeKey</label>
-                    <input asp-for="ProductAttributes[i].AttributeValue" class="form-control" type="text" />
-                    <span asp-validation-for="ProductAttributes[i].AttributeValue" class="text-danger"></span>
+                <div class="inputbox">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <label asp-for="Product.ProductName" class="control-label"></label>
+                    <input asp-for="Product.ProductName" class="form-control" />
+                    <span asp-validation-for="Product.ProductName" class="text-danger"></span>
                 </div>
-            }
+                <div class="inputbox">
+                    <label asp-for="ProductCategory.CategoryName" class="control-label">Main Category:</label>
+                    <select asp-for="ProductCategory.CategoryName" id="main-category">
+                        <option asp-for="ProductCategory.CategoryName">@Html.DisplayFor(model => model.ProductCategory.CategoryName)</option>
+                    </select>
+                    <span asp-validation-for="ProductCategory.CategoryName" class="text-danger"></span>
+                </div>
+                <div class="inputbox">
+                    <label asp-for="ProductSubCategory.SubCategoryName" class="control-label">Subcategory:</label>
+                    <select asp-for="ProductSubCategory.SubCategoryName" id="subcategory">
+                        <option asp-for="ProductSubCategory.SubCategoryName">@Html.DisplayFor(model => model.ProductSubCategory.SubCategoryName)</option>
+                    </select>
+                    <span asp-validation-for="ProductSubCategory.SubCategoryName" class="text-danger"></span>
+                </div>
+                <div class="inputbox">
+                    <label asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category-label" class="control-label">Sub-Subcategory:</label>
+                    <select asp-for="ProductNestedCategory.NestedCategoryName" id="nested-category">
+                        <option asp-for="ProductNestedCategory.NestedCategoryName">@Html.DisplayFor(model => model.ProductNestedCategory.NestedCategoryName)</option>
+                    </select>
+                    <span asp-validation-for="ProductNestedCategory.NestedCategoryName" class="text-danger"></span>
+                </div>
+                <div class="inputbox">
+                    <label asp-for="Product.ProductBrand" class="control-label">Brand Of Product:</label>
+                    <select asp-for="Product.ProductBrand" id="product-brand">
+                        <option asp-for="Product.ProductBrand">@Html.DisplayFor(model => model.Product.ProductBrand)</option>
+                    </select>
+                    <span asp-validation-for="Product.ProductBrand" class="text-danger"></span>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                    <label asp-for="Product.Price" class="control-label"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Product.PriceUnit" class="form-control" />
+                    <span asp-validation-for="Product.PriceUnit" class="text-danger"></span>
+                </div>
+                <div class="inputbox">
+                    <label asp-for="Product.ProductDescription" class="control-label">Description:</label>
+                    <textarea asp-for="Product.ProductDescription" class="form-control"></textarea>
+                    <span asp-validation-for="Product.ProductDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Product.ProductImage" class="form-control" />
+                </div>
+                <div id="inventory-details">
+                    <h3>Inventory</h3>
+                   
+                        <div class="form-group">
+                            <input type="hidden" asp-for="ProductInventory.Quantity" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="ProductInventory.BatchNumber" class="form-control" />
+                        </div>
+                        <div class="inputbox">
+                        <label asp-for="ProductInventory.Location" class="control-label">Location:</label>
+                        <select asp-for="ProductInventory.Location" id="product-location">
+                            <option asp-for="ProductInventory.Location">@Html.DisplayFor(model => model.ProductInventory.Location)</option>
+                        </select>
+                        <span asp-validation-for="ProductInventory.Location" class="text-danger"></span>
+                        </div>
+                   
+                    <div class="inputbox">
+                        <label asp-for="ProductInventory.Supplier" class="control-label">Supplier:</label>
+                        <select asp-for="ProductInventory.Supplier" id="product-supplier">
+                            <option asp-for="ProductInventory.Supplier">@Html.DisplayFor(model => model.ProductInventory.Supplier)</option>
+                        </select>
+                        <span asp-validation-for="ProductInventory.Supplier" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <label asp-for="ProductInventory.Cost" class="control-label">Cost(per Product):</label>
+                        <input asp-for="ProductInventory.Cost" class="form-control" />
+                        <span asp-validation-for="ProductInventory.Cost" class="text-danger"></span>
+                    </div>
+                    <div class="inputbox">
+                        <label asp-for="ProductInventory.Status" class="control-label">Status of Product:</label>
+                        <select asp-for="ProductInventory.Status" id="product-brand">
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                            <option value="3">Discontinued</option>
+                        </select>
+                        <span asp-validation-for="ProductInventory.Status" class="text-danger"></span>
+                    </div>
+                    @if (Model.ProductInventory.ExpirationDate.Equals(DateTime.MinValue))
+                    {
+                        <div class="inputbox">
+                            <input type="hidden" asp-for="ProductInventory.ExpirationDate" class="form-control" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="inputbox">
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                            <label asp-for="ProductInventory.ExpirationDate" class="control-label">Expiration Date:</label>
+                            <input asp-for="ProductInventory.ExpirationDate" class="form-control" type="date" />
+                            <span asp-validation-for="ProductInventory.ExpirationDate" class="text-danger"></span>
+                        </div>
+                    }
+                </div>
+                <div id="additionalAttributesSection">
+                    <h3>Additional Attributes</h3>
+                    @for (int i = 0; i < Model.ProductAttributes.Count; i++)
+                    {
+                        <div class="inputbox">
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                            <label asp-for="ProductAttributes[i].AttributeKey" class="control-label">@Model.ProductAttributes[i].AttributeKey</label>
+                            <input asp-for="ProductAttributes[i].AttributeValue" class="form-control" type="text" />
+                            <span asp-validation-for="ProductAttributes[i].AttributeValue" class="text-danger"></span>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="loginBtn" />
+                </div>
+            </form>
+            <div>
+                <a class="adminBtn" asp-page="./Index">Back to List</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 <script src="~/js/adminEditPage.js" asp-append-version="true"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

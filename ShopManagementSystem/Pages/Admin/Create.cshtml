@@ -6,10 +6,12 @@
     Layout = "~/Pages/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Create</h1>
+<div class="title-name">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Add a new Product</h1>
+</div>
 
-<h4>Product</h4>
-<hr />
+
 <div class="row">
     <div class="col-md-4">
         <form method="post" id="create-form">
@@ -98,7 +100,7 @@
             <div id="additionalAttributesSection">
                  <h3>Additional Attributes</h3>
                <div id="attributeList">
-                <!-- Existing attributes will be dynamically added here -->
+               
                </div>
                <button type="button" id="addAttributeButton">Add Attribute</button>
               </div>

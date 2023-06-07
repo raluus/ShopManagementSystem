@@ -82,6 +82,7 @@ body {
 }
 
 .row {
+    margin-bottom: 100px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(100px);
@@ -169,6 +170,7 @@ body {
         padding: 0px 35px 0px 5px;
         color: dimgray;
     }
+
     .inputbox ion-icon {
         position: absolute;
         right: 8px;

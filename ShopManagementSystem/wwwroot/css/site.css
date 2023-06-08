@@ -30,7 +30,6 @@ body {
 nav.main-products-category-navigation {
     background-color: white;
     margin-top: 100px;
-    position: fixed;
     z-index: 9999;
 }
 
@@ -186,6 +185,7 @@ nav.main-products-category-navigation {
 }
 
 .product-item {
+    
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -211,6 +211,12 @@ nav.main-products-category-navigation {
 .product-item a {
     text-decoration: none;
     color: black;
+}
+
+.add-cart {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .add-cart form {

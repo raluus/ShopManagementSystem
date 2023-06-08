@@ -60,6 +60,7 @@ namespace ShopManagementSystem.Pages
                 (p, pnc) => new { Product = p, ProductCategory = pnc })
                .Where(joined => joined.ProductCategory.CategoryName == category)
                .Select(joined => joined.Product)
+               .OrderBy(x => Guid.NewGuid())
                .Take(10)
                .ToListAsync();
                 categoryProducts.AddRange(limitedProducts);
@@ -172,6 +173,10 @@ namespace ShopManagementSystem.Pages
             await OnGetAsync();
          
             string previousPageUrl = Request.Headers["Referer"].ToString();
+            if (previousPageUrl.Contains("/Products?handler=FilterProducts"))
+            {
+                return RedirectToPage("/Index");
+            }
             return Redirect(previousPageUrl);
 
         }

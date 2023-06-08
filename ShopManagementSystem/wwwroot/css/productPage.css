@@ -134,7 +134,7 @@ body {
 .form-box {
     position: relative;
     width: 400px;
-    height: 1680px;
+    height: 1800px;
     background: transparent;
     display: flex;
     border: 2px solid rgba(255, 255, 255, 0.5);
@@ -201,8 +201,6 @@ body {
     backdrop-filter: blur(100px);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 5px;
     padding: 10px;
-    width: 800px !important;
-    height: 500px !important;
     margin-top: 20px;
     margin-bottom: 20px;
 }

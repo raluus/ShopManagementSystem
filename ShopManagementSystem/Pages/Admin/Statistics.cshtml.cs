@@ -28,8 +28,8 @@ namespace ShopManagementSystem.Pages.Admin
         public async Task OnGet()
         {
             List<List<string>> transactions = new List<List<string>>();
-            int minSupport = 3;
-            double minConfidence = 0.8;
+            int minSupport = 2;
+            double minConfidence = 0.3;
 
             var paymentDetailsList = await _context.PaymentDetails
             .Include(pd => pd.PayedProducts)

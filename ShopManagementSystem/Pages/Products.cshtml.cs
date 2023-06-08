@@ -90,7 +90,7 @@ namespace ShopManagementSystem.Pages
                         )
                         .ToListAsync();
                     }
-                    else
+                    else if(!NestedCategory.IsNullOrEmpty())
                     {
                         Product = await _context.Product
                       .Join(
@@ -242,7 +242,9 @@ namespace ShopManagementSystem.Pages
 
         public string GetNestedCategoryDisplayName(string nestedCategoryName)
         {
-            string nestedCategoryDisplayName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nestedCategoryName.Replace('-', ' '));
+           
+                string nestedCategoryDisplayName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nestedCategoryName.Replace('-', ' '));
+            
             switch (nestedCategoryDisplayName)
             {
                 case "Non Alcoholic Beer" :

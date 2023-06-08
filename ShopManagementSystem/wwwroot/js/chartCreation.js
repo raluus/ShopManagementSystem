@@ -3,6 +3,8 @@
     var chartData = JSON.parse(document.getElementById('chartData').getAttribute('data-chartData'));
 
     var ctx = document.getElementById('chart').getContext('2d');
+    ctx.canvas.width = 800;
+    ctx.canvas.height = 500;
     var chart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -22,7 +24,7 @@
             }]
         },
         options: {
-            responsive: true,
+            responsive: false,
             scales: {
                 y: {
                     beginAtZero: true
@@ -34,6 +36,8 @@
     var productChartData = JSON.parse(document.getElementById('productChartData').getAttribute('data-chartData'));
    
     var ctx = document.getElementById('productChart').getContext('2d');
+    ctx.canvas.width = 800;
+    ctx.canvas.height = 500;
     var productChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -47,7 +51,7 @@
             }]
         },
         options: {
-            responsive: true,
+            responsive: false,
             scales: {
                 y: {
                     beginAtZero: true
@@ -59,6 +63,8 @@
     var totalSalesChartData = JSON.parse(document.getElementById('totalSalesChartData').getAttribute('data-chartData'));
    
     var ctx = document.getElementById('totalSalesChart').getContext('2d');
+    ctx.canvas.width = 800;
+    ctx.canvas.height = 500;
     var totalSalesChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -73,7 +79,7 @@
             }]
         },
         options: {
-            responsive: true,
+            responsive: false,
             scales: {
                 y: {
                     beginAtZero: true

@@ -135,14 +135,12 @@
                    
                 </a>
                 <div class="add-cart">
-                    <form method="post" asp-page-handler="AddToCart">
-                        <form method="post" asp-page-handler="AddToCart">
-                            <input type="hidden" name="productId" value="@productInventory.Id" />
+                        <form method="post" asp-page="/Index" asp-page-handler="AddToCart">
+                            <input type="hidden" name="productId" value="@productInventory.ProductId" />
                             <button type="submit" class="btn btn-success" @(productInventory.Status == 2 || productInventory.Status == 3 || productInventory.Quantity == 0 ? "disabled" : "")>
                                 +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
                             </button>
                         </form>
-                    </form>
                 </div>
              </div>
             }

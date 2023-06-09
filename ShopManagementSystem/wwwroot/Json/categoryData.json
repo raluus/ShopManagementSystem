@@ -15,7 +15,7 @@
   "nestedcategories": {
     "Fruits": [ "Organic Fruits", "Frozen Fruits", "Fresh Fruits", "Dried Fruits" ],
     "Vegetables": [ "Organic Vegetables", "Frozen Vegetables", "Fresh Vegetables", "Dried Vegetables" ],
-    "Sweets": [ "Chocolate", "Biscuits", "Wafer Biscuits", "Cookies", "Pastries" ],
+    "Sweets": [ "Chocolate", "Biscuits", "Wafer Biscuits"],
     "Dairy Products": [ "Milk", "Yogurt", "Cheese", "Sour Cream", "Whipped Cream", "Butter", "Margarine" ],
     "Meat": [ "Chicken Meat", "Pork Meat", "Beef Meat", "Sheep Meat", "Frozen Meat" ],
     "Fish": [ "Fresh Fish", "Frozen Fish", "Seafood", "Sushi" ],

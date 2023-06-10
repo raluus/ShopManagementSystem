@@ -19,7 +19,7 @@
     "Dairy Products": [ "Milk", "Yogurt", "Cheese", "Sour Cream", "Whipped Cream", "Butter", "Margarine" ],
     "Meat": [ "Chicken Meat", "Pork Meat", "Beef Meat", "Sheep Meat", "Frozen Meat" ],
     "Fish": [ "Fresh Fish", "Frozen Fish", "Seafood", "Sushi" ],
-    "Deli": [ "Salami", "Ham", "Sausages", "FrankFurter", "Bologna" ],
+    "Deli": [ "Salami", "Ham", "Sausages"],
     "Tobacco": [ "Cigarettes", "E-cigarettes" ],
     "Water": [ "Still Water", "Sparkling Water", "Flavored Water" ],
     "Coffee": [ "Ground Coffee", "Coffee Beans", "Instant Coffee" ],

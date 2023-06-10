@@ -104,7 +104,7 @@ function getNestedCategories(subcategory) {
         case "Vegetables":
             return ["Organic Vegetables", "Frozen Vegetables", "Fresh Vegetables", "Dried Vegetables"];
         case "Sweets":
-            return ["Chocolate", "Biscuits", "Wafer Biscuits", "Cookies", "Pastries"];
+            return ["Chocolate", "Biscuits", "Wafer Biscuits"];
         case "Dairy Products":
             return ["Milk", "Yogurt", "Cheese", "Sour Cream", "Whipped Cream", "Butter", "Margarine"];
         case "Basic Foodstuffs":
@@ -114,7 +114,7 @@ function getNestedCategories(subcategory) {
         case "Fish":
             return ["Fresh Fish", "Frozen Fish", "Seafood", "Sushi"];
         case "Deli":
-            return ["Salami", "Ham", "Sausages", "FrankFurter", "Bologna"];
+            return ["Salami", "Ham", "Sausages"];
         case "Tobacco":
             return ["Cigarettes", "E-cigarettes"];
         case "Water":

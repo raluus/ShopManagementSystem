@@ -29,7 +29,7 @@ namespace ShopManagementSystem.Models
         [Required]
         public string? PriceUnit { get; set; }
 
-        [Range(0, 500)]
+        [Range(0, 10500)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 

@@ -108,7 +108,7 @@ function getNestedCategories(subcategory) {
         case "Dairy Products":
             return ["Milk", "Yogurt", "Cheese", "Sour Cream", "Whipped Cream", "Butter", "Margarine"];
         case "Basic Foodstuffs":
-            return ["Oil", "Vinegar", "Sugar", "Rice", "Flour", "Cornmeal", "Semolina"];
+            return ["Oil", "Vinegar", "Sugar", "Rice", "Flour"];
         case "Meat":
             return ["Chicken Meat", "Pork Meat", "Beef Meat", "Sheep Meat", "Frozen Meat"];
         case "Fish":
@@ -140,7 +140,7 @@ function getNestedCategories(subcategory) {
         case "Body Care Products":
             return ["Body Wash", "Soap", "Lotions and Creams", "Hair Removal Products", "Hand Care Products", "Foot Care Products", "Deodorants"];
         case "Facial Care Products":
-            return ["Face Cream", "Makeup", "Lipsticks", "After Shave", "Facial Cleansing", "Shavers", "Shaving Cream and Gel"];
+            return ["Face Cream", "Makeup", "Lipsticks", "After Shave", "Facial Cleansing", "Shavers"];
         case "Home":
             return ["Rug", "Bedspread", "Bedding", "Beds", "Pillows", "Duvet"];
         case "Furniture":

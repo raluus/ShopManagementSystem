@@ -95,7 +95,10 @@ namespace ShopManagementSystem.Pages.Products
 
             _context.ProductCategory.Add(ProductCategory);
             _context.ProductSubCategory.Add(ProductSubCategory);
-            _context.ProductNestedCategory.Add(ProductNestedCategory);
+            if (ProductNestedCategory.NestedCategoryName != "")
+            {
+                _context.ProductNestedCategory.Add(ProductNestedCategory);
+            }
             _context.ProductInventory.Add(ProductInventory);
             await _context.SaveChangesAsync();
 

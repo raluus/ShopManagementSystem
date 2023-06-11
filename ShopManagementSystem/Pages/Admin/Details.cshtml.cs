@@ -48,7 +48,7 @@ namespace ShopManagementSystem.Pages.Products
                 var productSubCategory = await _context.ProductSubCategory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
                 var productNestedCategory = await _context.ProductNestedCategory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
                 var productInventory = await _context.ProductInventory.FirstOrDefaultAsync(pc => pc.ProductId == product.Id);
-                if (productCategory == null || productSubCategory == null || productNestedCategory == null || productInventory == null)
+                if (productCategory == null || productSubCategory == null || productInventory == null)
                 {
                     return NotFound();
                 }

@@ -13,6 +13,7 @@ namespace ShopManagementSystem.Pages
     public class SearchResultsModel : PageModel
     {
         private readonly ShopManagementSystem.Data.ShopManagementSystemContext _context;
+        [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
 
         public SearchResultsModel(ShopManagementSystem.Data.ShopManagementSystemContext context)
@@ -26,16 +27,26 @@ namespace ShopManagementSystem.Pages
         public List<ProductInventory> ProductInventory { get; set; } = default!;
 
 
-        public async Task OnGetAsync()
-        {
-            //if (_context.Product != null)
-            //{
-            //    Product = await _context.Product.ToListAsync();
-            //}
-        }
+        //public async Task<IActionResult> OnGetAsync()
+        //{
+        //    SearchString = HttpContext.Session.GetString("SearchString");
+        //    var products = from m in _context.Product
+        //                   select m;
+        //    var productInventory = from m in _context.ProductInventory select m;
+        //    if (!string.IsNullOrEmpty(SearchString))
+        //    {
+        //        products = products.Where(s => s.ProductName.Contains(SearchString));
+        //    }
+
+        //    Product = await products.ToListAsync();
+        //    ProductInventory = await productInventory.ToListAsync();
+
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnPostSearchResult()
         {
+            HttpContext.Session.Clear();
             SearchString = Request.Form["searchString"];
             var products = from m in _context.Product
                           select m;
@@ -47,6 +58,7 @@ namespace ShopManagementSystem.Pages
 
             Product = await products.ToListAsync();
             ProductInventory = await productInventory.ToListAsync();
+            HttpContext.Session.SetString("SearchString", SearchString);
 
             return Page();
         }

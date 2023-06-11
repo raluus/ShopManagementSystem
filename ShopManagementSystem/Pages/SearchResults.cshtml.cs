@@ -27,22 +27,22 @@ namespace ShopManagementSystem.Pages
         public List<ProductInventory> ProductInventory { get; set; } = default!;
 
 
-        //public async Task<IActionResult> OnGetAsync()
-        //{
-        //    SearchString = HttpContext.Session.GetString("SearchString");
-        //    var products = from m in _context.Product
-        //                   select m;
-        //    var productInventory = from m in _context.ProductInventory select m;
-        //    if (!string.IsNullOrEmpty(SearchString))
-        //    {
-        //        products = products.Where(s => s.ProductName.Contains(SearchString));
-        //    }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            SearchString = HttpContext.Session.GetString("SearchString");
+            var products = from m in _context.Product
+                           select m;
+            var productInventory = from m in _context.ProductInventory select m;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(SearchString));
+            }
 
-        //    Product = await products.ToListAsync();
-        //    ProductInventory = await productInventory.ToListAsync();
+            Product = await products.ToListAsync();
+            ProductInventory = await productInventory.ToListAsync();
 
-        //    return Page();
-        //}
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostSearchResult()
         {

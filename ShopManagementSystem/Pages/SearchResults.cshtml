@@ -1,0 +1,73 @@
+﻿@page
+@model SearchResultsModel
+@{
+    ViewData["Title"] = "Search Results";
+
+}
+
+<div class="title-name search-list">
+    <img class="animated-icon-image" src="~/images/seeMoreIcon.gif" alt="Logo" />
+    <h1 class="hover-effect">Searched Results:</h1>
+</div>
+@if (Model.Product.Count > 0)
+{
+    <div id="products-list">
+        <div class="product-grid search-list">
+            @foreach (var product in Model.Product)
+            {
+                var inventory = Model.ProductInventory.FirstOrDefault(i => i.ProductId == product.Id);
+                if (inventory != null)
+                {
+                    <div class="product-item">
+                        <a asp-page="/ProductDetails" asp-route-Id="@product.Id">
+                            <div class="product-allList">
+                                <div class="product-image">
+                                    <img src="~/images/@product.ProductImage" alt="Product Image">
+                                </div>
+                                <div class="product-name">
+                                    <p>@product.ProductName</p>
+                                </div>
+                                <div class="product-status">
+                                    @switch (inventory.Status)
+                                    {
+                                        case 1:
+                                            <p>Status: In Stock  <img class="icon-image" src="~/images/checkIcon.png" alt="Logo" /></p>
+                                            break;
+                                        case 2:
+                                            <p>Status: Out of Stock  <img class="icon-image" src="~/images/crossIcon.png" alt="Logo" /></p>
+                                            break;
+                                        case 3:
+                                            <p>Status: Out of Stock - Seasonal  <img class="icon-image" src="~/images/waitIcon.png" alt="Logo" /></p>
+                                            break;
+                                        default:
+                                            <p>Status: Unknown Status</p>
+                                            break;
+                                    }
+                                </div>
+                                <div class="product-price">
+                                    <p>$@inventory.RetailPrice</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="add-cart">
+                            <form method="post" asp-page-handler="AddToCart">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <button type="submit" class="btn btn-success" @(inventory.Status == 2 || inventory.Status == 3 || inventory.Quantity == 0 ? "disabled" : "")>
+                                    +<img class="icon-image" src="~/images/addCartIcon.png" alt="Logo" />
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                }
+            }
+            }
+        </div>
+    </div>
+}
+@if(Model.Product.Count == 0)
+{
+    <div id="products-list search-list">
+    <p>No products found!</p>
+    </div>
+}

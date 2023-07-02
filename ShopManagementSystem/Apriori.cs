@@ -129,14 +129,14 @@
         {
             if (itemSize > 2)
             {
-                if (currentSubset.Count > 0 && currentSubset.Count < items.Count() && currentSubset.Count() > 1)
+                if (currentSubset.Count > 0 && currentSubset.Count < items.Count && currentSubset.Count > 1)
                 {
                     subsets.Add(currentSubset);
                 }
             }
             else
             {
-                if (currentSubset.Count > 0 && currentSubset.Count < items.Count())
+                if (currentSubset.Count > 0 && currentSubset.Count < items.Count)
                 {
                     subsets.Add(currentSubset);
                 }
@@ -144,7 +144,7 @@
 
             for (int i = index; i < items.Count; i++)
             {
-                List<string> newSubset = new List<string>(currentSubset)
+                List<string> newSubset = new(currentSubset)
                 {
                     items[i]
                 };
